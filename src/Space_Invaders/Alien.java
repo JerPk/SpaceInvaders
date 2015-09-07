@@ -77,6 +77,15 @@ public class Alien {
 	}
 	
 	/**
+	 * the method used to let an alien shoot
+	 * it creates a bullet with type alien
+	 * and the x and y position of the alien
+	 */
+	public void shoot(){
+		new Bullet(/*type,*/ x, y);
+	}
+	
+	/**
 	 * the method that returns the x position
 	 * 
 	 * @return x position
