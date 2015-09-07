@@ -7,6 +7,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -25,7 +26,7 @@ public class Game extends Canvas implements Runnable {
 	// here it used for moving all the aliens down simultaneously.
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
-	private ArrayList<Alien> Aliens = new ArrayList();
+	private Vector<Alien> alienStorageVector;
 	// the main Thread we use for the game.
 	private Thread thread;
 
@@ -106,12 +107,14 @@ public class Game extends Canvas implements Runnable {
 		{
 			e.printStackTrace();
 		}
-
+		
+		alienStorageVector = new Vector<Alien>(0);
+		
 		// creates all the aliens and adds them to the Aliens array.
 		for (int x = 0; x < 10; x++) 
 		{
 			Alien alien = new Alien(200 + 20 * x, 200*(x/10), this);
-			Aliens.add(alien);
+			alienStorageVector.addElement(alien);
 		}
 	}
 
@@ -160,10 +163,10 @@ public class Game extends Canvas implements Runnable {
 			if (logicRequiredThisLoop) 
 			{
 				// the for loop gets
-				for (int i = 0; i < Aliens.size(); i++) 
+				for (int i = 0; i < alienStorageVector.size(); i++)
 				{
-					Alien a = (Alien) Aliens.get(i);
-					a.VMovement();
+					Alien alien_obj = (Alien) alienStorageVector.get(i);
+					alien_obj.VMovement();
 				}
 				logicRequiredThisLoop = false;
 			}
@@ -190,10 +193,10 @@ public class Game extends Canvas implements Runnable {
 	 */
 	private void doAction() 
 	{
-		for (int i = 0; i < Aliens.size(); i++) 
+		for (int i = 0; i < alienStorageVector.size(); i++)
 		{
-			Alien a = (Alien) Aliens.get(i);
-			a.HMovement();
+			Alien alien_obj = (Alien) alienStorageVector.get(i);
+			alien_obj.HMovement();
 		}
 	}
 
@@ -217,9 +220,9 @@ public class Game extends Canvas implements Runnable {
 		graphic.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
 		// here we draw all the aliens.
-		for (int i = 0; i < Aliens.size(); i++) 
+		for (int i = 0; i < alienStorageVector.size(); i++)
 		{
-			Alien alien_obj = (Alien) Aliens.get(i);
+			Alien alien_obj = (Alien) alienStorageVector.get(i);
 			alien_obj.render(graphic);
 		}
 
