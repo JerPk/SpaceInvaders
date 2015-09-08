@@ -6,8 +6,8 @@ import java.awt.image.BufferedImage;
 public class Spaceship {
 	
 	// the x and y coordinates of the Spaceship.
-	private int x;
-	private static int y = 425;
+	private double x;
+	private static double y = 425;
 	
 	// the game the alien is a part of.
 	private Game game;
@@ -29,6 +29,17 @@ public class Spaceship {
 	}
 
 	/**
+	 * this method makes the ship move right by 1 as long as it hasn't reached
+	 * the border
+	 *
+	 */
+	public void moveRight() {
+		if (x < 625) {
+			x += 1;
+		}
+	}
+	
+	/**
 	 * the constructor of the Spaceship class.
 	 * 
 	 * @param int x
@@ -42,16 +53,11 @@ public class Spaceship {
 		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
 		Spaceship = ss.grabImage(277, 228, 26, 16);
 	}
-
-	/**
-	 * this method makes the ship move right by 1 as long as it hasn't reached
-	 * the border
-	 *
-	 */
-	public void moveRight() {
-		if (x < 590) {
-			x += 1;
-		}
+	
+	public Bullet Shoot() {
+		Bullet newBullet = new Bullet();
+		//Bullet newBullet = new Bullet(x,y,game);
+		return newBullet;
 	}
 
 	/**
@@ -59,8 +65,17 @@ public class Spaceship {
 	 * 
 	 * @return x position
 	 */
-	public int getPosX() {
+	public double getPosX() {
 		return x;
+	}
+	
+	/**
+	 * the method that returns the y position
+	 * 
+	 * @return y position
+	 */
+	public double getPosY(){
+		return y;
 	}
 	
 	/**
@@ -72,12 +87,4 @@ public class Spaceship {
 		g.drawImage(Spaceship,(int) x,(int) y, null);
 	}
 	
-	/**
-	 * the method that returns the y position
-	 * 
-	 * @return y position
-	 */
-	public int getPosY(){
-		return y;
-	}
 }
