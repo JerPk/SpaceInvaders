@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
 
-	private ArrayList Aliens = new ArrayList();
+	//private ArrayList Aliens = new ArrayList();
 	//Bullets
 	private ArrayList BulletAlien = new ArrayList();
 	private ArrayList BulletShip = new ArrayList();
@@ -37,6 +37,8 @@ public class Game extends Canvas implements Runnable {
 	long delta = 200;
 
 	private Vector<Alien> alienStorageVector;
+	private Vector<Bullet> bulletStorageVector;
+	private Vector<Bullet> bulletShipStorageVector;
 
 	// the main Thread we use for the game.
 	private Thread thread;
