@@ -7,7 +7,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.JFrame;
 
@@ -23,10 +22,10 @@ public class Game extends Canvas implements Runnable {
 	// a boolean that is true when the game is running.
 	private boolean running = false;
 	// a boolean that is only true if the aliens need to be updated.
-	// here it used for moving all the aliens down simultaneously.
+	// here it used for moving all the aliens down simultaniously.
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
-	private Vector<Alien> alienStorageVector;
+	private ArrayList Aliens = new ArrayList();
 	// the main Thread we use for the game.
 	private Thread thread;
 
@@ -42,47 +41,38 @@ public class Game extends Canvas implements Runnable {
 	 * The start method will be called once at the start of the game. it is
 	 * mainly used to start up the main thread of our game.
 	 */
-	private synchronized void start() 
-	{
+	private synchronized void start() {
 		// an if statement that is to prevent that the start method creates
 		// two threads if it accidently called twice.
-		if (running) 
-		{
+		if (running) {
 			return;
 		}
 
 		running = true;
-		
 		// create and start the main thread of our game.
 		thread = new Thread(this);
 		thread.start();
-		
-		run();
+
 	}
 
 	/**
 	 * the stop method of the game. it is called only if we accidently leave the
 	 * game loop. if the game has no errors this method will not be called.
 	 */
-	private synchronized void stop() 
-	{
+	private synchronized void stop() {
 		// returns if for some accident the stop method is called before the
 		// game has
 		// started.
-		if (!running) 
-		{
+		if (!running) {
 			return;
 		}
 
 		running = false;
 
 		// tries to join all the threads together.
-		try 
-		{
+		try {
 			thread.join();
-		} 
-		catch (InterruptedException e) 
-		{
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
@@ -94,36 +84,29 @@ public class Game extends Canvas implements Runnable {
 	 * the init method initializes all the entities that will appear in the
 	 * game.
 	 */
-	public void init() 
-	{
+	public void init() {
 		BuffereImageLoader loader = new BuffereImageLoader();
 
 		// tries to load the spritesheet from the png file.
-		try 
-		{
+		try {
 			SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-		} 
-		catch (IOException e) 
-		{
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		alienStorageVector = new Vector<Alien>(0);
-		
+
 		// creates all the aliens and adds them to the Aliens array.
-		for (int x = 0; x < 10; x++) 
-		{
-			Alien alien = new Alien(200 + 20 * x, 200*(x/10), this);
-			alienStorageVector.addElement(alien);
+		for (int x = 0; x < 12; x++) {
+			Alien alien = new Alien(200 + 20 * x, 200, this);
+			Aliens.add(alien);
+
 		}
 	}
 
 	/**
-	 * the main thread of the application. it creates the JFrame and calls the
+	 * the main thread of the application. it creates the jframe and calls the
 	 * start method.
 	 */
-	public static void main(String argv[]) 
-	{
+	public static void main(String argv[]) {
 		// creates the game object that will be used.
 		Game game = new Game();
 
@@ -131,7 +114,7 @@ public class Game extends Canvas implements Runnable {
 		game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
 		game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
-		// creates the JFrame that will be used.
+		// creates the Jframe that will be used.
 		JFrame frame = new JFrame(game.TITLE);
 		frame.add(game);
 		frame.pack();
@@ -148,38 +131,33 @@ public class Game extends Canvas implements Runnable {
 	 * the run method is the method that has the main game loop that will be
 	 * called repeatedly when the game is ongoing.
 	 */
-	public void run() 
-	{
-		// initialize all the entities
+	public void run() {
+		// initialize all the etities
 		init();
 
 		// the while loop that will be active once the game is running.
-		while (running) 
-		{
+		while (running) {
+
 			doAction();
 
 			// this if statement will only be used if all the aliens need to be
-			// updated simultaneously.
-			if (logicRequiredThisLoop) 
-			{
+			// updated
+			// simultaniously.
+			if (logicRequiredThisLoop) {
 				// the for loop gets
-				for (int i = 0; i < alienStorageVector.size(); i++)
-				{
-					Alien alien_obj = (Alien) alienStorageVector.get(i);
-					alien_obj.VMovement();
+				for (int i = 0; i < Aliens.size(); i++) {
+					Alien a = (Alien) Aliens.get(i);
+					a.VMovement();
 				}
+
 				logicRequiredThisLoop = false;
 			}
 
 			render();
 
-			try 
-			{
+			try {
 				Thread.sleep(15);
-			} 
-			catch (Exception e) 
-			{
-				//Catch if needed
+			} catch (Exception e) {
 			}
 		}
 		// if the loop is ended due to some error the stop method
@@ -191,12 +169,10 @@ public class Game extends Canvas implements Runnable {
 	 * the method that is used for all the non player entities to perform their
 	 * actions
 	 */
-	private void doAction() 
-	{
-		for (int i = 0; i < alienStorageVector.size(); i++)
-		{
-			Alien alien_obj = (Alien) alienStorageVector.get(i);
-			alien_obj.HMovement();
+	private void doAction() {
+		for (int i = 0; i < Aliens.size(); i++) {
+			Alien a = (Alien) Aliens.get(i);
+			a.HMovement();
 		}
 	}
 
@@ -204,45 +180,43 @@ public class Game extends Canvas implements Runnable {
 	 * the render method is used to project all the objects on the screen for
 	 * the player to see.
 	 */
-	private void render() 
-	{
-		BufferStrategy buff_strat = this.getBufferStrategy();
+	private void render() {
+		BufferStrategy bs = this.getBufferStrategy();
 
-		if (buff_strat == null) 
-		{
+		if (bs == null) {
+
 			createBufferStrategy(3);
 			return;
 		}
 
-		Graphics graphic = buff_strat.getDrawGraphics();
+		Graphics g = bs.getDrawGraphics();
+		// ///////////////
 
 		// here we draw the black background.
-		graphic.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
 		// here we draw all the aliens.
-		for (int i = 0; i < alienStorageVector.size(); i++)
-		{
-			Alien alien_obj = (Alien) alienStorageVector.get(i);
-			alien_obj.render(graphic);
+		for (int i = 0; i < Aliens.size(); i++) {
+			Alien a = (Alien) Aliens.get(i);
+			a.render(g);
 		}
 
-		graphic.dispose();
-		buff_strat.show();
+		// ///////////////
+		g.dispose();
+		bs.show();
 	}
 
 	/**
 	 * get method to get the spritesheet.
 	 */
-	public BufferedImage getSpriteSheet() 
-	{
+	public BufferedImage getSpriteSheet() {
 		return SpriteSheet;
 	}
 
 	/**
-	 * the method used to put the logicRequiredThisLoop boolean to true.
+	 * the method used to put the logicrequirerthisloop boolean to true.
 	 */
-	public void updateLogic() 
-	{
+	public void updateLogic() {
 		logicRequiredThisLoop = true;
 	}
 
@@ -251,8 +225,7 @@ public class Game extends Canvas implements Runnable {
 	 * aliens have reached the bottom of the screen
 	 * 
 	 */
-	public void end() 
-	{
+	public void end() {
 		System.exit(0);
 	}
 }
