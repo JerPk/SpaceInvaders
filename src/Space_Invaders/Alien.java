@@ -6,11 +6,15 @@ import java.awt.image.BufferedImage;
 public class Alien {
 
 	// the x and y coordinates of the Alien.
+<<<<<<< HEAD
+	private int x, y;
+=======
 	private double x,y;
+>>>>>>> master
 	// the game the alien is a part of.
 	private Game game;
 	// the horizontal movement speed of the aliens.
-	private double MovementSpeed = 0.8;
+	private int MovementSpeed = 1;
 	
 	//the bufferedImage of the alien.
 	private BufferedImage Alien;

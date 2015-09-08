@@ -48,6 +48,8 @@ public class Game extends Canvas implements Runnable {
 	//the bufferdImage which will be the spritesheet that contains 
 	//all the sprites we use.
 	private BufferedImage SpriteSheet = null;
+	
+	Spaceship spaceship;
 
 	/**
 	 * The start method will be called once at the start of the game. it is
@@ -138,10 +140,15 @@ public class Game extends Canvas implements Runnable {
 			Alien alien = new Alien(startXOffsetAlien+(25*row), startYOffsetAlien+(25*(x/maxAlienRowCount)), this);
 			alienStorageVector.addElement(alien);
 		}
+<<<<<<< HEAD
+		
+		spaceship = new Spaceship(this);
+=======
 		//Adds the bullets for the Aliens
 		newAlienBullet();
 		//Adds bullets for the Ship
 		newShipBullet();
+>>>>>>> master
 	}
 
 	/**
@@ -304,6 +311,8 @@ public class Game extends Canvas implements Runnable {
 			Alien alien_obj = (Alien) alienStorageVector.get(i);
 			alien_obj.render(graphic);
 		}
+		
+		spaceship.render(g);
 
 <<<<<<< HEAD
 		// Draw the bullet for the Aliens
