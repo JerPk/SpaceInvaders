@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 
 public class Spaceship {
 
+<<<<<<< HEAD
 	// the x and y coordinates of the Spaceship.
 <<<<<<< HEAD
 	private int x;
@@ -114,4 +115,6 @@ public class Spaceship {
 		g.drawImage(Spaceship,(int) x,(int) y, null);
 	}
 	
+=======
+>>>>>>> master
 }

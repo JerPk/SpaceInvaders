@@ -6,7 +6,11 @@ import java.awt.image.BufferedImage;
 public class Alien {
 
 	// the x and y coordinates of the Alien.
+<<<<<<< HEAD
 	private int x, y;
+=======
+	private double x,y;
+>>>>>>> master
 	// the game the alien is a part of.
 	private Game game;
 	// the horizontal movement speed of the aliens.
@@ -18,11 +22,11 @@ public class Alien {
 	/**
 	 * the constructor of the Alien class.
 	 * 
-	 * @param int x
-	 * @param int y
+	 * @param double x
+	 * @param double y
 	 * @param  Game g
 	 */
-	public Alien(int x, int y, Game g){
+	public Alien(double x, double y, Game g){
 		this.x = x;
 		this.y = y;
 		game = g;
@@ -74,32 +78,5 @@ public class Alien {
 	 */
 	public void render(Graphics g){
 		g.drawImage(Alien,(int) x,(int) y, null);
-	}
-	
-	/**
-	 * the method used to let an alien shoot
-	 * it creates a bullet with type alien
-	 * and the x and y position of the alien
-	 */
-	public void shoot(){
-		new Bullet(/*type,*/ x, y);
-	}
-	
-	/**
-	 * the method that returns the x position
-	 * 
-	 * @return x position
-	 */
-	public int getPosX(){
-		return x;
-	}
-	
-	/**
-	 * the method that returns the y position
-	 * 
-	 * @return y position
-	 */
-	public int getPosY(){
-		return y;
 	}
 }
