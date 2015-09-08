@@ -26,6 +26,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
 	private ArrayList Aliens = new ArrayList();
+	//Bullets
+	private ArrayList Bullets = new ArrayList();
 	// the main Thread we use for the game.
 	private Thread thread;
 
@@ -99,6 +101,11 @@ public class Game extends Canvas implements Runnable {
 			Alien alien = new Alien(200 + 20 * x, 200, this);
 			Aliens.add(alien);
 
+		}
+		//Adds the bullets
+		for (int x = 0; x < 1; x++){
+			Bullet bullet = new Bullet(200 + 20 * x, 200, this);
+			Bullets.add(bullet);
 		}
 	}
 
@@ -201,7 +208,12 @@ public class Game extends Canvas implements Runnable {
 			a.render(g);
 		}
 
-		// ///////////////
+		// Draw the bullet
+		//for (int i = 0; i< Bullets.size(); i++){
+		//	Bullet b = (Bullet) Bullets.get(i);
+		//	b.render(g);
+		//}
+				///////////////
 		g.dispose();
 		bs.show();
 	}
