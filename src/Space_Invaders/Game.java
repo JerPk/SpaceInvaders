@@ -27,7 +27,12 @@ public class Game extends Canvas implements Runnable {
 	// an Array consisting of all the Aliens in the game.
 	private ArrayList Aliens = new ArrayList();
 	//Bullets
-	private ArrayList Bullets = new ArrayList();
+	private ArrayList BulletAlien = new ArrayList();
+	private ArrayList BulletShip = new ArrayList();
+	//boolean to update bullet
+	private boolean updateBullet = false;
+	//Timer speed for the bullets
+	long delta = 200;
 	// the main Thread we use for the game.
 	private Thread thread;
 
@@ -102,17 +107,30 @@ public class Game extends Canvas implements Runnable {
 			Aliens.add(alien);
 
 		}
-		//Adds the bullets
-		for (int x = 0; x < 1; x++){
-			Bullet bullet = new Bullet(200 + 20 * x, 200, this);
-			Bullets.add(bullet);
-		}
+		//Adds the bullets for the Aliens
+		newAlienBullet();
+		//Adds bullets for the Ship
+		newShipBullet();
 	}
 
 	/**
 	 * the main thread of the application. it creates the jframe and calls the
 	 * start method.
 	 */
+	
+	public void newShipBullet(){
+		for (int x = 0; x < 1; x++){
+			Bullet bullet = new Bullet(210 + 20 * x, 210, this);
+			BulletShip.add(bullet);
+		}
+	}
+	
+	public void newAlienBullet(){
+		for (int x = 0; x < 1; x++){
+			Bullet bullet = new Bullet( 210 + 20 * x, 210, this);
+			BulletAlien.add(bullet);	
+		}
+	}
 	public static void main(String argv[]) {
 		// creates the game object that will be used.
 		Game game = new Game();
@@ -144,29 +162,35 @@ public class Game extends Canvas implements Runnable {
 
 		// the while loop that will be active once the game is running.
 		while (running) {
-
+			
 			doAction();
 
 			// this if statement will only be used if all the aliens need to be
 			// updated
 			// simultaniously.
 			if (logicRequiredThisLoop) {
+				
 				// the for loop gets
 				for (int i = 0; i < Aliens.size(); i++) {
 					Alien a = (Alien) Aliens.get(i);
 					a.VMovement();
 				}
-
+				
 				logicRequiredThisLoop = false;
+				
+				//Temporary here for testing purposes
+				//One bullet for Aliens and Ship is created when aliens update
+				newShipBullet();
+				newAlienBullet();
+
 			}
-
 			render();
-
 			try {
 				Thread.sleep(15);
 			} catch (Exception e) {
 			}
 		}
+		
 		// if the loop is ended due to some error the stop method
 		// is called immediately.
 		stop();
@@ -180,7 +204,8 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < Aliens.size(); i++) {
 			Alien a = (Alien) Aliens.get(i);
 			a.HMovement();
-		}
+		}		
+			
 	}
 
 	/**
@@ -208,12 +233,10 @@ public class Game extends Canvas implements Runnable {
 			a.render(g);
 		}
 
-		// Draw the bullet
-		//for (int i = 0; i< Bullets.size(); i++){
-		//	Bullet b = (Bullet) Bullets.get(i);
-		//	b.render(g);
-		//}
-				///////////////
+		// Draw the bullet for the Aliens
+		renderBulletShip();
+		renderBulletAlien ();
+	
 		g.dispose();
 		bs.show();
 	}
@@ -224,12 +247,46 @@ public class Game extends Canvas implements Runnable {
 	public BufferedImage getSpriteSheet() {
 		return SpriteSheet;
 	}
+	
+	//Temporal: Method to draw the bullet for the spaceship
+	private void renderBulletShip() {
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		for (int i = 0; i < BulletShip.size(); i++){
+			Bullet c = (Bullet) BulletShip.get(i);
+			c.render(g);
+			c.moveBulletUp(delta);
+			
+		}
+	
+	}
+	
+	//Temporal: Method to render the bullet for the alien
+	private void renderBulletAlien () {
+		BufferStrategy bs = this.getBufferStrategy();
+		if (bs == null) {
+			createBufferStrategy(3);
+			return;
+		}
+		Graphics g = bs.getDrawGraphics();
+		for (int i = 0; i < BulletAlien.size(); i++){
+			Bullet b = (Bullet) BulletAlien.get(i);				
+			b.render(g);
+			b.moveBulletDown(delta);
+			
+		}
+	}
 
 	/**
 	 * the method used to put the logicrequirerthisloop boolean to true.
 	 */
 	public void updateLogic() {
 		logicRequiredThisLoop = true;
+		updateBullet = true;
 	}
 
 	/**

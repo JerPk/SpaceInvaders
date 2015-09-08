@@ -9,31 +9,27 @@ public class Bullet {
 	private double speed =  -300;
 	//Type
 	//String type;
-	//Game class, should it manage the removal of bullets?
 	private Game game;
 	private BufferedImage Bullet;
 	//Bullet coordinates
-	private double x,y;
+	private double x,y, a,b;
 	public Bullet(double x, double y, Game g){
 		this.x = x;
 		this.y = y;
-		game = g;
 		
 		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
-		Bullet = ss.grabImage(411, 275, 16, 16); //How do i get the coordinates in the sprite? 
+		Bullet = ss.grabImage(411, 275, 16, 16); 
 
 	}
-
-	//Move the bullet (speed and time)
-	public void moveBullet(long delta) {
-		//Move the bullet up
-		y += (delta * speed) / 1000;
-		//Move the bullet down
-		//y -= (delta * speed) / 1000;
+	//Move the bullet up
+	public void moveBulletUp(long delta){   
+		y +=  (delta * speed) / 100000;;
+	}
 		
-	
-	}
-	
+	//Move the bullet down
+	public void moveBulletDown(long delta){
+		y -= (delta * speed) / 100000;
+		}
 	
 	//Draw the bullet
 	public void render(Graphics g){
