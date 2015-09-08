@@ -36,6 +36,8 @@ public class Game extends Canvas implements Runnable {
 	//the bufferdImage which will be the spritesheet that contains 
 	//all the sprites we use.
 	private BufferedImage SpriteSheet = null;
+	
+	Spaceship spaceship;
 
 	/**
 	 * The start method will be called once at the start of the game. it is
@@ -100,6 +102,8 @@ public class Game extends Canvas implements Runnable {
 			Aliens.add(alien);
 
 		}
+		
+		spaceship = new Spaceship(this);
 	}
 
 	/**
@@ -200,6 +204,8 @@ public class Game extends Canvas implements Runnable {
 			Alien a = (Alien) Aliens.get(i);
 			a.render(g);
 		}
+		
+		spaceship.render(g);
 
 		// ///////////////
 		g.dispose();
