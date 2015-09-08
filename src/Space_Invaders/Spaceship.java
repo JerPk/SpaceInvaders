@@ -5,34 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class Spaceship {
 
-<<<<<<< HEAD
+
 	// the x and y coordinates of the Spaceship.
-<<<<<<< HEAD
-	private int x;
-  private static int y;
-
-  /**
-   * this method makes the ship move left by 1
-   * as long as it hasn't reached the border
-   *
-   */
-  public void moveLeft() {
-    if (x > 10) {
-      x-= 1;
-    }
-  }
-
-  /**
-   * this method makes the ship move right by 1
-   * as long as it hasn't reached the border
-   *
-   */
-  public void moveRight() {
-    if (x < 590) {
-      x += 1;
-    }
-  }
-=======
 	private double x;
 	private static double y = 425;
 	
@@ -81,12 +55,12 @@ public class Spaceship {
 		Spaceship = ss.grabImage(277, 228, 26, 16);
 	}
 	
-	public Bullet Shoot() {
+//	public Bullet Shoot() {
 		Bullet newBullet = new Bullet();
 		//Bullet newBullet = new Bullet(x,y,game);
-		return newBullet;
-	}
->>>>>>> origin/Jeroen
+	//	return newBullet;
+	//}
+
 
 	/**
 	 * the method that returns the x position
@@ -115,6 +89,4 @@ public class Spaceship {
 		g.drawImage(Spaceship,(int) x,(int) y, null);
 	}
 	
-=======
->>>>>>> master
 }

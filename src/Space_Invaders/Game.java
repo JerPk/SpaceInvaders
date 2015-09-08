@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable {
 	// here it used for moving all the aliens down simultaneously.
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
-<<<<<<< HEAD
+
 	private ArrayList Aliens = new ArrayList();
 	//Bullets
 	private ArrayList BulletAlien = new ArrayList();
@@ -35,9 +35,9 @@ public class Game extends Canvas implements Runnable {
 	private boolean updateBullet = false;
 	//Timer speed for the bullets
 	long delta = 200;
-=======
+
 	private Vector<Alien> alienStorageVector;
->>>>>>> master
+
 	// the main Thread we use for the game.
 	private Thread thread;
 
@@ -140,22 +140,22 @@ public class Game extends Canvas implements Runnable {
 			Alien alien = new Alien(startXOffsetAlien+(25*row), startYOffsetAlien+(25*(x/maxAlienRowCount)), this);
 			alienStorageVector.addElement(alien);
 		}
-<<<<<<< HEAD
+
 		
 		spaceship = new Spaceship(this);
-=======
+
 		//Adds the bullets for the Aliens
 		newAlienBullet();
 		//Adds bullets for the Ship
 		newShipBullet();
->>>>>>> master
+
 	}
 
 	/**
 	 * the main thread of the application. it creates the JFrame and calls the
 	 * start method.
 	 */
-<<<<<<< HEAD
+
 	
 	public void newShipBullet(){
 		for (int x = 0; x < 1; x++){
@@ -171,10 +171,6 @@ public class Game extends Canvas implements Runnable {
 		}
 	}
 	public static void main(String argv[]) {
-=======
-	public static void main(String argv[]) 
-	{
->>>>>>> master
 		// creates the game object that will be used.
 		Game game = new Game();
 
@@ -205,17 +201,6 @@ public class Game extends Canvas implements Runnable {
 		init();
 
 		// the while loop that will be active once the game is running.
-<<<<<<< HEAD
-		while (running) {
-			
-			doAction();
-
-			// this if statement will only be used if all the aliens need to be
-			// updated
-			// simultaniously.
-			if (logicRequiredThisLoop) {
-				
-=======
 		while (running) 
 		{
 			doAction();
@@ -224,17 +209,13 @@ public class Game extends Canvas implements Runnable {
 			// updated simultaneously.
 			if (logicRequiredThisLoop) 
 			{
->>>>>>> master
+
 				// the for loop gets
 				for (int i = 0; i < alienStorageVector.size(); i++)
 				{
 					Alien alien_obj = (Alien) alienStorageVector.get(i);
 					alien_obj.VMovement();
 				}
-<<<<<<< HEAD
-				
-=======
->>>>>>> master
 				logicRequiredThisLoop = false;
 				
 				//Temporary here for testing purposes
@@ -244,13 +225,10 @@ public class Game extends Canvas implements Runnable {
 
 			}
 			render();
-<<<<<<< HEAD
-			try {
-=======
 
 			try 
 			{
->>>>>>> master
+
 				Thread.sleep(15);
 			} 
 			catch (Exception e) 
@@ -268,14 +246,6 @@ public class Game extends Canvas implements Runnable {
 	 * the method that is used for all the non player entities to perform their
 	 * actions
 	 */
-<<<<<<< HEAD
-	private void doAction() {
-		for (int i = 0; i < Aliens.size(); i++) {
-			Alien a = (Alien) Aliens.get(i);
-			a.HMovement();
-		}		
-			
-=======
 	private void doAction() 
 	{
 		for (int i = 0; i < alienStorageVector.size(); i++)
@@ -283,7 +253,7 @@ public class Game extends Canvas implements Runnable {
 			Alien alien_obj = (Alien) alienStorageVector.get(i);
 			alien_obj.HMovement();
 		}
->>>>>>> master
+
 	}
 
 	/**
@@ -314,17 +284,14 @@ public class Game extends Canvas implements Runnable {
 		
 		spaceship.render(g);
 
-<<<<<<< HEAD
+
 		// Draw the bullet for the Aliens
 		renderBulletShip();
 		renderBulletAlien ();
 	
-		g.dispose();
-		bs.show();
-=======
 		graphic.dispose();
 		buff_strat.show();
->>>>>>> master
+
 	}
 
 	/**
