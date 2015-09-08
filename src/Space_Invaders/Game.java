@@ -97,6 +97,11 @@ public class Game extends Canvas implements Runnable {
 	public void init() 
 	{
 		BuffereImageLoader loader = new BuffereImageLoader();
+		int maxAlienRowCount = 20;
+		int amountAliens = 45;
+		int startYOffsetAlien = 0;
+		int startXOffsetAlien = 75;
+		int row = 0;
 
 		// tries to load the spritesheet from the png file.
 		try 
@@ -111,9 +116,15 @@ public class Game extends Canvas implements Runnable {
 		alienStorageVector = new Vector<Alien>(0);
 		
 		// creates all the aliens and adds them to the Aliens array.
-		for (int x = 0; x < 10; x++) 
+		for (int x = 0; x < amountAliens; x++) 
 		{
-			Alien alien = new Alien(200 + 20 * x, 200*(x/10), this);
+			if (row >= maxAlienRowCount)
+			{
+				row = 0;
+			}
+			row++;
+			
+			Alien alien = new Alien(startXOffsetAlien+(25*row), startYOffsetAlien+(25*(x/maxAlienRowCount)), this);
 			alienStorageVector.addElement(alien);
 		}
 	}
