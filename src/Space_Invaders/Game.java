@@ -2,6 +2,7 @@ package Space_Invaders;
 
 import java.awt.Dimension;
 import java.awt.Canvas;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -11,17 +12,13 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable 
+{
+	public static final int WIDTH = 635; 			/* The width of the screen */
+	public static final int HEIGHT = 450;			/* The Height of the screen */
+	public final String TITLE = "Space Invaders";	/* the title of the application */
 
-	// The width of the screen.
-	public static final int WIDTH = 635;
-	// The Height of the screen.
-	public static final int HEIGHT = 450;
-	// the title of the application
-	public final String TITLE = "Space Invaders";
-
-	// a boolean that is true when the game is running.
-	private boolean running = false;
+	private boolean running = false;				/* running == true when the game is running */
 	// a boolean that is only true if the aliens need to be updated.
 	// here it used for moving all the aliens down simultaneously.
 	private boolean logicRequiredThisLoop = false;
@@ -37,7 +34,7 @@ public class Game extends Canvas implements Runnable {
 	long delta = 200;
 
 	private Vector<Alien> alienStorageVector;
-	private Vector<Bullet> bulletStorageVector;
+	private Vector<Bullet> bulletAlienStorageVector;
 	private Vector<Bullet> bulletShipStorageVector;
 
 	// the main Thread we use for the game.
@@ -129,6 +126,8 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		alienStorageVector = new Vector<Alien>(0);
+		bulletShipStorageVector = new Vector<Bullet>(0);
+		bulletAlienStorageVector = new Vector<Bullet>(0);
 		
 		// creates all the aliens and adds them to the Aliens array.
 		for (int x = 0; x < amountAliens; x++) 
@@ -150,7 +149,6 @@ public class Game extends Canvas implements Runnable {
 		newAlienBullet();
 		//Adds bullets for the Ship
 		newShipBullet();
-
 	}
 
 	/**
@@ -161,15 +159,15 @@ public class Game extends Canvas implements Runnable {
 	
 	public void newShipBullet(){
 		for (int x = 0; x < 1; x++){
-			Bullet bullet = new Bullet(210 + 20 * x, 210, this);
-			BulletShip.add(bullet);
+			Bullet bullet = new Bullet(spaceship.getPosX(), spaceship.getPosY(), new SpriteSheet(getSpriteSheet()));
+			bulletShipStorageVector.addElement(bullet);
 		}
 	}
 	
 	public void newAlienBullet(){
 		for (int x = 0; x < 1; x++){
-			Bullet bullet = new Bullet( 210 + 20 * x, 210, this);
-			BulletAlien.add(bullet);	
+			Bullet bullet = new Bullet( 210 + 20 * x, 210, new SpriteSheet(getSpriteSheet()));
+			bulletAlienStorageVector.addElement(bullet);	
 		}
 	}
 	public static void main(String argv[]) {
@@ -315,7 +313,7 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < BulletShip.size(); i++){
 			Bullet c = (Bullet) BulletShip.get(i);
 			c.render(g);
-			c.moveBulletUp(delta);
+			c.moveUp(delta);
 			
 		}
 	
@@ -332,7 +330,7 @@ public class Game extends Canvas implements Runnable {
 		for (int i = 0; i < BulletAlien.size(); i++){
 			Bullet b = (Bullet) BulletAlien.get(i);				
 			b.render(g);
-			b.moveBulletDown(delta);
+			b.moveDown(delta);
 			
 		}
 	}
