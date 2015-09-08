@@ -282,7 +282,7 @@ public class Game extends Canvas implements Runnable {
 			alien_obj.render(graphic);
 		}
 		
-		spaceship.render(g);
+		spaceship.render(graphic);
 
 
 		// Draw the bullet for the Aliens

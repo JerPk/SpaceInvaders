@@ -56,7 +56,7 @@ public class Spaceship {
 	}
 	
 //	public Bullet Shoot() {
-		Bullet newBullet = new Bullet();
+		//Bullet newBullet = new Bullet();
 		//Bullet newBullet = new Bullet(x,y,game);
 	//	return newBullet;
 	//}
