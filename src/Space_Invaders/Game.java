@@ -24,15 +24,12 @@ public class Game extends Canvas implements Runnable
 	private boolean logicRequiredThisLoop = false;
 	// an Array consisting of all the Aliens in the game.
 
-	//private ArrayList Aliens = new ArrayList();
-	//Bullets
-	private ArrayList BulletAlien = new ArrayList();
-	private ArrayList BulletShip = new ArrayList();
 	//boolean to update bullet
 	private boolean updateBullet = false;
 	//Timer speed for the bullets
 	long delta = 200;
 
+	// Vector to store all alien and bullet objects
 	private Vector<Alien> alienStorageVector;
 	private Vector<Bullet> bulletAlienStorageVector;
 	private Vector<Bullet> bulletShipStorageVector;
@@ -310,8 +307,8 @@ public class Game extends Canvas implements Runnable
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < BulletShip.size(); i++){
-			Bullet c = (Bullet) BulletShip.get(i);
+		for (int i = 0; i < bulletShipStorageVector.size(); i++){
+			Bullet c = (Bullet) bulletShipStorageVector.get(i);
 			c.render(g);
 			c.moveUp(delta);
 			
@@ -327,8 +324,8 @@ public class Game extends Canvas implements Runnable
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < BulletAlien.size(); i++){
-			Bullet b = (Bullet) BulletAlien.get(i);				
+		for (int i = 0; i < bulletAlienStorageVector.size(); i++){
+			Bullet b = (Bullet) bulletAlienStorageVector.get(i);				
 			b.render(g);
 			b.moveDown(delta);
 			
