@@ -25,7 +25,7 @@ public class Spaceship {
 	 */
 	public void moveLeft() {
 		if (x > 10) {
-			x -= 1;
+			x -= 5;
 		}
 	}
 
@@ -35,8 +35,8 @@ public class Spaceship {
 	 *
 	 */
 	public void moveRight() {
-		if (x < 625) {
-			x += 1;
+		if (x < 600) {
+			x += 5;
 		}
 	}
 	
@@ -55,11 +55,10 @@ public class Spaceship {
 		Spaceship = ss.grabImage(277, 228, 26, 16);
 	}
 	
-//	public Bullet Shoot() {
-		//Bullet newBullet = new Bullet();
-		//Bullet newBullet = new Bullet(x,y,game);
-	//	return newBullet;
-	//}
+	public Bullet shoot() {
+		Bullet newBullet = new Bullet(x,y,game);
+		return newBullet;
+	}
 
 
 	/**
