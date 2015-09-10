@@ -2,6 +2,7 @@ package Space_Invaders;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Vector;
 
 public class Spaceship {
 
@@ -55,9 +56,26 @@ public class Spaceship {
 		Spaceship = ss.grabImage(277, 228, 26, 16);
 	}
 	
+	/**
+	 * the method creates a new bullet on the position of the ship
+	 * and returns it
+	 *
+	 * @return Bullet newBullet
+	 */
 	public Bullet shoot() {
 		Bullet newBullet = new Bullet(x,y,game);
 		return newBullet;
+	}
+	
+	public boolean ifHit(Vector<Bullet> alienBullets) {
+		for (Bullet bullet : alienBullets) {
+			if (bullet.getX() >= x && bullet.getX() <= x+20) {
+				if (bullet.getY() >= y && bullet.getX() <= y+5) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 

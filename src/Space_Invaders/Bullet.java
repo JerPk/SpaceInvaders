@@ -36,4 +36,12 @@ public class Bullet {
 		g.drawImage(Bullet,(int) x,(int) y, null);
 	}
 	
+	public double getX() {
+		return x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
 }
