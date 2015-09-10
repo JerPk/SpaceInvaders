@@ -69,6 +69,19 @@ public class Alien {
 	}
 	
 	/**
+	 * the method creates a new bullet on the position of the alien
+	 * and returns it
+	 *
+	 * @return Bullet newBullet
+	 */
+	public Bullet shoot() {
+		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+		Bullet newBullet = new Bullet(x,y,ss);
+		return newBullet;
+	}
+	
+	
+	/**
 	 * the method used to draw the aliens on the screen.
 	 * 
 	 * @param Graphics g

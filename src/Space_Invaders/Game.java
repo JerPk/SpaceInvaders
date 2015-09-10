@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -36,6 +37,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Vector<Alien> aliens;
 	private Vector<Bullet> alienBullets;
 	private Vector<Bullet> shipBullets;
+	
+	private Vector<KeyEvent> pressedKeys;
+	private int counter;
+	
+	//private Timer timer;
 
 	// the main Thread we use for the game.
 	private Thread thread;
@@ -53,6 +59,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	public Game() {
 		addKeyListener(this);
 		setFocusable(true);
+		counter = 0;
 	}
 
 	/**
@@ -149,28 +156,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		
 		spaceship = new Spaceship(this);
-
-		//Adds the bullets for the Aliens
-		//newAlienBullet();
-		//Adds bullets for the Ship
-		//newShipBullet();
 	}
-
-	/*
-	public void newShipBullet(){
-		for (int x = 0; x < 1; x++){
-			Bullet bullet = new Bullet(spaceship.getPosX(), spaceship.getPosY(), new SpriteSheet(getSpriteSheet()));
-			shipBullets.addElement(bullet);
-		}
-	}
-	
-	public void newAlienBullet(){
-		for (int x = 0; x < 1; x++){
-			Bullet bullet = new Bullet( 210 + 20 * x, 210, new SpriteSheet(getSpriteSheet()));
-			alienBullets.addElement(bullet);	
-		}
-	}
-	*/
 	
 	public static void main(String argv[]) {
 		// creates the game object that will be used.
@@ -206,12 +192,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		while (running) 
 		{
 			doAction();
+			counter++;
+			if (counter >= 120) {
+				alienShoot();
+				counter = 0;
+			}
 
 			// this if statement will only be used if all the aliens need to be
 			// updated simultaneously.
 			if (logicRequiredThisLoop) 
 			{
-
+		
 				// the for loop gets
 				for (int i = 0; i < aliens.size(); i++)
 				{
@@ -337,17 +328,34 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 	}
 	
-	public void keyPressed(KeyEvent k) {
-		if (k.getKeyCode() == KeyEvent.VK_LEFT) {
-			spaceship.moveLeft();
-		}
-		if (k.getKeyCode() == KeyEvent.VK_RIGHT) {
-			spaceship.moveRight();
-		}
-		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
-			shipBullets.addElement(spaceship.shoot());
-		}
+	public void alienShoot() {
+		Random rand = new Random();
+		int randNr = rand.nextInt(aliens.size());
+		alienBullets.addElement(aliens.get(randNr).shoot());
 	}
+	
+	@Override
+	public void keyPressed(KeyEvent k) {
+		//if () {
+			if (k.getKeyCode() == KeyEvent.VK_LEFT) {
+				spaceship.moveLeft();
+			}
+			if (k.getKeyCode() == KeyEvent.VK_RIGHT) {
+				spaceship.moveRight();
+			}
+			if (k.getKeyCode() == KeyEvent.VK_SPACE) {
+				shipBullets.addElement(spaceship.shoot());
+			}
+		//}
+		//else {
+
+		//}
+		pressedKeys.add(k);
+	}
+	
+	public void keyReleased(KeyEvent k) {
+        pressedKeys.remove(k);
+    }
 
 	/**
 	 * the method used to put the logicRequiredThisLoop boolean to true.
