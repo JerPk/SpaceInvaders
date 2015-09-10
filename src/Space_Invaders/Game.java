@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Vector<Bullet> alienBullets;
 	private Vector<Bullet> shipBullets;
 	
-	private Vector<KeyEvent> pressedKeys;
+	private Vector<Integer> pressedKeys;
 	private int counter;
 	
 	//private Timer timer;
@@ -334,9 +334,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		alienBullets.addElement(aliens.get(randNr).shoot());
 	}
 	
-	@Override
 	public void keyPressed(KeyEvent k) {
-		//if () {
+		if (pressedKeys.size() <= 1) {
 			if (k.getKeyCode() == KeyEvent.VK_LEFT) {
 				spaceship.moveLeft();
 			}
@@ -346,15 +345,42 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (k.getKeyCode() == KeyEvent.VK_SPACE) {
 				shipBullets.addElement(spaceship.shoot());
 			}
-		//}
-		//else {
-
-		//}
-		pressedKeys.add(k);
+		}
+		else {
+			if (pressedKeys.get(1) == KeyEvent.VK_LEFT) {
+				if (pressedKeys.get(2) == KeyEvent.VK_SPACE) {
+					spaceship.moveLeft();
+					spaceship.shoot();
+				}
+				else {
+					spaceship.moveLeft();
+				}
+			}
+			if (pressedKeys.get(1) == KeyEvent.VK_RIGHT) {
+				if (pressedKeys.get(2) == KeyEvent.VK_SPACE) {
+					spaceship.moveRight();
+					spaceship.shoot();
+				}
+				else {
+					spaceship.moveRight();
+				}
+			}
+			if (pressedKeys.get(1) == KeyEvent.VK_SPACE) {
+				if (pressedKeys.get(2) == KeyEvent.VK_LEFT) {
+					spaceship.shoot();
+					spaceship.moveLeft();
+				}
+				else if (pressedKeys.get(2) == KeyEvent.VK_RIGHT) {
+					spaceship.shoot();
+					spaceship.moveRight();
+				}
+			}
+		}
+		pressedKeys.add(k.getKeyCode());
 	}
 	
 	public void keyReleased(KeyEvent k) {
-        pressedKeys.remove(k);
+        pressedKeys.remove(k.getKeyCode());
     }
 
 	/**
