@@ -9,39 +9,36 @@ public class Bullet {
 	private double speed =  -300;
 	//Type
 	//String type;
-	private Game game;
-	private BufferedImage Bullet;
+	private BufferedImage bullet;
 	//Bullet coordinates
-	private double x,y, a,b;
-	public Bullet(double x, double y, Game g){
-		this.x = x;
-		this.y = y;
-		
-		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
-		Bullet = ss.grabImage(411, 275, 16, 16); 
+	private double xpos,ypos, a,b;
+	public Bullet(double x, double y, SpriteSheet ss){
+		this.xpos = x;
+		this.ypos = y;
 
+		bullet = ss.grabImage(411, 275, 16, 16);
 	}
 	//Move the bullet up
-	public void moveBulletUp(long delta){   
-		y +=  (delta * speed) / 100000;;
+	public void moveUp(long delta){   
+		ypos +=  (delta * speed) / 100000;;
 	}
 		
 	//Move the bullet down
-	public void moveBulletDown(long delta){
-		y -= (delta * speed) / 100000;
+	public void moveDown(long delta){
+		ypos -= (delta * speed) / 100000;
 		}
 	
 	//Draw the bullet
 	public void render(Graphics g){
-		g.drawImage(Bullet,(int) x,(int) y, null);
+		g.drawImage(bullet,(int) xpos,(int) ypos, null);
 	}
 	
 	public double getX() {
-		return x;
+		return xpos;
 	}
 	
 	public double getY() {
-		return y;
+		return ypos;
 	}
 	
 }
