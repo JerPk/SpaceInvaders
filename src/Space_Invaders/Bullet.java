@@ -11,7 +11,7 @@ public class Bullet {
 	//String type;
 	private BufferedImage bullet;
 	//Bullet coordinates
-	private double xpos,ypos, a,b;
+	private double xpos,ypos;
 	public Bullet(double x, double y, SpriteSheet ss){
 		this.xpos = x;
 		this.ypos = y;

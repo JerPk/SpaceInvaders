@@ -33,9 +33,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	long delta = 200;
 
 	// Vector to store all alien and bullet objects
-	private Vector<Alien> alienStorageVector;
-	private Vector<Bullet> bulletAlienStorageVector;
-	private Vector<Bullet> bulletShipStorageVector;
+	private Vector<Alien> aliens;
+	private Vector<Bullet> alienBullets;
+	private Vector<Bullet> shipBullets;
 
 	// the main Thread we use for the game.
 	private Thread thread;
@@ -130,9 +130,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 		
-		alienStorageVector = new Vector<Alien>(0);
-		bulletShipStorageVector = new Vector<Bullet>(0);
-		bulletAlienStorageVector = new Vector<Bullet>(0);
+		aliens = new Vector<Alien>(0);
+		alienBullets = new Vector<Bullet>(0);
+		shipBullets = new Vector<Bullet>(0);
 		
 		// creates all the aliens and adds them to the Aliens array.
 		for (int x = 0; x < amountAliens; x++) 
@@ -144,37 +144,33 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			row++;
 			
 			Alien alien = new Alien(startXOffsetAlien+(25*row), startYOffsetAlien+(25*(x/maxAlienRowCount)), this);
-			alienStorageVector.addElement(alien);
+			aliens.addElement(alien);
 		}
 
 		
 		spaceship = new Spaceship(this);
 
 		//Adds the bullets for the Aliens
-		newAlienBullet();
+		//newAlienBullet();
 		//Adds bullets for the Ship
-		newShipBullet();
+		//newShipBullet();
 	}
 
-	/**
-	 * the main thread of the application. it creates the JFrame and calls the
-	 * start method.
-	 */
-
-	
+	/*
 	public void newShipBullet(){
 		for (int x = 0; x < 1; x++){
 			Bullet bullet = new Bullet(spaceship.getPosX(), spaceship.getPosY(), new SpriteSheet(getSpriteSheet()));
-			bulletShipStorageVector.addElement(bullet);
+			shipBullets.addElement(bullet);
 		}
 	}
 	
 	public void newAlienBullet(){
 		for (int x = 0; x < 1; x++){
 			Bullet bullet = new Bullet( 210 + 20 * x, 210, new SpriteSheet(getSpriteSheet()));
-			bulletAlienStorageVector.addElement(bullet);	
+			alienBullets.addElement(bullet);	
 		}
 	}
+	*/
 	
 	public static void main(String argv[]) {
 		// creates the game object that will be used.
@@ -217,17 +213,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			{
 
 				// the for loop gets
-				for (int i = 0; i < alienStorageVector.size(); i++)
+				for (int i = 0; i < aliens.size(); i++)
 				{
-					Alien alien_obj = (Alien) alienStorageVector.get(i);
+					Alien alien_obj = (Alien) aliens.get(i);
 					alien_obj.VMovement();
 				}
 				logicRequiredThisLoop = false;
 				
 				//Temporary here for testing purposes
 				//One bullet for Aliens and Ship is created when aliens update
-				newShipBullet();
-				newAlienBullet();
+				//newShipBullet();
+				//newAlienBullet();
 
 			}
 			render();
@@ -254,9 +250,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 */
 	private void doAction() 
 	{
-		for (int i = 0; i < alienStorageVector.size(); i++)
+		for (int i = 0; i < aliens.size(); i++)
 		{
-			Alien alien_obj = (Alien) alienStorageVector.get(i);
+			Alien alien_obj = (Alien) aliens.get(i);
 			alien_obj.HMovement();
 		}
 
@@ -282,9 +278,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		graphic.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
 		// here we draw all the aliens.
-		for (int i = 0; i < alienStorageVector.size(); i++)
+		for (int i = 0; i < aliens.size(); i++)
 		{
-			Alien alien_obj = (Alien) alienStorageVector.get(i);
+			Alien alien_obj = (Alien) aliens.get(i);
 			alien_obj.render(graphic);
 		}
 		
@@ -316,8 +312,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < bulletShipStorageVector.size(); i++){
-			Bullet c = (Bullet) bulletShipStorageVector.get(i);
+		for (int i = 0; i < shipBullets.size(); i++){
+			Bullet c = (Bullet) shipBullets.get(i);
 			c.render(g);
 			c.moveUp(delta);
 			
@@ -333,8 +329,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < bulletAlienStorageVector.size(); i++){
-			Bullet b = (Bullet) bulletAlienStorageVector.get(i);				
+		for (int i = 0; i < alienBullets.size(); i++){
+			Bullet b = (Bullet) alienBullets.get(i);				
 			b.render(g);
 			b.moveDown(delta);
 			
@@ -349,7 +345,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			spaceship.moveRight();
 		}
 		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
-			spaceship.shoot();
+			shipBullets.addElement(spaceship.shoot());
 		}
 	}
 
