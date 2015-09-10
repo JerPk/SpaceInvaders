@@ -350,6 +350,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (k.getKeyCode() == KeyEvent.VK_RIGHT) {
 			spaceship.moveRight();
 		}
+		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
+			spaceship.shoot();
+		}
 	}
 
 	/**
