@@ -33,4 +33,12 @@ public class Bullet {
 		g.drawImage(bullet,(int) xpos,(int) ypos, null);
 	}
 	
+	public double getX() {
+		return xpos;
+	}
+	
+	public double getY() {
+		return ypos;
+	}
+	
 }

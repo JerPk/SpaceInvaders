@@ -6,14 +6,17 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JFrame;
 
-public class Game extends Canvas implements Runnable 
-{
+
+public class Game extends Canvas implements Runnable, KeyListener {
+	
 	public static final int WIDTH = 635; 			/* The width of the screen */
 	public static final int HEIGHT = 450;			/* The Height of the screen */
 	public final String TITLE = "Space Invaders";	/* the title of the application */
@@ -46,6 +49,11 @@ public class Game extends Canvas implements Runnable
 	private BufferedImage SpriteSheet = null;
 	
 	Spaceship spaceship;
+	
+	public Game() {
+		addKeyListener(this);
+		setFocusable(true);
+	}
 
 	/**
 	 * The start method will be called once at the start of the game. it is
@@ -167,6 +175,7 @@ public class Game extends Canvas implements Runnable
 			bulletAlienStorageVector.addElement(bullet);	
 		}
 	}
+	
 	public static void main(String argv[]) {
 		// creates the game object that will be used.
 		Game game = new Game();
@@ -329,6 +338,18 @@ public class Game extends Canvas implements Runnable
 			b.render(g);
 			b.moveDown(delta);
 			
+		}
+	}
+	
+	public void keyPressed(KeyEvent k) {
+		if (k.getKeyCode() == KeyEvent.VK_LEFT) {
+			spaceship.moveLeft();
+		}
+		if (k.getKeyCode() == KeyEvent.VK_RIGHT) {
+			spaceship.moveRight();
+		}
+		if (k.getKeyCode() == KeyEvent.VK_SPACE) {
+			spaceship.shoot();
 		}
 	}
 
