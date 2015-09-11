@@ -226,7 +226,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				spacePressed = false;
 			}
 			
-			if (spaceship.ifHit(alienBullets)  || aliens.get(aliens.size()-1).getY() >= 400)
+			if (spaceship.ifHit(alienBullets)  || aliens.get(aliens.size()-1).getY() >= 400 || aliens.size() == 0)
 			{
 				end();
 			}
@@ -377,7 +377,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			// check if the time interval in between bullets is large enough.
-			if (System.currentTimeMillis() - lastFire > 300) {
+			if (System.currentTimeMillis() - lastFire > 400) {
 				lastFire = System.currentTimeMillis();
 				spacePressed = true;
 			}
