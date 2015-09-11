@@ -47,7 +47,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Vector<Bullet> alienBullets;
 	private Vector<Bullet> shipBullets;
 
-	private Vector<Integer> pressedKeys;
 	private int counter;
 
 	// private Timer timer;
@@ -203,11 +202,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				}
 				logicRequiredThisLoop = false;
 
-				// Temporary here for testing purposes
-				// One bullet for Aliens and Ship is created when aliens update
-				// newShipBullet();
-				// newAlienBullet();
-
 			}
 			render();
 
@@ -219,8 +213,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 			if ((leftPressed) && (!rightPressed)) {
 				spaceship.moveLeft();
+				if (spacePressed) {
+					spaceship.shoot();
+				}
 			} else if ((rightPressed) && (!leftPressed)) {
 				spaceship.moveRight();
+				if (spacePressed) {
+					spaceship.shoot();
+				}
 			}
 
 			// if we're pressing fire, attempt to fire
@@ -336,26 +336,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
-	 * public void keyPressed(KeyEvent k) { if (pressedKeys.size() <= 1) { if
-	 * (k.getKeyCode() == KeyEvent.VK_LEFT) { spaceship.moveLeft(); } if
-	 * (k.getKeyCode() == KeyEvent.VK_RIGHT) { spaceship.moveRight(); } if
-	 * (k.getKeyCode() == KeyEvent.VK_SPACE) {
-	 * 
-	 * shipBullets.addElement(spaceship.shoot()); } } else { if
-	 * (pressedKeys.get(1) == KeyEvent.VK_LEFT) { if (pressedKeys.get(2) ==
-	 * KeyEvent.VK_SPACE) { spaceship.moveLeft(); spaceship.shoot(); } else {
-	 * spaceship.moveLeft(); } } if (pressedKeys.get(1) == KeyEvent.VK_RIGHT) {
-	 * if (pressedKeys.get(2) == KeyEvent.VK_SPACE) { spaceship.moveRight();
-	 * spaceship.shoot(); } else { spaceship.moveRight(); } } if
-	 * (pressedKeys.get(1) == KeyEvent.VK_SPACE) { if (pressedKeys.get(2) ==
-	 * KeyEvent.VK_LEFT) { spaceship.shoot(); spaceship.moveLeft(); } else if
-	 * (pressedKeys.get(2) == KeyEvent.VK_RIGHT) { spaceship.shoot();
-	 * spaceship.moveRight(); } } } pressedKeys.add(k.getKeyCode()); }
-	 * 
-	 * public void keyReleased(KeyEvent k) { pressedKeys.remove(k.getKeyCode());
-	 * }
-	 */
-	/**
 	 * the method used to put the logicRequiredThisLoop boolean to true.
 	 */
 	public void updateLogic() {
@@ -383,6 +363,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rightPressed = true;
 		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			// check if the time interval in between bullets is large enough.
+			if (System.currentTimeMillis() - lastFire > 600) {
+				lastFire = System.currentTimeMillis();
+				spacePressed = true;
+			}
+		}
 	}
 
 	/**
@@ -397,13 +384,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rightPressed = false;
 		}
-
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			// check if the time interval in between bullets is large enough.
-			if (System.currentTimeMillis() - lastFire > 600) {
-				lastFire = System.currentTimeMillis();
-				spacePressed = true;
-			}
+			spacePressed = false;
 		}
 	}
 

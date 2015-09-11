@@ -26,7 +26,7 @@ public class Spaceship {
 	 */
 	public void moveLeft() {
 		if (x > 10) {
-			x -= 5;
+			x -= 2;
 		}
 	}
 
@@ -37,7 +37,7 @@ public class Spaceship {
 	 */
 	public void moveRight() {
 		if (x < 600) {
-			x += 5;
+			x += 2;
 		}
 	}
 	
