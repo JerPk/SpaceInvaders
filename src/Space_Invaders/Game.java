@@ -9,7 +9,6 @@ import java.awt.image.BufferedImage;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
@@ -120,8 +119,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 */
 	public void init() {
 		BuffereImageLoader loader = new BuffereImageLoader();
-		int maxAlienRowCount = 11;
-		int amountAliens = 55;
+		int maxAlienRowCount = 20;
+		int amountAliens = 60;
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		int row = 0;
@@ -229,7 +228,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				spacePressed = false;
 			}
 			
-			if (spaceship.ifHit(alienBullets) == true)
+			if (spaceship.ifHit(alienBullets))
 			{
 				end();
 			}

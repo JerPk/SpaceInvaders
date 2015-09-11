@@ -72,8 +72,8 @@ public class Spaceship {
 	
 	public boolean ifHit(Vector<Bullet> alienBullets) {
 		for (Bullet bullet : alienBullets) {
-			if (bullet.getX() >= x && bullet.getX() <= x+20) {
-				if (bullet.getY() >= y && bullet.getX() <= y+5) {
+			if (bullet.getX() >= x && bullet.getX() <= x+26) {
+				if (bullet.getY() >= y && bullet.getY() <= y+16) {
 					return true;
 				}
 			}
