@@ -16,7 +16,7 @@ public class Bullet {
 		this.xpos = x;
 		this.ypos = y;
 
-		bullet = ss.grabImage(411, 275, 16, 16);
+		bullet = ss.grabImage(413, 277, 6, 12);
 	}
 	//Move the bullet up
 	public void moveUp(long delta){   
