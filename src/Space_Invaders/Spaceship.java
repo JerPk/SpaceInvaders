@@ -63,8 +63,6 @@ public class Spaceship {
 	 * @return Bullet newBullet
 	 */
 	public Bullet shoot() {
-		
-		
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		Bullet newBullet = new Bullet(x+10, y+2, ss);
 		return newBullet;

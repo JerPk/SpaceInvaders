@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 public class Bullet {
 
 	//Speed of the shot
-	private double speed =  -300;
+	private double speed =  -1000;
 	//Type
 	//String type;
 	private BufferedImage bullet;

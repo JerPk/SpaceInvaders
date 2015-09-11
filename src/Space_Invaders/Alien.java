@@ -2,6 +2,7 @@ package Space_Invaders;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.util.Vector;
 
 public class Alien {
 
@@ -80,6 +81,17 @@ public class Alien {
 		return newBullet;
 	}
 	
+	public int ifHit(Vector<Bullet> shipBullets) {
+		for (int i = 0; i < shipBullets.size(); i++) {
+			if (shipBullets.get(i).getX() >= x && shipBullets.get(i).getX() <= x+16) {
+				if (shipBullets.get(i).getY() >= y && shipBullets.get(i).getY() <= y+16) {
+					return i;
+				}
+			}
+		}
+		return -1;
+	}
+
 	
 	/**
 	 * the method used to draw the aliens on the screen.

@@ -2,7 +2,6 @@ package Space_Invaders;
 
 import java.awt.Dimension;
 import java.awt.Canvas;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -47,8 +46,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Vector<Bullet> shipBullets;
 
 	private int counter;
-
-	// private Timer timer;
 
 	// the main Thread we use for the game.
 	private Thread thread;
@@ -119,8 +116,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 */
 	public void init() {
 		BuffereImageLoader loader = new BuffereImageLoader();
-		int maxAlienRowCount = 20;
-		int amountAliens = 60;
+		int maxAlienRowCount = 18;
+		int amountAliens = 36;
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		int row = 0;
@@ -202,6 +199,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 			}
 			render();
+			alienDie(); 
 
 			// resolve the movement of the ship. First assume the ship
 
@@ -232,6 +230,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			{
 				end();
 			}
+			
 
 			try {
 
@@ -337,6 +336,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		int randNr = rand.nextInt(aliens.size());
 		alienBullets.addElement(aliens.get(randNr).shoot());
 	}
+	
+	public void alienDie() {
+		for (int i = 0; i < aliens.size(); i++) {
+			int hit = aliens.get(i).ifHit(shipBullets);
+			if (hit != -1) {
+				aliens.removeElementAt(i);
+				shipBullets.removeElementAt(hit);
+			}
+		}
+	}
 
 	/**
 	 * the method used to put the logicRequiredThisLoop boolean to true.
@@ -368,7 +377,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			// check if the time interval in between bullets is large enough.
-			if (System.currentTimeMillis() - lastFire > 600) {
+			if (System.currentTimeMillis() - lastFire > 300) {
 				lastFire = System.currentTimeMillis();
 				spacePressed = true;
 			}
