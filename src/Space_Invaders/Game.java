@@ -87,7 +87,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		thread = new Thread(this);
 		thread.start();
 
-		run();
 	}
 
 	/**
