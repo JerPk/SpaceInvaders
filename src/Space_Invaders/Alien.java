@@ -89,4 +89,25 @@ public class Alien {
 	public void render(Graphics g){
 		g.drawImage(Alien,(int) x,(int) y, null);
 	}
+	
+	/**
+	 * the get method for the X coordinate
+	 */
+	public double getX(){
+		return x;
+	}
+	
+	/**
+	 * the get method for the Y coordinate
+	 */
+	public double getY(){
+		return y;
+	}
+	
+	/**
+	 * the set method for the MovementSpeed
+	 */
+	public void setMovementSpeed(int x){
+		MovementSpeed = x;
+	}
 }

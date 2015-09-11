@@ -30,9 +30,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	// boolean to update bullet
 	private boolean updateBullet = false;
 
+	// booleans related to the spaceships action
 	private boolean leftPressed = false;
 	private boolean rightPressed = false;
 	private boolean spacePressed = false;
+
+	// long that is used to set a limit between the spaceship
+	// being able to fire.
 	private long lastFire = 0;
 
 	// Timer speed for the bullets
@@ -212,7 +216,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			// isn't moving. If either cursor key is pressed then
 
 			// update the movement appropriately
-			
+
 			if ((leftPressed) && (!rightPressed)) {
 				spaceship.moveLeft();
 			} else if ((rightPressed) && (!leftPressed)) {
@@ -223,7 +227,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
-				spacePressed = false;                    
+				spacePressed = false;
 			}
 
 			try {
@@ -332,9 +336,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	}
 
 	/**
-	 * public void keyPressed(KeyEvent k) 
-	 * { if (pressedKeys.size() <= 1)
-	 *  { if (k.getKeyCode() == KeyEvent.VK_LEFT) { spaceship.moveLeft(); } if
+	 * public void keyPressed(KeyEvent k) { if (pressedKeys.size() <= 1) { if
+	 * (k.getKeyCode() == KeyEvent.VK_LEFT) { spaceship.moveLeft(); } if
 	 * (k.getKeyCode() == KeyEvent.VK_RIGHT) { spaceship.moveRight(); } if
 	 * (k.getKeyCode() == KeyEvent.VK_SPACE) {
 	 * 
@@ -369,7 +372,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		System.exit(0);
 	}
 
-
 	/**
 	 * the keyPressed method is called when a key is pressed down.
 	 */
@@ -397,16 +399,60 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			//check if the time interval in between bullets is large enough.
-			if (System.currentTimeMillis() - lastFire > 600){
-                lastFire = System.currentTimeMillis();			
+			// check if the time interval in between bullets is large enough.
+			if (System.currentTimeMillis() - lastFire > 600) {
+				lastFire = System.currentTimeMillis();
 				spacePressed = true;
 			}
-		} 
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 
+	}
+
+	/**
+	 * The setter method for the sprite sheet from the path that is written as a
+	 * string.
+	 * 
+	 * @param s
+	 */
+	public void setSpriteSheet(String s) {
+		BuffereImageLoader loader = new BuffereImageLoader();
+		// tries to load the spritesheet from the string.
+		try {
+			SpriteSheet = loader.LoadImage(s);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * getter method for the LogicrequiredThisLoop boolean
+	 * 
+	 * @return boolean
+	 */
+	public boolean getupdateLogic() {
+		return logicRequiredThisLoop;
+
+	}
+
+	/**
+	 * getter method for the LogicrequiredThisLoop boolean
+	 * 
+	 * @return boolean
+	 */
+	public boolean getrunning() {
+		return running;
+	}
+
+	/**
+	 * setter method for the running boolean.
+	 * 
+	 * @param boolean b
+	 */
+	public void setrunning(boolean b) {
+		running = b;
 	}
 }
