@@ -181,7 +181,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		while (running) {
 			doAction();
 			counter++;
-			if (counter >= 120) {
+			if (counter >= 90) {
 				alienShoot();
 				counter = 0;
 			}
@@ -226,7 +226,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				spacePressed = false;
 			}
 			
-			if (spaceship.ifHit(alienBullets))
+			if (spaceship.ifHit(alienBullets)  || aliens.get(aliens.size()-1).getY() >= 400)
 			{
 				end();
 			}
