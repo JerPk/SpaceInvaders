@@ -122,8 +122,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 */
 	public void init() {
 		BuffereImageLoader loader = new BuffereImageLoader();
-		int maxAlienRowCount = 20;
-		int amountAliens = 45;
+		int maxAlienRowCount = 11;
+		int amountAliens = 55;
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		int row = 0;
@@ -228,6 +228,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
 				spacePressed = false;
+			}
+			
+			if (spaceship.ifHit(alienBullets) == true)
+			{
+				end();
 			}
 
 			try {
