@@ -10,6 +10,7 @@ public class Spaceship {
 	// the x and y coordinates of the Spaceship.
 	private double x;
 	private static double y = 425;
+	private int lives;
 	
 	// the game the alien is a part of.
 	private Game game;
@@ -51,6 +52,7 @@ public class Spaceship {
 	public Spaceship(Game g){
 		x = g.WIDTH/2-13;
 		game = g;
+		lives = 3;
 		
 		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
 		Spaceship = ss.grabImage(277, 228, 26, 16);
@@ -68,17 +70,16 @@ public class Spaceship {
 		return newBullet;
 	}
 	
-	public boolean ifHit(Vector<Bullet> alienBullets) {
-		for (Bullet bullet : alienBullets) {
-			if (bullet.getX() >= x && bullet.getX() <= x+26) {
-				if (bullet.getY() >= y && bullet.getY() <= y+16) {
-					return true;
+	public int ifHit(Vector<Bullet> alienBullets) {
+		for (int i = 0; i < alienBullets.size(); i++) {
+			if (alienBullets.get(i).getX() >= x && alienBullets.get(i).getX() <= x+26) {
+				if (alienBullets.get(i).getY() >= y && alienBullets.get(i).getY() <= y+16) {
+					return i;
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
-
 
 	/**
 	 * the method that returns the x position
@@ -99,12 +100,33 @@ public class Spaceship {
 	}
 	
 	/**
-	 * the method used to draw the aliens on the screen.
+	 * the method that returns the amount of lives left.
+	 * 
+	 * @return amount of lives
+	 */
+	public int getLives(){
+		return lives;
+	}
+	
+	/**
+	 * the method that decreases lives with one.
+	 */
+	public void decreaseLives(){
+		lives--;
+	}
+	
+	/**
+	 * the method used to draw the spaceship on the screen.
 	 * 
 	 * @param Graphics g
 	 */
 	public void render(Graphics g){
 		g.drawImage(Spaceship,(int) x,(int) y, null);
+		
+		for (int i=1; i<=lives; i++){
+			g.drawImage(Spaceship, 10+30*(i-1), 452, null);
+		}
+		
 	}
 	
 }

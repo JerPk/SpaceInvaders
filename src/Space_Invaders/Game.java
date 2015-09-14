@@ -16,14 +16,13 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable, KeyListener {
 
 	public static final int WIDTH = 635; /* The width of the screen */
-	public static final int HEIGHT = 450; /* The Height of the screen */
+	public static final int HEIGHT = 470; /* The Height of the screen */
 	public final String TITLE = "Space Invaders"; /* the title of the application */
 
 	private boolean running = false; /* running == true when the game is running */
 	// a boolean that is only true if the aliens need to be updated.
 	// here it used for moving all the aliens down simultaneously.
 	private boolean logicRequiredThisLoop = false;
-	// an Array consisting of all the Aliens in the game.
 
 	// boolean to update bullet
 	private boolean updateBullet = false;
@@ -37,10 +36,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	// being able to fire.
 	private long lastFire = 0;
 
-	// Timer speed for the bullets
-	long delta = 200;
-
-	// Vector to store all alien and bullet objects
+	// Vector to store all alien, bullet and barrier objects
 	private Vector<Alien> aliens;
 	private Vector<Bullet> alienBullets;
 	private Vector<Bullet> shipBullets;
@@ -129,13 +125,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		aliens = new Vector<Alien>(0);
 		alienBullets = new Vector<Bullet>(0);
 		shipBullets = new Vector<Bullet>(0);
 		barriers = new Vector<Barrier>(0);
 
-		// creates all the aliens and adds them to the Aliens array.
+		// creates all the aliens and adds them to the Aliens vector
 		for (int x = 0; x < amountAliens; x++) {
 			if (row >= maxAlienRowCount) {
 				row = 0;
@@ -149,10 +145,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 		spaceship = new Spaceship(this);
 		
-		barriers.addElement(new Barrier(this.WIDTH/5*1-22, 320, new SpriteSheet(getSpriteSheet())));
-		barriers.addElement(new Barrier(this.WIDTH/5*2-22, 320, new SpriteSheet(getSpriteSheet())));
-		barriers.addElement(new Barrier(this.WIDTH/5*3-22, 320, new SpriteSheet(getSpriteSheet())));
-		barriers.addElement(new Barrier(this.WIDTH/5*4-22, 320, new SpriteSheet(getSpriteSheet())));
+		//creates all barriers and adds them to the barrier vector
+		for (int i = 1; i <= 4; i++) {
+			barriers.addElement(new Barrier(WIDTH/5*i-22, 320, new SpriteSheet(getSpriteSheet())));
+		}
 	}
 
 	public static void main(String argv[]) {
@@ -210,11 +206,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			removeOffScreenBullets();
 
 			// resolve the movement of the ship. First assume the ship
-
 			// isn't moving. If either cursor key is pressed then
-
 			// update the movement appropriately
-
 			if ((leftPressed) && (!rightPressed)) {
 				spaceship.moveLeft();
 				if (spacePressed) {
@@ -228,14 +221,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 
 			// if we're pressing fire, attempt to fire
-
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
 				spacePressed = false;
 			}
 			
-			if (spaceship.ifHit(alienBullets)  || aliens.get(aliens.size()-1).getY() >= 400 || aliens.size() == 0)
+			if ((spaceship.ifHit(alienBullets) != -1) || aliens.get(aliens.size()-1).getY() >= 400)
 			{
+				if(spaceship.getLives()>1){
+					spaceship.decreaseLives();
+					alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
+				}
+				else{
+					end();
+				}
+			}
+			if (aliens.size() == 0){
 				end();
 			}
 			
@@ -250,6 +251,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 					}
 				}
 			}
+			
 
 			try {
 
@@ -273,6 +275,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			Alien alien_obj = (Alien) aliens.get(i);
 			alien_obj.HMovement();
 		}
+
 	}
 
 	/**
@@ -331,7 +334,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < shipBullets.size(); i++) {
 			Bullet c = (Bullet) shipBullets.get(i);
 			c.render(g);
-			c.moveUp(delta);
+			c.moveUp();
 
 		}
 
@@ -348,7 +351,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < alienBullets.size(); i++) {
 			Bullet b = (Bullet) alienBullets.get(i);
 			b.render(g);
-			b.moveDown(delta);
+			b.moveDown();
 
 		}
 	}
