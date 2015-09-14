@@ -37,9 +37,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	// being able to fire.
 	private long lastFire = 0;
 
-	// Timer speed for the bullets
-	long delta = 200;
-
 	// Vector to store all alien and bullet objects
 	private Vector<Alien> aliens;
 	private Vector<Bullet> alienBullets;
@@ -310,7 +307,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < shipBullets.size(); i++) {
 			Bullet c = (Bullet) shipBullets.get(i);
 			c.render(g);
-			c.moveUp(delta);
+			c.moveUp();
 
 		}
 
@@ -327,7 +324,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		for (int i = 0; i < alienBullets.size(); i++) {
 			Bullet b = (Bullet) alienBullets.get(i);
 			b.render(g);
-			b.moveDown(delta);
+			b.moveDown();
 
 		}
 	}
