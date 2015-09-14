@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable, KeyListener {
 
 	public static final int WIDTH = 635; /* The width of the screen */
-	public static final int HEIGHT = 450; /* The Height of the screen */
+	public static final int HEIGHT = 470; /* The Height of the screen */
 	public final String TITLE = "Space Invaders"; /* the title of the application */
 
 	private boolean running = false; /* running == true when the game is running */
@@ -229,7 +229,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			
 			if (spaceship.ifHit(alienBullets)  || aliens.get(aliens.size()-1).getY() >= 400 || aliens.size() == 0)
 			{
-				end();
+				if(spaceship.getLives()>1){
+					spaceship.decreaseLives();
+					
+				}
+				else{
+					end();
+				}
 			}
 			
 

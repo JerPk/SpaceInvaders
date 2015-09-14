@@ -10,6 +10,7 @@ public class Spaceship {
 	// the x and y coordinates of the Spaceship.
 	private double x;
 	private static double y = 425;
+	private int lives;
 	
 	// the game the alien is a part of.
 	private Game game;
@@ -51,6 +52,7 @@ public class Spaceship {
 	public Spaceship(Game g){
 		x = 317;
 		game = g;
+		lives = 3;
 		
 		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
 		Spaceship = ss.grabImage(277, 228, 26, 16);
@@ -79,7 +81,6 @@ public class Spaceship {
 		return false;
 	}
 
-
 	/**
 	 * the method that returns the x position
 	 *
@@ -99,12 +100,33 @@ public class Spaceship {
 	}
 	
 	/**
-	 * the method used to draw the aliens on the screen.
+	 * the method that returns the amount of lives left.
+	 * 
+	 * @return amount of lives
+	 */
+	public int getLives(){
+		return lives;
+	}
+	
+	/**
+	 * the method that decreases lives with one.
+	 */
+	public void decreaseLives(){
+		lives--;
+	}
+	
+	/**
+	 * the method used to draw the spaceship on the screen.
 	 * 
 	 * @param Graphics g
 	 */
 	public void render(Graphics g){
 		g.drawImage(Spaceship,(int) x,(int) y, null);
+		
+		for (int i=1; i<=lives; i++){
+			g.drawImage(Spaceship, 10+30*(i-1), 452, null);
+		}
+		
 	}
 	
 }
