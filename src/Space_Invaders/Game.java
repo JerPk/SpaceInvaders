@@ -23,7 +23,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	// a boolean that is only true if the aliens need to be updated.
 	// here it used for moving all the aliens down simultaneously.
 	private boolean logicRequiredThisLoop = false;
-	// an Array consisting of all the Aliens in the game.
 
 	// boolean to update bullet
 	private boolean updateBullet = false;
@@ -126,10 +125,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			e.printStackTrace();
 		}
 
-		aliens = new Vector<Alien>(0);
-		alienBullets = new Vector<Bullet>(0);
-		shipBullets = new Vector<Bullet>(0);
-
 		// creates all the aliens and adds them to the Aliens array.
 		for (int x = 0; x < amountAliens; x++) {
 			if (row >= maxAlienRowCount) {
@@ -200,11 +195,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			removeOffScreenBullets();
 
 			// resolve the movement of the ship. First assume the ship
-
 			// isn't moving. If either cursor key is pressed then
-
 			// update the movement appropriately
-
 			if ((leftPressed) && (!rightPressed)) {
 				spaceship.moveLeft();
 				if (spacePressed) {
@@ -218,7 +210,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			}
 
 			// if we're pressing fire, attempt to fire
-
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
 				spacePressed = false;
