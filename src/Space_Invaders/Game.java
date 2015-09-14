@@ -124,6 +124,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		aliens = new Vector<Alien>(0);
+		alienBullets = new Vector<Bullet>(0);
+		shipBullets = new Vector<Bullet>(0);
 
 		// creates all the aliens and adds them to the Aliens array.
 		for (int x = 0; x < amountAliens; x++) {

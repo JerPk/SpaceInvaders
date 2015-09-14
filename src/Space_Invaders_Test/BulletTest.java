@@ -42,7 +42,7 @@ public class BulletTest {
 		Bullet b = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
         g.setrunning(true);
 		
-		b.moveUp(200);
+		b.moveUp();
 		assertEquals((double) 19.4, b.getY(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
@@ -55,7 +55,7 @@ public class BulletTest {
 		Bullet b = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
         g.setrunning(true);
 		
-		b.moveDown(200);
+		b.moveDown();
 		assertEquals((double) 20.6, b.getY(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
