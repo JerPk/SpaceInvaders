@@ -199,7 +199,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
 			}
 			render();
-			alienDie(); 
+			alienDie();
+			removeOffScreenBullets();
 
 			// resolve the movement of the ship. First assume the ship
 
@@ -343,6 +344,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (hit != -1) {
 				aliens.removeElementAt(i);
 				shipBullets.removeElementAt(hit);
+			}
+		}
+	}
+	
+	public void removeOffScreenBullets() {
+		for (int i = 0; i < alienBullets.size(); i++) {
+			if (alienBullets.get(i).getY() >= 450) {
+				alienBullets.removeElementAt(i);
+				i--;
+			}
+		}
+		for (int j = 0; j < shipBullets.size(); j++) {
+			if (shipBullets.get(j).getY() <= 0) {
+				shipBullets.removeElementAt(j);
+				j--;
 			}
 		}
 	}
