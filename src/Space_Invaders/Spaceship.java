@@ -70,15 +70,15 @@ public class Spaceship {
 		return newBullet;
 	}
 	
-	public boolean ifHit(Vector<Bullet> alienBullets) {
-		for (Bullet bullet : alienBullets) {
-			if (bullet.getX() >= x && bullet.getX() <= x+26) {
-				if (bullet.getY() >= y && bullet.getY() <= y+16) {
-					return true;
+	public int ifHit(Vector<Bullet> alienBullets) {
+		for (int i = 0; i < alienBullets.size(); i++) {
+			if (alienBullets.get(i).getX() >= x && alienBullets.get(i).getX() <= x+26) {
+				if (alienBullets.get(i).getY() >= y && alienBullets.get(i).getY() <= y+16) {
+					return i;
 				}
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	/**
