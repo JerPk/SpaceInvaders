@@ -50,7 +50,7 @@ public class Spaceship {
 	 * @param  Game g
 	 */
 	public Spaceship(Game g){
-		x = 317;
+		x = g.WIDTH/2-13;
 		game = g;
 		lives = 3;
 		

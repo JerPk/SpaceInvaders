@@ -36,10 +36,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	// being able to fire.
 	private long lastFire = 0;
 
-	// Vector to store all alien and bullet objects
+	// Vector to store all alien, bullet and barrier objects
 	private Vector<Alien> aliens;
 	private Vector<Bullet> alienBullets;
 	private Vector<Bullet> shipBullets;
+	private Vector<Barrier> barriers;
 
 	private int counter;
 
@@ -128,8 +129,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		aliens = new Vector<Alien>(0);
 		alienBullets = new Vector<Bullet>(0);
 		shipBullets = new Vector<Bullet>(0);
+		barriers = new Vector<Barrier>(0);
 
-		// creates all the aliens and adds them to the Aliens array.
+		// creates all the aliens and adds them to the Aliens vector
 		for (int x = 0; x < amountAliens; x++) {
 			if (row >= maxAlienRowCount) {
 				row = 0;
@@ -142,6 +144,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 
 		spaceship = new Spaceship(this);
+		
+		//creates all barriers and adds them to the barrier vector
+		for (int i = 1; i <= 4; i++) {
+			barriers.addElement(new Barrier(WIDTH/5*i-22, 320, new SpriteSheet(getSpriteSheet())));
+		}
 	}
 
 	public static void main(String argv[]) {
@@ -229,8 +236,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
 					end();
 				}
 			}
-			else if (aliens.size() == 0){
+			if (aliens.size() == 0){
 				end();
+			}
+			
+			for (int i = 0; i < barriers.size(); i++) {
+				if (barriers.get(i).ifHit(alienBullets) != -1) {
+					alienBullets.removeElementAt(barriers.get(i).ifHit(alienBullets));
+					if(barriers.get(i).getState() < 4){
+						barriers.get(i).decreaseState();
+					}
+					else {
+						barriers.removeElementAt(i);
+					}
+				}
 			}
 			
 
@@ -283,6 +302,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 
 		spaceship.render(graphic);
+		
+		for (int i = 0; i < barriers.size(); i++) {
+			barriers.get(i).render(graphic);
+		}
 
 		// Draw the bullet for the Aliens
 		renderBulletShip();
