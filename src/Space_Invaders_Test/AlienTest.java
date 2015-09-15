@@ -1,11 +1,16 @@
 package Space_Invaders_Test;
 
+import java.util.Vector;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import Space_Invaders.Alien;
+import Space_Invaders.Bullet;
 import Space_Invaders.Game;
+import Space_Invaders.SpriteSheet;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 
 public class AlienTest {
@@ -108,5 +113,40 @@ public class AlienTest {
 		assertEquals(true,g.getrunning());
 
 	}
+	
+	@Test
+	public void TestShoot(){
+	    Alien a = new Alien(7, 30, g);
+	    Bullet aBullet = a.shoot();
+	    
+	    SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+	    
+	    Bullet testBullet = new Bullet(12,32,ss);
+	    
+	    assertEquals(aBullet,testBullet);
+	    assertNotSame(aBullet,testBullet);
+	}
+	
+	@Test
+	public void TestIfHit(){
+	    Alien a = new Alien(7, 30, g);
+	    Vector<Bullet> shipBullets = new Vector<Bullet>(0);
+        
+	    //assert that the ifhit method returns -1 if
+	    //the vector is empty.
+	    assertEquals(a.ifHit(shipBullets),-1);
+	    
+	    SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+        
+        Bullet testBullet = new Bullet(7,30,ss);
+        shipBullets.add(testBullet);
+        
+        //test that ifhit method results in 0 
+        //if the alien is hit by the first bullet from the bullet vector.
+        assertEquals(a.ifHit(shipBullets),0);
+        
+	    
+	}
+	
 	
 }
