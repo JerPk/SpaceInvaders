@@ -147,7 +147,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		
 		//creates all barriers and adds them to the barrier vector
 		for (int i = 1; i <= 4; i++) {
-			barriers.addElement(new Barrier(WIDTH/5*i-22, 320, new SpriteSheet(getSpriteSheet())));
+			barriers.addElement(new Barrier(WIDTH/5*i-22, 370, new SpriteSheet(getSpriteSheet())));
 		}
 	}
 
@@ -226,8 +226,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 				spacePressed = false;
 			}
 			
-			if ((spaceship.ifHit(alienBullets) != -1) || aliens.get(aliens.size()-1).getY() >= 400)
-			{
+			if (spaceship.ifHit(alienBullets) != -1) {
 				if(spaceship.getLives()>1){
 					spaceship.decreaseLives();
 					alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
@@ -236,7 +235,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 					end();
 				}
 			}
-			if (aliens.size() == 0){
+		
+			if (aliens.get(aliens.size()-1).getY() >= 360) {
+				barriers.clear();
+			}
+			if (aliens.size() == 0 || aliens.get(aliens.size()-1).getY() >= 400){
 				end();
 			}
 			
