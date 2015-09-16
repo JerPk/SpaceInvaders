@@ -31,7 +31,7 @@ public class SpaceshipTest {
 	@Test
 	public void testSpaceship() {
 		Spaceship s = new Spaceship(g);
-		assertEquals((double) 317, s.getPosX(), 0.00001);
+		assertEquals((double) 304, s.getPosX(), 0.00001);
 		assertEquals((double) 425, s.getPosY(), 0.00001);
 	}
 	
@@ -44,7 +44,7 @@ public class SpaceshipTest {
         g.setrunning(true);
 		
 		s.moveLeft();
-		assertEquals((double) 312, s.getPosX(), 0.00001);
+		assertEquals((double) 302, s.getPosX(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
 
@@ -57,7 +57,7 @@ public class SpaceshipTest {
         g.setrunning(true);
 		
 		s.moveRight();
-		assertEquals((double) 322, s.getPosX(), 0.00001);
+		assertEquals((double) 306, s.getPosX(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
 
@@ -70,8 +70,8 @@ public class SpaceshipTest {
         g.setrunning(true);
 		
 		Bullet b = s.shoot();
-		assertEquals((double) s.getPosX(), b.getX(), 0.00001);
-		assertEquals((double) s.getPosY(), b.getY(), 0.00001);
+		assertEquals((double) s.getPosX() + 10, b.getX(), 0.00001);
+		assertEquals((double) s.getPosY() + 2, b.getY(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
 
@@ -85,11 +85,34 @@ public class SpaceshipTest {
         Vector<Bullet> alienBullets = new Vector<Bullet>(0);
         
         alienBullets.add(new Bullet(5, 5, new SpriteSheet(g.getSpriteSheet())));
-       // assertFalse(s.ifHit(alienBullets));
-        alienBullets.removeAllElements();
+       assertEquals(s.ifHit(alienBullets),-1); 
+       alienBullets.removeAllElements();
         
         alienBullets.add(new Bullet(317, 425, new SpriteSheet(g.getSpriteSheet())));
-       // assertTrue(s.ifHit(alienBullets));
+       assertEquals(s.ifHit(alienBullets),0);
+	}
+	
+	/**
+	 * The JUnit test of the getlives method of Spaceship. 
+	 * the getlives method returns the amount of lives the spaceship has left.
+	 */
+	@Test
+	public void testGetLives(){
+	    Spaceship s = new Spaceship(g);
+	    assertEquals(s.getLives(),3);
+	}
+	
+	/**
+     * The JUnit test of the decreaseLives method of Spaceship. 
+     * every time the decreaseLives method is called the amount of lives spaceship
+     * should be decreased by one.
+     */
+	@Test
+	public void testDecreaseLives(){
+	    Spaceship s = new Spaceship(g);
+        assertEquals(s.getLives(),3);
+        s.decreaseLives();
+        assertEquals(s.getLives(),2);
 	}
 
 }

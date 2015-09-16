@@ -42,8 +42,8 @@ public class BulletTest {
 		Bullet b = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
         g.setrunning(true);
 		
-		//b.moveUp(200);
-		assertEquals((double) 19.4, b.getY(), 0.00001);
+		b.moveUp();
+		assertEquals((double) 17.8, b.getY(), 0.00001);
 		assertEquals(true, g.getrunning());
 	}
 
@@ -55,9 +55,22 @@ public class BulletTest {
 		Bullet b = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
         g.setrunning(true);
 		
-		//b.moveDown(200);
-		assertEquals((double) 20.6, b.getY(), 0.00001);
+		b.moveDown();
+		assertEquals((double) 22.2 , b.getY(), 0.00001);
 		assertEquals(true, g.getrunning());
+	}
+	
+	/**
+	 * The JUnit test that test the equals method that compares
+	 * two bullets, and checks if they are equal.  
+	 */
+	@Test
+	public void testEquals(){
+	    Bullet a = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
+	    Bullet b = new Bullet(1, 20, new SpriteSheet(g.getSpriteSheet()));
+	    
+	    assertEquals(a,b);
+	    assertNotSame(a,b);
 	}
 
 }
