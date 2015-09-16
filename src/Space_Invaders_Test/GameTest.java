@@ -57,7 +57,7 @@ public class GameTest {
         }
         
         assertTrue(g.compareImages(g.getSpriteSheet(),testSprite));
-        
+        assertNotSame(g.getSpriteSheet(),testSprite);
         assertNotSame(g.getSpriteSheet(),null);
     }
     
