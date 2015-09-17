@@ -129,4 +129,38 @@ public class Spaceship {
 		
 	}
 	
+	/**
+     * the method that returns the game the spaceship was created in
+     */
+    public Game getGame(){
+        return game;
+    }
+    
+    /**
+     * the method that returns the bufferedImage of the spaceship
+     */
+    public BufferedImage getImage(){
+        return Spaceship;
+    }
+    
+    /**
+     * the equals method returns if two spaceships are equal.
+     */
+    @Override
+    public boolean equals(Object other){
+        boolean result = false;
+        if(other instanceof Spaceship){
+            Spaceship that = (Spaceship) other;
+            if(this.getPosX() == that.getPosX()){
+                if(this.getGame().equals(that.getGame())){
+                    Game g = this.getGame();
+                    if(g.compareImages(this.getImage(), that.getImage())){
+                        result = true;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+	
 }

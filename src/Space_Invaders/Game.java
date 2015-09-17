@@ -15,48 +15,55 @@ import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener {
 
-	public static final int WIDTH = 635; /* The width of the screen */
-	public static final int HEIGHT = 470; /* The Height of the screen */
-	public final String TITLE = "Space Invaders"; /* the title of the application */
+    public static final int WIDTH = 635; /* The width of the screen */
+    public static final int HEIGHT = 470; /* The Height of the screen */
+    public final String TITLE = "Space Invaders"; /*
+                                                   * the title of the
+                                                   * application
+                                                   */
 
-	private boolean running = false; /* running == true when the game is running */
-	// a boolean that is only true if the aliens need to be updated.
-	// here it used for moving all the aliens down simultaneously.
-	private boolean logicRequiredThisLoop = false;
+    private boolean running = false; /* running == true when the game is running */
+    // a boolean that is only true if the aliens need to be updated.
+    // here it used for moving all the aliens down simultaneously.
+    private boolean logicRequiredThisLoop = false;
 
-	// boolean to update bullet
-	private boolean updateBullet = false;
+    // boolean to update bullet
+    private boolean updateBullet = false;
 
-	// booleans related to the spaceships action
-	private boolean leftPressed = false;
-	private boolean rightPressed = false;
-	private boolean spacePressed = false;
+    // booleans related to the spaceships action
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean spacePressed = false;
 
-	// long that is used to set a limit between the spaceship
-	// being able to fire.
-	private long lastFire = 0;
+    private BufferStrategy bs;
 
-	// Vector to store all alien, bullet and barrier objects
-	private Vector<Alien> aliens;
-	private Vector<Bullet> alienBullets;
-	private Vector<Bullet> shipBullets;
-	private Vector<Barrier> barriers;
+    // long that is used to set a limit between the spaceship
+    // being able to fire.
+    private long lastFire = 0;
 
-	private int counter;
+    // Vector to store all alien, bullet and barrier objects
+    private Vector<Alien> aliens;
+    private Vector<Bullet> alienBullets;
+    private Vector<Bullet> shipBullets;
+    private Vector<Barrier> barriers;
 
-	// the main Thread we use for the game.
-	private Thread thread;
+    private int counter;
 
-	// the main BufferedImage of the game class.
-	private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
-			BufferedImage.TYPE_INT_RGB);
+    // the main Thread we use for the game.
+    private Thread thread;
 
-	// the bufferdImage which will be the spritesheet that contains
-	// all the sprites we use.
-	private BufferedImage SpriteSheet = null;
+    // the main BufferedImage of the game class.
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
+            BufferedImage.TYPE_INT_RGB);
 
-	Spaceship spaceship;
-	public static LogFile logfile;
+    // the bufferdImage which will be the spritesheet that contains
+    // all the sprites we use.
+    private BufferedImage SpriteSheet = null;
+
+
+    Spaceship spaceship;
+    
+    public static LogFile logfile;
 
 	public Game() {
 		addKeyListener(this);
@@ -64,436 +71,561 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		counter = 0;
 	}
 
-	/**
-	 * The start method will be called once at the start of the game. it is
-	 * mainly used to start up the main thread of our game.
-	 */
-	private synchronized void start() {
-		// an if statement that is to prevent that the start method creates
-		// two threads if it accidently called twice.
-		if (running) {
-			return;
-		}
+    /**
+     * The start method will be called once at the start of the game. it is
+     * mainly used to start up the main thread of our game.
+     */
+    private synchronized void start() {
+        // an if statement that is to prevent that the start method creates
+        // two threads if it accidently called twice.
+        if (running) {
+            return;
+        }
 
-		running = true;
+        running = true;
 
-		// create and start the main thread of our game.
-		thread = new Thread(this);
-		thread.start();
+        // create and start the main thread of our game.
+        thread = new Thread(this);
+        thread.start();
 
-	}
+    }
 
-	/**
-	 * the stop method of the game. it is called only if we accidently leave the
-	 * game loop. if the game has no errors this method will not be called.
-	 */
-	private synchronized void stop() {
-		// returns if for some accident the stop method is called before the
-		// game has
-		// started.
-		if (!running) {
-			return;
-		}
+    /**
+     * the stop method of the game. it is called only if we accidently leave the
+     * game loop. if the game has no errors this method will not be called.
+     */
+    private synchronized void stop() {
+        // returns if for some accident the stop method is called before the
+        // game has
+        // started.
+        if (!running) {
+            return;
+        }
 
-		running = false;
+        running = false;
 
-		// tries to join all the threads together.
-		try {
-			thread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+        // tries to join all the threads together.
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-		// exits the application.
-		System.exit(1);
-	}
+        // exits the application.
+        System.exit(1);
+    }
 
-	/**
-	 * the init method initializes all the entities that will appear in the
-	 * game.
-	 */
-	public void init() {
-		BuffereImageLoader loader = new BuffereImageLoader();
-		int maxAlienRowCount = 18;
-		int amountAliens = 36;
-		int startYOffsetAlien = 0;
-		int startXOffsetAlien = 75;
-		int row = 0;
+    /**
+     * the init method initializes all the entities that will appear in the
+     * game.
+     */
+    public void init() {
+        BuffereImageLoader loader = new BuffereImageLoader();
+        int maxAlienRowCount = 18;
+        int amountAliens = 36;
+        int startYOffsetAlien = 0;
+        int startXOffsetAlien = 75;
+        int row = 0;
 
-		// tries to load the spritesheet from the png file.
-		try {
-			SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		aliens = new Vector<Alien>(0);
-		alienBullets = new Vector<Bullet>(0);
-		shipBullets = new Vector<Bullet>(0);
-		barriers = new Vector<Barrier>(0);
+        // tries to load the spritesheet from the png file.
+        try {
+            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		// creates all the aliens and adds them to the Aliens vector
-		for (int x = 0; x < amountAliens; x++) {
-			if (row >= maxAlienRowCount) {
-				row = 0;
-			}
-			row++;
+        aliens = new Vector<Alien>(0);
+        alienBullets = new Vector<Bullet>(0);
+        shipBullets = new Vector<Bullet>(0);
+        barriers = new Vector<Barrier>(0);
 
-			Alien alien = new Alien(startXOffsetAlien + (25 * row),
-					startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
-			aliens.addElement(alien);
-		}
+        // creates all the aliens and adds them to the Aliens vector
+        for (int x = 0; x < amountAliens; x++) {
+            if (row >= maxAlienRowCount) {
+                row = 0;
+            }
+            row++;
+            Alien alien = new Alien(startXOffsetAlien + (25 * row),
+                    startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
+            aliens.addElement(alien);
+        }
 
-		spaceship = new Spaceship(this);
-		logfile = new LogFile();
+        spaceship = new Spaceship(this);
+        
+        logfile = new LogFile();
 		logfile.open();
-		
-		//creates all barriers and adds them to the barrier vector
-		for (int i = 1; i <= 4; i++) {
-			barriers.addElement(new Barrier(WIDTH/5*i-22, 370, new SpriteSheet(getSpriteSheet())));
-		}
-	}
 
-	public static void main(String argv[]) {
-		// creates the game object that will be used.
-		Game game = new Game();
+        // creates all barriers and adds them to the barrier vector
+        for (int i = 1; i <= 4; i++) {
+            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
+                    new SpriteSheet(getSpriteSheet())));
+        }
+    }
 
-		game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-		game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
+    public static void main(String argv[]) {
+        // creates the game object that will be used.
+        Game game = new Game();
 
-		// creates the JFrame that will be used.
-		JFrame frame = new JFrame(game.TITLE);
-		frame.add(game);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+        game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
-		// calls the start method.
-		game.start();
-	}
+        // creates the JFrame that will be used.
+        JFrame frame = new JFrame(game.TITLE);
+        frame.add(game);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
 
-	/**
-	 * the run method is the method that has the main game loop that will be
-	 * called repeatedly when the game is ongoing.
-	 */
-	public void run() {
-		// initialize all the entities
-		init();
+        // calls the start method.
+        game.start();
+    }
 
-		// the while loop that will be active once the game is running.
-		while (running) {
-			doAction();
-			counter++;
-			if (counter >= 90) {
-				alienShoot();
-				counter = 0;
-			}
+    /**
+     * the run method is the method that has the main game loop that will be
+     * called repeatedly when the game is ongoing.
+     */
+    public void run() {
+        // initialize all the entities
+        init();
 
-			// this if statement will only be used if all the aliens need to be
-			// updated simultaneously.
-			if (logicRequiredThisLoop) {
+        // the while loop that will be active once the game is running.
+        while (running) {
+            doAction();
+            counter++;
+            if (counter >= 90) {
+                alienShoot();
+                counter = 0;
+            }
 
-				// the for loop gets
-				for (int i = 0; i < aliens.size(); i++) {
-					Alien alien_obj = (Alien) aliens.get(i);
-					alien_obj.VMovement();
-				}
-				logicRequiredThisLoop = false;
+            // this if statement will only be used if all the aliens need to be
+            // updated simultaneously.
+            if (logicRequiredThisLoop) {
 
-			}
-			render();
-			alienDie();
-			removeOffScreenBullets();
+                // the for loop gets
+                for (int i = 0; i < aliens.size(); i++) {
+                    Alien alien_obj = (Alien) aliens.get(i);
+                    alien_obj.VMovement();
+                }
+                logicRequiredThisLoop = false;
 
-			// resolve the movement of the ship. First assume the ship
-			// isn't moving. If either cursor key is pressed then
-			// update the movement appropriately
-			if ((leftPressed) && (!rightPressed)) {
-				spaceship.moveLeft();
-				if (spacePressed) {
-					spaceship.shoot();
-				}
-			} else if ((rightPressed) && (!leftPressed)) {
-				spaceship.moveRight();
-				if (spacePressed) {
-					spaceship.shoot();
-				}
-			}
+            }
+            render();
+            alienDie();
+            removeOffScreenBullets();
 
-			// if we're pressing fire, attempt to fire
-			if (spacePressed) {
-				shipBullets.addElement(spaceship.shoot());
-				spacePressed = false;
-			}
-			
-			if (spaceship.ifHit(alienBullets) != -1) {
-				if(spaceship.getLives()>1){
-					spaceship.decreaseLives();
-					alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
-				}
-				else{
-					end();
-				}
-			}
-		
-			if (aliens.get(aliens.size()-1).getY() >= 360) {
-				barriers.clear();
-			}
-			if (aliens.size() == 0 || aliens.get(aliens.size()-1).getY() >= 400){
-				end();
-			}
-			
-			for (int i = 0; i < barriers.size(); i++) {
-				if (barriers.get(i).ifHit(alienBullets) != -1) {
-					alienBullets.removeElementAt(barriers.get(i).ifHit(alienBullets));
-					if(barriers.get(i).getState() < 4){
-						barriers.get(i).decreaseState();
-					}
-					else {
-						barriers.removeElementAt(i);
-					}
-				}
-			}
-			
+            // resolve the movement of the ship. First assume the ship
+            // isn't moving. If either cursor key is pressed then
+            // update the movement appropriately
+            if ((leftPressed) && (!rightPressed)) {
+                spaceship.moveLeft();
+                if (spacePressed) {
+                    spaceship.shoot();
+                }
+            } else if ((rightPressed) && (!leftPressed)) {
+                spaceship.moveRight();
+                if (spacePressed) {
+                    spaceship.shoot();
+                }
+            }
 
-			try {
+            // if we're pressing fire, attempt to fire
+            if (spacePressed) {
+                shipBullets.addElement(spaceship.shoot());
+                spacePressed = false;
+            }
 
-				Thread.sleep(15);
-			} catch (Exception e) {
-				// Catch if needed
-			}
-		}
+            if (spaceship.ifHit(alienBullets) != -1) {
+                if (spaceship.getLives() > 1) {
+                    spaceship.decreaseLives();
+                    alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
+                } else {
+                    end();
+                }
+            }
 
-		// if the loop is ended due to some error the stop method
-		// is called immediately.
-		stop();
-	}
+            if (aliens.get(aliens.size() - 1).getY() >= 360) {
+                barriers.clear();
+            }
+            if (aliens.size() == 0
+                    || aliens.get(aliens.size() - 1).getY() >= 400) {
+                end();
+            }
 
-	/**
-	 * the method that is used for all the non player entities to perform their
-	 * actions
-	 */
-	private void doAction() {
-		for (int i = 0; i < aliens.size(); i++) {
-			Alien alien_obj = (Alien) aliens.get(i);
-			alien_obj.HMovement();
-		}
+            for (int i = 0; i < barriers.size(); i++) {
+                if (barriers.get(i).ifHit(alienBullets) != -1) {
+                    alienBullets.removeElementAt(barriers.get(i).ifHit(
+                            alienBullets));
+                    if (barriers.get(i).getState() < 4) {
+                        barriers.get(i).decreaseState();
+                    } else {
+                        barriers.removeElementAt(i);
+                    }
+                }
+            }
 
-	}
+            try {
 
-	/**
-	 * the render method is used to project all the objects on the screen for
-	 * the player to see.
-	 */
-	private void render() {
-		BufferStrategy buff_strat = this.getBufferStrategy();
+                Thread.sleep(15);
+            } catch (Exception e) {
+                // Catch if needed
+            }
+        }
 
-		if (buff_strat == null) {
-			createBufferStrategy(3);
-			return;
-		}
+        // if the loop is ended due to some error the stop method
+        // is called immediately.
+        stop();
+    }
 
-		Graphics graphic = buff_strat.getDrawGraphics();
+    /**
+     * the method that is used for all the non player entities to perform their
+     * actions
+     */
+    public void doAction() {
+        for (int i = 0; i < aliens.size(); i++) {
+            Alien alien_obj = (Alien) aliens.get(i);
+            alien_obj.HMovement();
+        }
 
-		// here we draw the black background.
-		graphic.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+    }
 
-		// here we draw all the aliens.
-		for (int i = 0; i < aliens.size(); i++) {
-			Alien alien_obj = (Alien) aliens.get(i);
-			alien_obj.render(graphic);
-		}
+    /**
+     * the render method is used to project all the objects on the screen for
+     * the player to see.
+     */
+    public void render() {
+        BufferStrategy buff_strat = this.getBufferStrategy();
 
-		spaceship.render(graphic);
-		
-		for (int i = 0; i < barriers.size(); i++) {
-			barriers.get(i).render(graphic);
-		}
+        if (buff_strat == null) {
+            createBufferStrategy(3);
+            return;
+        }
 
-		// Draw the bullet for the Aliens
-		renderBulletShip();
-		renderBulletAlien();
+        Graphics graphic = buff_strat.getDrawGraphics();
 
-		graphic.dispose();
-		buff_strat.show();
+        // here we draw the black background.
+        graphic.drawImage(image, 0, 0, getWidth(), getHeight(), this);
 
-	}
+        // here we draw all the aliens.
+        for (int i = 0; i < aliens.size(); i++) {
+            Alien alien_obj = (Alien) aliens.get(i);
+            alien_obj.render(graphic);
+        }
 
-	/**
-	 * get method to get the spritesheet.
-	 */
-	public BufferedImage getSpriteSheet() {
-		return SpriteSheet;
-	}
+        spaceship.render(graphic);
 
-	// Temporal: Method to draw the bullet for the spaceship
-	private void renderBulletShip() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if (bs == null) {
-			createBufferStrategy(3);
-			return;
-		}
-		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < shipBullets.size(); i++) {
-			Bullet c = (Bullet) shipBullets.get(i);
-			c.render(g);
-			c.moveUp();
+        for (int i = 0; i < barriers.size(); i++) {
+            barriers.get(i).render(graphic);
+        }
 
-		}
+        // Draw the bullet for the Aliens
+        renderBulletShip();
+        renderBulletAlien();
 
-	}
+        graphic.dispose();
+        buff_strat.show();
 
-	// Temporal: Method to render the bullet for the alien
-	private void renderBulletAlien() {
-		BufferStrategy bs = this.getBufferStrategy();
-		if (bs == null) {
-			createBufferStrategy(3);
-			return;
-		}
-		Graphics g = bs.getDrawGraphics();
-		for (int i = 0; i < alienBullets.size(); i++) {
-			Bullet b = (Bullet) alienBullets.get(i);
-			b.render(g);
-			b.moveDown();
+    }
 
-		}
-	}
+    /**
+     * get method to get the spritesheet.
+     */
+    public BufferedImage getSpriteSheet() {
+        return SpriteSheet;
+    }
 
-	public void alienShoot() {
-		Random rand = new Random();
-		int randNr = rand.nextInt(aliens.size());
-		alienBullets.addElement(aliens.get(randNr).shoot());
-	}
-	
-	public void alienDie() {
-		for (int i = 0; i < aliens.size(); i++) {
-			int hit = aliens.get(i).ifHit(shipBullets);
-			if (hit != -1) {
-				aliens.removeElementAt(i);
-				shipBullets.removeElementAt(hit);
-			}
-		}
-	}
-	
-	public void removeOffScreenBullets() {
-		for (int i = 0; i < alienBullets.size(); i++) {
-			if (alienBullets.get(i).getY() >= 450) {
-				alienBullets.removeElementAt(i);
-				i--;
-			}
-		}
-		for (int j = 0; j < shipBullets.size(); j++) {
-			if (shipBullets.get(j).getY() <= 0) {
-				shipBullets.removeElementAt(j);
-				j--;
-			}
-		}
-	}
+    // Temporal: Method to draw the bullet for the spaceship
+    public void renderBulletShip() {
 
-	/**
-	 * the method used to put the logicRequiredThisLoop boolean to true.
-	 */
-	public void updateLogic() {
-		logicRequiredThisLoop = true;
-		updateBullet = true;
-	}
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
 
-	/**
-	 * the method we use to exit the application. this method is called when the
-	 * aliens have reached the bottom of the screen
-	 * 
-	 */
-	public void end() {
-		logfile.close();
-		System.exit(0);
-	}
+            createBufferStrategy(3);
+            return;
+        }
+        Graphics g = bs.getDrawGraphics();
+        for (int i = 0; i < shipBullets.size(); i++) {
+            Bullet c = (Bullet) shipBullets.get(i);
+            c.render(g);
+            c.moveUp();
 
-	/**
-	 * the keyPressed method is called when a key is pressed down.
-	 */
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			leftPressed = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rightPressed = true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			// check if the time interval in between bullets is large enough.
-			if (System.currentTimeMillis() - lastFire > 400) {
-				lastFire = System.currentTimeMillis();
-				spacePressed = true;
-			}
-		}
-	}
+        }
 
-	/**
-	 * the keyReleased method is called when a key has been released.
-	 */
-	@Override
-	public void keyReleased(KeyEvent e) {
+    }
 
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			leftPressed = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			rightPressed = false;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-			spacePressed = false;
-		}
-	}
+    // Temporal: Method to render the bullet for the alien
+    public void renderBulletAlien() {
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        Graphics g = bs.getDrawGraphics();
+        for (int i = 0; i < alienBullets.size(); i++) {
+            Bullet b = (Bullet) alienBullets.get(i);
+            b.render(g);
+            b.moveDown();
 
-	@Override
-	public void keyTyped(KeyEvent e) {
+        }
+    }
 
-	}
+    public void alienShoot() {
+        Random rand = new Random();
+        int randNr = rand.nextInt(aliens.size());
+        alienBullets.addElement(aliens.get(randNr).shoot());
+    }
 
-	/**
-	 * The setter method for the sprite sheet from the path that is written as a
-	 * string.
-	 * 
-	 * @param s
-	 */
-	public void setSpriteSheet(String s) {
-		BuffereImageLoader loader = new BuffereImageLoader();
-		// tries to load the spritesheet from the string.
-		try {
-			SpriteSheet = loader.LoadImage(s);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+    public void alienDie() {
+        for (int i = 0; i < aliens.size(); i++) {
+            int hit = aliens.get(i).ifHit(shipBullets);
+            if (hit != -1) {
+                aliens.removeElementAt(i);
+                shipBullets.removeElementAt(hit);
+            }
+        }
+    }
 
-	/**
-	 * getter method for the LogicrequiredThisLoop boolean
-	 * 
-	 * @return boolean
-	 */
-	public boolean getupdateLogic() {
-		return logicRequiredThisLoop;
+    public void removeOffScreenBullets() {
+        for (int i = 0; i < alienBullets.size(); i++) {
+            if (alienBullets.get(i).getY() >= 450) {
+                alienBullets.removeElementAt(i);
+                i--;
+            }
+        }
+        for (int j = 0; j < shipBullets.size(); j++) {
+            if (shipBullets.get(j).getY() <= 0) {
+                shipBullets.removeElementAt(j);
+                j--;
+            }
+        }
+    }
 
-	}
+    /**
+     * the method used to put the logicRequiredThisLoop boolean to true.
+     */
+    public void updateLogic() {
+        logicRequiredThisLoop = true;
+        updateBullet = true;
+    }
 
-	/**
-	 * getter method for the LogicrequiredThisLoop boolean
-	 * 
-	 * @return boolean
-	 */
-	public boolean getrunning() {
-		return running;
-	}
+    /**
+     * the method we use to exit the application. this method is called when the
+     * aliens have reached the bottom of the screen
+     * 
+     */
+    public void end() {
+    	logfile.close();
+        System.exit(0);
+    }
 
-	/**
-	 * setter method for the running boolean.
-	 * 
-	 * @param boolean b
-	 */
-	public void setrunning(boolean b) {
-		running = b;
-	}
+    /**
+     * the keyPressed method is called when a key is pressed down.
+     */
+    @Override
+    public void keyPressed(KeyEvent vkLeft) {
+        if (vkLeft.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = true;
+        }
+        if (vkLeft.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = true;
+        }
+        if (vkLeft.getKeyCode() == KeyEvent.VK_SPACE) {
+            // check if the time interval in between bullets is large enough.
+            if (System.currentTimeMillis() - lastFire > 400) {
+                lastFire = System.currentTimeMillis();
+                spacePressed = true;
+            }
+        }
+    }
+
+    /**
+     * the keyReleased method is called when a key has been released.
+     */
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = false;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            spacePressed = false;
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    /**
+     * The setter method for the sprite sheet from the path that is written as a
+     * string.
+     * 
+     * @param s
+     */
+    public void setSpriteSheet(String s) {
+        BuffereImageLoader loader = new BuffereImageLoader();
+        // tries to load the spritesheet from the string.
+        try {
+            SpriteSheet = loader.LoadImage(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * getter method for the LogicrequiredThisLoop boolean
+     * 
+     * @return boolean
+     */
+    public boolean getupdateLogic() {
+        return logicRequiredThisLoop;
+
+    }
+
+    /**
+     * getter method for the LogicrequiredThisLoop boolean
+     * 
+     * @return boolean
+     */
+    public boolean getrunning() {
+        return running;
+    }
+
+    /**
+     * setter method for the running boolean.
+     * 
+     * @param boolean b
+     */
+    public void setrunning(boolean b) {
+        running = b;
+    }
+
+    /**
+     * getter method for the counter integer
+     */
+    public int getcounter() {
+        return counter;
+    }
+
+    /**
+     * getter method for the spaceship object
+     */
+    public Spaceship getSpaceship() {
+        return spaceship;
+    }
+
+    /**
+     * getter method for the leftpressed boolean
+     */
+    public boolean getLeftPressed() {
+        return leftPressed;
+    }
+
+    /**
+     * equals method that compares if two game objects are equal.
+     */
+    public boolean equals(Object other) {
+        boolean result = false;
+        if (other instanceof Game) {
+            Game that = (Game) other;
+            if (this.getcounter() == that.getcounter()) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Compares two images pixel by pixel.
+     *
+     * @param imgA
+     *            - the first image.
+     * @param imgB
+     *            - the second image.
+     * @return whether the images are both the same.
+     */
+    public boolean compareImages(Object a, Object b) {
+
+        if (a instanceof BufferedImage && b instanceof BufferedImage) {
+            BufferedImage imgA = (BufferedImage) a;
+            BufferedImage imgB = (BufferedImage) b;
+
+            // The images mush be the same size.
+            if (imgA.getWidth() == imgB.getWidth()
+                    && imgA.getHeight() == imgB.getHeight()) {
+                int width = imgA.getWidth();
+                int height = imgA.getHeight();
+
+                // Loop over every pixel.
+                for (int y = 0; y < height; y++) {
+                    for (int x = 0; x < width; x++) {
+                        // Compare the pixels for equality.
+                        if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
+                            return false;
+                        }
+                    }
+                }
+            } else {
+                return false;
+            }
+
+            return true;
+        }
+        return false;
+
+    }
+
+    public Vector<Alien> getAlienVector() {
+        return aliens;
+    }
+
+    public void addShipBullets(Bullet bill) {
+        shipBullets.add(bill);
+    }
+
+    public Vector<Bullet> getShipBullets() {
+        return shipBullets;
+    }
+
+    public void addAlienBullets(Bullet bill) {
+        alienBullets.add(bill);
+    }
+
+    public Vector<Bullet> getAlienBullets() {
+        return alienBullets;
+    }
+
+    public void addAlien(Alien a) {
+        aliens.add(a);
+    }
+
+    public boolean getRightPressed() {
+
+        return rightPressed;
+    }
+
+    public boolean getSpacePressed() {
+        return spacePressed;
+    }
+
+    public void setPressedLeft(boolean b) {
+       leftPressed = b;
+        
+    }
+
+    public void setPressedRight(boolean b) {
+        rightPressed = b;
+        
+    }
+
+    public void setPressedSpace(boolean b) {
+        spacePressed = b;
+        
+    }
 }
