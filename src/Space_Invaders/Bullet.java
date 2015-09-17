@@ -13,7 +13,7 @@ public class Bullet {
 		this.xpos = x;
 		this.ypos = y;
 
-		Game.logfile.writeCreate("Bullet created at: ", xpos, ypos);
+		Game.logfile.writeCreate("Bullet ", xpos, ypos);
 		bullet = ss.grabImage(413, 277, 6, 12);
 	}
 	//Move the bullet up
