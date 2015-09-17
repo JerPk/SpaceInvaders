@@ -56,6 +56,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private BufferedImage SpriteSheet = null;
 
 	Spaceship spaceship;
+	LogFile logfile;
 
 	public Game() {
 		addKeyListener(this);
@@ -144,6 +145,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		}
 
 		spaceship = new Spaceship(this);
+		logfile = new LogFile();
+		logfile.open();
 		
 		//creates all barriers and adds them to the barrier vector
 		for (int i = 1; i <= 4; i++) {
@@ -224,6 +227,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
 				spacePressed = false;
+				
+				logfile.writeCreate("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+				logfile.writeShoot("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+				logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+				logfile.writeHit("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+				logfile.writeOffscreen("Spaceship", spaceship.getPosY());
 			}
 			
 			if (spaceship.ifHit(alienBullets) != -1) {
@@ -404,6 +413,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	 * 
 	 */
 	public void end() {
+		logfile.close();
 		System.exit(0);
 	}
 
