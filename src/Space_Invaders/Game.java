@@ -227,12 +227,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 			if (spacePressed) {
 				shipBullets.addElement(spaceship.shoot());
 				spacePressed = false;
-				
-				logfile.writeCreate("Spaceship", spaceship.getPosX(), spaceship.getPosY());
-				logfile.writeShoot("Spaceship", spaceship.getPosX(), spaceship.getPosY());
-				logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
-				logfile.writeHit("Spaceship", spaceship.getPosX(), spaceship.getPosY());
-				logfile.writeOffscreen("Spaceship", spaceship.getPosY());
 			}
 			
 			if (spaceship.ifHit(alienBullets) != -1) {
