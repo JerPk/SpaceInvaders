@@ -13,6 +13,7 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+
 public class Game extends Canvas implements Runnable, KeyListener {
 
     public static final int WIDTH = 635; /* The width of the screen */
