@@ -60,13 +60,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
     // all the sprites we use.
     private BufferedImage SpriteSheet = null;
 
-    Spaceship spaceship;
 
-    public Game() {
-        // addKeyListener(this);
-        // setFocusable(true);
-        counter = 0;
-    }
+    Spaceship spaceship;
+    
+    public static LogFile logfile;
+
+	public Game() {
+		addKeyListener(this);
+		setFocusable(true);
+		counter = 0;
+	}
 
     /**
      * The start method will be called once at the start of the game. it is
@@ -142,13 +145,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 row = 0;
             }
             row++;
-
             Alien alien = new Alien(startXOffsetAlien + (25 * row),
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
 
         spaceship = new Spaceship(this);
+        
+        logfile = new LogFile();
+		logfile.open();
 
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
@@ -411,6 +416,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      */
     public void end() {
+    	logfile.close();
         System.exit(0);
     }
 

@@ -16,6 +16,8 @@ public class Barrier {
 		this.xpos = x;
 		this.ypos = y;
 		this.state = 0;
+		
+		Game.logfile.writeCreate("Barrier", xpos, ypos);
 
 		barrier[0] = ss.grabImage(316, 213, 44, 32);
 		barrier[1] = ss.grabImage(480, 210, 44, 32);
@@ -39,6 +41,7 @@ public class Barrier {
 	 * the method that returns the state
 	 */
 	public void decreaseState() {
+		Game.logfile.writeHit("Barrier", xpos, ypos);
 		state++;
 	}
 	
