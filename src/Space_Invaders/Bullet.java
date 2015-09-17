@@ -38,4 +38,21 @@ public class Bullet {
 		return ypos;
 	}
 	
+	@Override
+	public boolean equals(Object other){
+        boolean result = false;
+        
+        if(other instanceof Bullet){
+            Bullet that = (Bullet) other;
+            if(this.getX() == that.getX()){
+                if(this.getY() == that.getY()){
+                    result = true;
+                }
+            }
+        }
+        
+	    return result;
+	    
+	}
+	
 }
