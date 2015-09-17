@@ -120,7 +120,7 @@ public class LogFile {
 	 * @return success of writing to logfile
 	 */
 	public boolean writeHit(String object, double x, double y) {
-		String out = object + " is hit at x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + ".\n";
+		String out = object + " at x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + " is hit.\n";
 		if (writeString(out) == true) {
 			return true;
 		}
