@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private BufferedImage SpriteSheet = null;
 
 	Spaceship spaceship;
-	LogFile logfile;
+	public static LogFile logfile;
 
 	public Game() {
 		addKeyListener(this);
