@@ -149,11 +149,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
-
-        spaceship = new Spaceship(this);
         
         logfile = new LogFile();
 		logfile.open();
+		
+        spaceship = new Spaceship(this);
 
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
@@ -236,11 +236,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 shipBullets.addElement(spaceship.shoot());
                 spacePressed = false;
             }
-
-            if (spaceship.ifHit(alienBullets) != -1) {
-                if (spaceship.getLives() > 1) {
-                    spaceship.decreaseLives();
-                    alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
+            
+            int hit = spaceship.ifHit(alienBullets); 
+            if (hit != -1) {
+                if (spaceship.getLives() > 0) {
+                    alienBullets.removeElementAt(hit);
                 } else {
                     end();
                 }
@@ -448,9 +448,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed = false;
+            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             rightPressed = false;
+            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             spacePressed = false;
