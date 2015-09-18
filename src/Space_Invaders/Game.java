@@ -13,35 +13,63 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+/**
+ * The game class is the main class.
+ * 
+ * @author Group 23
+ *
+ */
 public class Game extends Canvas implements Runnable, KeyListener {
 
-    public static final int WIDTH = 635; /* The width of the screen */
-    public static final int HEIGHT = 470; /* The Height of the screen */
-    public final String TITLE = "Space Invaders"; /*
-                                                   * the title of the
-                                                   * application
-                                                   */
+    /**
+     * The Widht of the screen.
+     */
+    public static final int WIDTH = 635;
+    
+    /**
+     * The Height of the screen.
+     */
+    public static final int HEIGHT = 470;
+    /**
+     * The title of the application.
+     */
+    public final String TITLE = "Space Invaders";
 
-    private boolean running = false; /* running == true when the game is running */
+    /** running == true when the game is running. 
+    */
+    private boolean running = false; 
+    
+    /**
     // a boolean that is only true if the aliens need to be updated.
     // here it used for moving all the aliens down simultaneously.
+     * 
+     */
     private boolean logicRequiredThisLoop = false;
 
-    // boolean to update bullet
+    /**
+     *  boolean to update bullet
+     */
     private boolean updateBullet = false;
 
-    // booleans related to the spaceships action
+    /**
+     *  booleans related to the spaceships action
+     */
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private boolean spacePressed = false;
 
     private BufferStrategy bs;
 
-    // long that is used to set a limit between the spaceship
-    // being able to fire.
+    /**
+     * long that is used to set a limit between the spaceship
+     *
+     *  being able to fire.
+     */
     private long lastFire = 0;
 
-    // Vector to store all alien, bullet and barrier objects
+    /**
+     *  Vector to store all alien, bullet and barrier objects
+     */
     private Vector<Alien> aliens;
     private Vector<Bullet> alienBullets;
     private Vector<Bullet> shipBullets;
@@ -49,15 +77,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     private int counter;
 
-    // the main Thread we use for the game.
+    /**
+     *  the main Thread we use for the game.
+     */
     private Thread thread;
 
-    // the main BufferedImage of the game class.
+    /**
+     *  the main BufferedImage of the game class.
+     */
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
             BufferedImage.TYPE_INT_RGB);
 
-    // the bufferdImage which will be the spritesheet that contains
-    // all the sprites we use.
+    /**
+     *  the bufferdImage which will be the spritesheet that contains
+     *
+     *  all the sprites we use.
+     */
     private BufferedImage SpriteSheet = null;
 
 
@@ -110,7 +145,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        
+        logfile.writeString("Game ended because of an error at " + System.currentTimeMillis());
+        logfile.close();
+        
         // exits the application.
         System.exit(1);
     }
@@ -138,6 +176,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
+        
+        logfile = new LogFile();
+		logfile.open();
+		logfile.writeString("Game started at " + System.currentTimeMillis());
 
         // creates all the aliens and adds them to the Aliens vector
         for (int x = 0; x < amountAliens; x++) {
@@ -149,11 +191,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
-        
-        logfile = new LogFile();
-		logfile.open();
 		
         spaceship = new Spaceship(this);
+
 
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
@@ -207,7 +247,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 // the for loop gets
                 for (int i = 0; i < aliens.size(); i++) {
                     Alien alien_obj = (Alien) aliens.get(i);
-                    alien_obj.VMovement();
+                    alien_obj.vmovement();
                 }
                 logicRequiredThisLoop = false;
 
@@ -286,7 +326,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void doAction() {
         for (int i = 0; i < aliens.size(); i++) {
             Alien alien_obj = (Alien) aliens.get(i);
-            alien_obj.HMovement();
+            alien_obj.hmovement();
         }
 
     }
@@ -355,7 +395,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     }
 
-    // Temporal: Method to render the bullet for the alien
+    /**
+     *  Temporal: Method to render the bullet for the alien
+     */
     public void renderBulletAlien() {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
@@ -371,12 +413,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * The method that that randomly selects an alien. and 
+     * adds its bullet to the vector.
+     */
     public void alienShoot() {
         Random rand = new Random();
         int randNr = rand.nextInt(aliens.size());
         alienBullets.addElement(aliens.get(randNr).shoot());
     }
 
+    /**
+     * The method alien die compares every spaceship bullet with alien.
+     * if the alien is shot it is removed from the game.
+     */
     public void alienDie() {
         for (int i = 0; i < aliens.size(); i++) {
             int hit = aliens.get(i).ifHit(shipBullets);
@@ -387,6 +437,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * The method that removes all the bullets that are offscreen.
+     */
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
             if (alienBullets.get(i).getY() >= 450) {
@@ -418,7 +471,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      */
     public void end() {
-    	logfile.close();
+        logfile.writeString("Game ended at " + System.currentTimeMillis());
+        logfile.close();
         System.exit(0);
     }
 
@@ -461,6 +515,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * The keytyped method isnt used in game class.
+     */
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -585,49 +642,93 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     }
 
+    /**
+     * the getter metod that returns the alienvector.
+     * @return
+     */
     public Vector<Alien> getAlienVector() {
         return aliens;
     }
 
+    /**
+     * the method that adds a bullet to the shipbullets vector.
+     * @param bill
+     */
     public void addShipBullets(Bullet bill) {
         shipBullets.add(bill);
     }
 
+    /**
+     * the getter methdo that returns the shipbullets vector.
+     * @return
+     */
     public Vector<Bullet> getShipBullets() {
         return shipBullets;
     }
 
+    /**
+     * the method that adds a bullet to the alienbullets vector.
+     * @param bill
+     */
     public void addAlienBullets(Bullet bill) {
         alienBullets.add(bill);
     }
 
+    /**
+     * the getter method that returns the alienbullets vector.
+     * @return
+     */
     public Vector<Bullet> getAlienBullets() {
         return alienBullets;
     }
 
+    /**
+     * the method that adds an alien to the alien vector.
+     * @param a
+     */
     public void addAlien(Alien a) {
         aliens.add(a);
     }
 
+    /**
+     * The method that returns the right pressed boolean.
+     * @return
+     */
     public boolean getRightPressed() {
 
         return rightPressed;
     }
 
+    /**
+     * the method that returns the space pressed boolean.
+     * @return
+     */
     public boolean getSpacePressed() {
         return spacePressed;
     }
 
+    /**
+     * the method that sets the left pressed boolean.
+     * @param b
+     */
     public void setPressedLeft(boolean b) {
        leftPressed = b;
         
     }
 
+    /**
+     * the method that sets the right pressed boolean.
+     * @param b
+     */
     public void setPressedRight(boolean b) {
         rightPressed = b;
         
     }
 
+    /**
+     * the method that sets the space pressed boolean.
+     * @param b
+     */
     public void setPressedSpace(boolean b) {
         spacePressed = b;
         
