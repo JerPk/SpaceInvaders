@@ -50,7 +50,7 @@ public class LogFile {
 	 */
 	public boolean writeString(String message) {
 		try {
-			outbuf.write(message);
+			outbuf.write(message + ".\n");
 			return true;
 		} catch(IOException e) {
 			return false;
@@ -66,7 +66,7 @@ public class LogFile {
 	 * @return success of writing to logfile 
 	 */
 	public boolean writeCreate(String object, double x, double y) {
-		String out = object + " created at x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + ".\n";
+		String out = object + " created at x=" + String.valueOf(x) + ", y=" + String.valueOf(y);
 		if (writeString(out) == true) {
 			return true;
 		}
@@ -84,7 +84,7 @@ public class LogFile {
 	 * @return success of writing to logfile
 	 */
 	public boolean writeShoot(String object, double x, double y) {
-		String out = object + " shot a bullet from x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + ".\n";
+		String out = object + " shot a bullet from x=" + String.valueOf(x) + ", y=" + String.valueOf(y);
 		if (writeString(out) == true) {
 			return true;
 		}
@@ -102,7 +102,7 @@ public class LogFile {
 	 * @return success of writing to logfile
 	 */
 	public boolean writeMove(String object, double x, double y) {
-		String out = object + " moved to x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + ".\n";
+		String out = object + " moved to x=" + String.valueOf(x) + ", y=" + String.valueOf(y);
 		if (writeString(out) == true) {
 			return true;
 		}
@@ -120,7 +120,7 @@ public class LogFile {
 	 * @return success of writing to logfile
 	 */
 	public boolean writeHit(String object, double x, double y) {
-		String out = object + " at position x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + " is hit.\n";
+		String out = object + " at position x=" + String.valueOf(x) + ", y=" + String.valueOf(y) + " is hit";
 		if (writeString(out) == true) {
 			return true;
 		}
@@ -137,7 +137,7 @@ public class LogFile {
 	 * @return success of writing to logfile
 	 */
 	public boolean writeOffscreen(String object, double x) {
-		String out = object + " bullet went offscreen at x=" + String.valueOf(x) + ".\n";
+		String out = object + " bullet went offscreen at x=" + String.valueOf(x);
 		if (writeString(out) == true) {
 			return true;
 		}

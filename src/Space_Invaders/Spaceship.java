@@ -83,7 +83,7 @@ public class Spaceship {
 					lives -= 1;
 					Game.logfile.writeHit("Spaceship", alienBullets.get(i).getX(), alienBullets.get(i).getY());
 					if (lives > 0) {
-						Game.logfile.writeString("Spaceship has " + String.valueOf(lives) + " lives left.");
+						Game.logfile.writeString("Spaceship has " + String.valueOf(lives) + " lives left");
 					}
 					else {
 						Game.logfile.writeString("Spaceship has no lives left");
