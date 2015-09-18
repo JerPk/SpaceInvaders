@@ -110,7 +110,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        
+        logfile.writeString("Game ended because of an error at " + System.currentTimeMillis());
+        logfile.close();
+        
         // exits the application.
         System.exit(1);
     }
@@ -154,6 +157,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         
         logfile = new LogFile();
 		logfile.open();
+		logfile.writeString("Game started at " + System.currentTimeMillis());
 
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
@@ -416,7 +420,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      */
     public void end() {
-    	logfile.close();
+        logfile.writeString("Game ended at " + System.currentTimeMillis());
+        logfile.close();
         System.exit(0);
     }
 

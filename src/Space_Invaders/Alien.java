@@ -49,6 +49,8 @@ public class Alien {
 		
 		//moves the alien in the horizontal direction.
 		x +=  MovementSpeed;
+	    
+		game.logfile.writeMove("Alien", x, y);
 	}
 	
 	/**
@@ -62,11 +64,13 @@ public class Alien {
 		//the other direction.
 		MovementSpeed = -MovementSpeed;
 		
+		game.logfile.writeMove("Alien", x, y);
 		//check if the alien has reached the bootom ofthe screen if so.
 		//end the game.
 		if(y > 450){
 			game.end();
 		}
+		
 	}
 	
 	/**
@@ -78,6 +82,7 @@ public class Alien {
 	public Bullet shoot() {
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		Bullet newBullet = new Bullet(x+5, y+2, ss);
+		game.logfile.writeShoot("Alien", x, y);
 		return newBullet;
 	}
 	
