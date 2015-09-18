@@ -176,6 +176,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
+        
+        logfile = new LogFile();
+		logfile.open();
+		logfile.writeString("Game started at " + System.currentTimeMillis());
 
         // creates all the aliens and adds them to the Aliens vector
         for (int x = 0; x < amountAliens; x++) {
@@ -187,10 +191,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
-        
-        logfile = new LogFile();
-		logfile.open();
-		logfile.writeString("Game started at " + System.currentTimeMillis());
 		
         spaceship = new Spaceship(this);
 

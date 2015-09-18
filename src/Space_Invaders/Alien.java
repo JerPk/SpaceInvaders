@@ -48,7 +48,7 @@ public class Alien {
     this.y = y;
     game = g;
     
-    game.logfile.writeCreate("Alien", x, y);
+    Game.logfile.writeCreate("Alien", x, y);
     SpriteSheet spritesheet = new SpriteSheet(g.getSpriteSheet());
     Alien = spritesheet.grabImage(7, 225, 16, 16);
   }
