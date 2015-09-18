@@ -78,6 +78,7 @@ public class Alien {
    */
   public void vmovement() {
         //move the alien in the vertical direction
+
     y += 20;
     
     //flip the movement speed so now the alien will move in
@@ -118,12 +119,14 @@ public class Alien {
     for (int i = 0; i < shipBullets.size(); i++) {
       if (shipBullets.get(i).getX() >= x && shipBullets.get(i).getX() <= x+16) {
         if (shipBullets.get(i).getY() >= y && shipBullets.get(i).getY() <= y+16) {
-          return i;
+          game.logfile.writeHit("Alien", x, y);
+            return i;
         }
       }
     }
     return -1;
   }
+
 
   
   /**
