@@ -58,7 +58,7 @@ public class AlienTest {
 
     assertFalse(game.getupdateLogic());
 
-    alien.HMovement();
+    alien.hmovement();
     assertFalse(game.getupdateLogic());
     assertEquals(34, alien.getX(), 0.00001);
   }
@@ -73,7 +73,7 @@ public class AlienTest {
 
     assertFalse(game.getupdateLogic());
 
-    alien.HMovement();
+    alien.hmovement();
     assertEquals((double) 644, alien.getX(), 0.0001);
     assertTrue(game.getupdateLogic());
   }
@@ -89,7 +89,7 @@ public class AlienTest {
 
     assertFalse(game.getupdateLogic());
 
-    alien.HMovement();
+    alien.hmovement();
     assertEquals((double) -2, alien.getX(), 0.0001);
     assertTrue(game.getupdateLogic());
   }
@@ -105,7 +105,7 @@ public class AlienTest {
 
     assertFalse(game.getupdateLogic());
 
-    alien.HMovement();
+    alien.hmovement();
     assertEquals((double) 2, alien.getX(), 0.0001);
     assertFalse(game.getupdateLogic());
   }
@@ -119,7 +119,7 @@ public class AlienTest {
     final Alien alien = new Alien(7, 30, game);
     game.setrunning(true);
 
-    alien.VMovement();
+    alien.vmovement();
     assertEquals((double) 50, alien.getY(), 0.0001);
     assertTrue(game.getrunning());
 
