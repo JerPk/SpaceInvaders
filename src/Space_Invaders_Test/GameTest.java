@@ -343,6 +343,7 @@ public class GameTest {
      */
   @Test
     public void testKeyReleasedLeft() {
+    game.init();
     game.setPressedLeft(true);
 
     assertTrue(game.getLeftPressed());
@@ -360,8 +361,9 @@ public class GameTest {
      */
   @Test
     public void testKeyReleasedRight() {
+    game.init();
     game.setPressedRight(true);
-
+    
     assertTrue(game.getRightPressed());
 
     final KeyEvent key = new KeyEvent(game, 0, System.currentTimeMillis(), 0,
