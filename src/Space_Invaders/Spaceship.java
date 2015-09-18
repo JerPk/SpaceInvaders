@@ -79,6 +79,13 @@ public class Spaceship {
 			if (alienBullets.get(i).getX() >= x && alienBullets.get(i).getX() <= x+26) {
 				if (alienBullets.get(i).getY() >= y && alienBullets.get(i).getY() <= y+16) {
 					lives -= 1;
+					Game.logfile.writeHit("Spaceship", alienBullets.get(i).getX(), alienBullets.get(i).getY());
+					if (lives > 0) {
+						Game.logfile.writeString("Spaceship has " + String.valueOf(lives) + " lives left.");
+					}
+					else {
+						Game.logfile.writeString("Spaceship has no lives left");
+					}
 					return i;
 				}
 			}
