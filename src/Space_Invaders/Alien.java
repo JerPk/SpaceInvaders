@@ -78,7 +78,7 @@ public class Alien {
 	public Bullet shoot() {
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		Bullet newBullet = new Bullet(x+5, y+2, ss);
-		Game.logfile.writeShoot("Alien Bullet", getX(), getY());
+		Game.logfile.writeShoot("Alien", getX(), getY());
 		return newBullet;
 	}
 	

@@ -390,16 +390,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
             if (alienBullets.get(i).getY() >= 450) {
+                Game.logfile.writeOffscreen("Alien", alienBullets.get(i).getX());
                 alienBullets.removeElementAt(i);
                 i--;
-                Game.logfile.writeOffscreen("Alien Bullet", getY());
             }
         }
         for (int j = 0; j < shipBullets.size(); j++) {
             if (shipBullets.get(j).getY() <= 0) {
-                shipBullets.removeElementAt(j);
+            	Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
+            	shipBullets.removeElementAt(j);
                 j--;
-                Game.logfile.writeOffscreen("Ship Bullet", getY());
             }
         }
     }

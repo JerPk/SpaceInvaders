@@ -67,7 +67,7 @@ public class Spaceship {
 	public Bullet shoot() {
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		Bullet newBullet = new Bullet(x+10, y+2, ss);
-		Game.logfile.writeShoot("Spaceship Bullet", getPosX(), getPosY());
+		Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
 		return newBullet;
 	}
 	
