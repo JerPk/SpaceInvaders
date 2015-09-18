@@ -4,6 +4,7 @@ jdk:
   - oraclejdk8
 
 notifications:
+  email: false
   webhooks:
     - http://octopull.rmhartog.me/api/travis/webhook
 before_install:
