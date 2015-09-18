@@ -149,11 +149,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
-
-        spaceship = new Spaceship(this);
         
         logfile = new LogFile();
 		logfile.open();
+		
+        spaceship = new Spaceship(this);
 
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
