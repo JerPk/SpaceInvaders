@@ -133,11 +133,11 @@ public class LogFile {
 	 * method to write object which went offscreen to logfile
 	 * 
 	 * @param object which went off the screen
-	 * @param y position of the object
+	 * @param x position of the object
 	 * @return success of writing to logfile
 	 */
-	public boolean writeOffscreen(String object, double y) {
-		String out = object + " went offscreen at y=" + String.valueOf(y) + ".\n";
+	public boolean writeOffscreen(String object, double x) {
+		String out = object + " bullet went offscreen at x=" + String.valueOf(x) + ".\n";
 		if (writeString(out) == true) {
 			return true;
 		}
