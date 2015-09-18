@@ -21,6 +21,25 @@ public class Spaceship {
 	private BufferedImage Spaceship;
 	
 	/**
+	 * the constructor of the Spaceship class.
+	 * 
+	 * @param int x
+	 * @param int y
+	 * @param  Game g
+	 */
+	public Spaceship(Game g){
+		x = g.WIDTH/2-13;
+		game = g;
+		lives = 3;
+		
+		Game.logfile.writeCreate("Spaceship", x, y);
+		
+		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+		Spaceship = ss.grabImage(277, 228, 26, 16);
+		
+	}
+	
+	/**
 	 * this method makes the ship move left by 1 as long as it hasn't reached
 	 * the border
 	 *
@@ -43,22 +62,6 @@ public class Spaceship {
 	}
 	
 	/**
-	 * the constructor of the Spaceship class.
-	 * 
-	 * @param int x
-	 * @param int y
-	 * @param  Game g
-	 */
-	public Spaceship(Game g){
-		x = g.WIDTH/2-13;
-		game = g;
-		lives = 3;
-		
-		SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
-		Spaceship = ss.grabImage(277, 228, 26, 16);
-	}
-	
-	/**
 	 * the method creates a new bullet on the position of the ship
 	 * and returns it
 	 *
@@ -67,6 +70,7 @@ public class Spaceship {
 	public Bullet shoot() {
 		SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
 		Bullet newBullet = new Bullet(x+10, y+2, ss);
+        Game.logfile.writeShoot("Spaceship", x+10, y+2);
 		return newBullet;
 	}
 	
@@ -74,6 +78,14 @@ public class Spaceship {
 		for (int i = 0; i < alienBullets.size(); i++) {
 			if (alienBullets.get(i).getX() >= x && alienBullets.get(i).getX() <= x+26) {
 				if (alienBullets.get(i).getY() >= y && alienBullets.get(i).getY() <= y+16) {
+					lives -= 1;
+					Game.logfile.writeHit("Spaceship", alienBullets.get(i).getX(), alienBullets.get(i).getY());
+					if (lives > 0) {
+						Game.logfile.writeString("Spaceship has " + String.valueOf(lives) + " lives left.");
+					}
+					else {
+						Game.logfile.writeString("Spaceship has no lives left");
+					}
 					return i;
 				}
 			}
@@ -106,13 +118,6 @@ public class Spaceship {
 	 */
 	public int getLives(){
 		return lives;
-	}
-	
-	/**
-	 * the method that decreases lives with one.
-	 */
-	public void decreaseLives(){
-		lives--;
 	}
 	
 	/**
