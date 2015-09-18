@@ -236,11 +236,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 shipBullets.addElement(spaceship.shoot());
                 spacePressed = false;
             }
-
-            if (spaceship.ifHit(alienBullets) != -1) {
-                if (spaceship.getLives() > 1) {
-                    spaceship.decreaseLives();
-                    alienBullets.removeElementAt(spaceship.ifHit(alienBullets));
+            
+            int hit = spaceship.ifHit(alienBullets); 
+            if (hit != -1) {
+                if (spaceship.getLives() > 0) {
+                    alienBullets.removeElementAt(hit);
                 } else {
                     end();
                 }

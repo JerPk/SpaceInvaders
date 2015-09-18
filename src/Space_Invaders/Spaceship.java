@@ -78,6 +78,7 @@ public class Spaceship {
 		for (int i = 0; i < alienBullets.size(); i++) {
 			if (alienBullets.get(i).getX() >= x && alienBullets.get(i).getX() <= x+26) {
 				if (alienBullets.get(i).getY() >= y && alienBullets.get(i).getY() <= y+16) {
+					lives -= 1;
 					return i;
 				}
 			}
@@ -110,13 +111,6 @@ public class Spaceship {
 	 */
 	public int getLives(){
 		return lives;
-	}
-	
-	/**
-	 * the method that decreases lives with one.
-	 */
-	public void decreaseLives(){
-		lives--;
 	}
 	
 	/**
