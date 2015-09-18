@@ -101,7 +101,7 @@ public class LogFileTest {
 	}
 	
 	@Test
-	public void testWriteHit() throws IOException {
+	public void testWriteOffscreen() throws IOException {
 		File outfile = new File("logfile.txt");
 		logfile = new LogFile();
 		logfile.open();
