@@ -448,9 +448,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed = false;
+            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             rightPressed = false;
+            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             spacePressed = false;
