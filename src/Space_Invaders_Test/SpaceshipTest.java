@@ -99,6 +99,7 @@ public class SpaceshipTest {
         
     alienBullets.add(new Bullet(317, 425, new SpriteSheet(game.getSpriteSheet())));
     assertEquals(ship.ifHit(alienBullets),0);
+    assertEquals(ship.getLives(),2);
   }
   
   /**
@@ -109,19 +110,6 @@ public class SpaceshipTest {
   public void testGetLives() {
     final Spaceship ship = new Spaceship(game);
     assertEquals(ship.getLives(),3);
-  }
-  
-  /**
-     * The JUnit test of the decreaseLives method of Spaceship. 
-     * every time the decreaseLives method is called the amount of lives spaceship
-     * should be decreased by one.
-     */
-  @Test
-  public void testDecreaseLives() {
-    final Spaceship ship = new Spaceship(game);
-    assertEquals(ship.getLives(),3);
-    ship.decreaseLives();
-    assertEquals(ship.getLives(),2);
   }
 
 }
