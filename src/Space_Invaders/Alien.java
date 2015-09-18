@@ -69,8 +69,6 @@ public class Alien {
     
     //moves the alien in the horizontal direction.
     x +=  movementSpeed;
-      
-    game.logfile.writeMove("Alien", x, y);
   }
   
   /**
@@ -85,7 +83,6 @@ public class Alien {
     //the other direction.
     movementSpeed = -movementSpeed;
     
-    game.logfile.writeMove("Alien", x, y);
     //check if the alien has reached the bootom ofthe screen if so.
     //end the game.
     if(y > 450) {

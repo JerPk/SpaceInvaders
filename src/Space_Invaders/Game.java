@@ -250,7 +250,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     alien_obj.vmovement();
                 }
                 logicRequiredThisLoop = false;
-
+                
+                Game.logfile.writeString("Aliens reached a border and moved down");
             }
             render();
             alienDie();
