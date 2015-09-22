@@ -1,17 +1,10 @@
-package Space_Invaders_Test;
+package spaceinvaders.spaceinvaders_framework;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-
-import Space_Invaders.Alien;
-import Space_Invaders.BuffereImageLoader;
-import Space_Invaders.Bullet;
-import Space_Invaders.Game;
-import Space_Invaders.Spaceship;
-import Space_Invaders.SpriteSheet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -343,6 +336,7 @@ public class GameTest {
      */
   @Test
     public void testKeyReleasedLeft() {
+    game.init();
     game.setPressedLeft(true);
 
     assertTrue(game.getLeftPressed());
@@ -360,8 +354,9 @@ public class GameTest {
      */
   @Test
     public void testKeyReleasedRight() {
+    game.init();
     game.setPressedRight(true);
-
+    
     assertTrue(game.getRightPressed());
 
     final KeyEvent key = new KeyEvent(game, 0, System.currentTimeMillis(), 0,

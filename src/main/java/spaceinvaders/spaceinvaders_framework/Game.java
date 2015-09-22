@@ -1,4 +1,4 @@
-package Space_Invaders;
+package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Dimension;
 import java.awt.Canvas;
@@ -100,11 +100,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
     
     public static LogFile logfile;
 
-	public Game() {
-		addKeyListener(this);
-		setFocusable(true);
-		counter = 0;
-	}
+    public Game() {
+        addKeyListener(this);
+        setFocusable(true);
+        counter = 0;
+    }
 
     /**
      * The start method will be called once at the start of the game. it is
@@ -178,8 +178,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         barriers = new Vector<Barrier>(0);
         
         logfile = new LogFile();
-		logfile.open();
-		logfile.writeString("Game started at " + System.currentTimeMillis());
+        logfile.open();
+        logfile.writeString("Game started at " + System.currentTimeMillis());
 
         // creates all the aliens and adds them to the Aliens vector
         for (int x = 0; x < amountAliens; x++) {
@@ -191,7 +191,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
-		
+        
         spaceship = new Spaceship(this);
 
 
@@ -451,8 +451,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
         for (int j = 0; j < shipBullets.size(); j++) {
             if (shipBullets.get(j).getY() <= 0) {
-            	Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
-            	shipBullets.removeElementAt(j);
+                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
+                shipBullets.removeElementAt(j);
                 j--;
             }
         }
@@ -480,7 +480,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * the keyPressed method is called when a key is pressed down.
      */
-    @Override
     public void keyPressed(KeyEvent vkLeft) {
         if (vkLeft.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed = true;
@@ -500,7 +499,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * the keyReleased method is called when a key has been released.
      */
-    @Override
     public void keyReleased(KeyEvent e) {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -519,7 +517,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * The keytyped method isnt used in game class.
      */
-    @Override
     public void keyTyped(KeyEvent e) {
 
     }

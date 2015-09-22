@@ -1,19 +1,18 @@
-package Space_Invaders_Test;
+package spaceinvaders.spaceinvaders_framework;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-import Space_Invaders.Alien;
-import Space_Invaders.Bullet;
-import Space_Invaders.Game;
-import Space_Invaders.SpriteSheet;
+
+
+
+
+import java.util.Vector;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Vector;
 
 /**
  * AlienTest tests all the methods in the alien class.
@@ -35,6 +34,7 @@ public class AlienTest {
   public void setUpGame() {
     game = new Game();
     game.setSpriteSheet("res/sprite_sheet.png");
+    game.init();
   }
   
 
