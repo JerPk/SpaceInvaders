@@ -27,6 +27,7 @@ public class BulletTest {
   public void setUpGame() {
     game = new Game();
     game.setSpriteSheet("res/sprite_sheet.png");
+    game.init();
   }
 
   /**
