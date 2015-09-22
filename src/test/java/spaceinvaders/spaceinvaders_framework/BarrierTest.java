@@ -1,11 +1,6 @@
-package Space_Invaders_Test;
+package spaceinvaders.spaceinvaders_framework;
 
 import static org.junit.Assert.assertEquals;
-
-import Space_Invaders.Barrier;
-import Space_Invaders.Bullet;
-import Space_Invaders.Game;
-import Space_Invaders.SpriteSheet;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +27,7 @@ public class BarrierTest {
     public void setUpGame() {
     game = new Game();
     game.setSpriteSheet("res/sprite_sheet.png");
+    game.init();
   }
 
     /**

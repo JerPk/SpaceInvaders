@@ -1,4 +1,4 @@
-package Space_Invaders;
+package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
