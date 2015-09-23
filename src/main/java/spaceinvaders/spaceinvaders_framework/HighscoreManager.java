@@ -130,4 +130,14 @@ public class HighscoreManager {
         }
     }
 
+    /**
+     * method that sets the outputstream. this method is only used for Testing purposes.
+     * 
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public void setOutputstream() throws FileNotFoundException, IOException{
+        outputStream = new ObjectOutputStream(new FileOutputStream(
+                "res/scores.dat"));
+    }
 }

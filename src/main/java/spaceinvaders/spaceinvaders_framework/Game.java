@@ -210,8 +210,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         spaceship = new Spaceship(this);    
         
-        highscoremanager = new HighscoreManager();
+        highscoremanager = new HighscoreManager();        
         
+
+       
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
@@ -792,7 +794,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
     
     /**
-     * The addscore 
+     * The addscore method compares the players score to the 10 object
+     * in the scores array. if the player scores higher the object is added to
+     * the array.
      */
     public void addscore(){
         ArrayList<Score> scores = highscoremanager.getScores();
@@ -817,4 +821,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
         
     }
 
+    /**
+     * the set highscoremanager sets the new Highscoremanager.
+     * This method is used mainly for testing purposes.
+     */
+    public void setHighscoremanager(HighscoreManager manager){
+        highscoremanager = manager;
+    }
+    
+    /**
+     * the set score method is able to manually set the score
+     * of the player. this method is only used for testing purposes.
+     * 
+     * @param score1
+     */
+    public void setscore(int score1){
+        score = score1;
+    }
 }
