@@ -27,27 +27,18 @@ import javax.swing.JTable;
  */
 public class TempShowScores {
 
-    private JFrame frame;
-    private JPanel p;
-    private JLabel top;
-
-    public TempShowScores() {
-        gui();
-    }
-
-    private void gui() {
-
+    public static void main(String argv[]) {
         HighscoreManager highscoremanager = new HighscoreManager();
         ArrayList<Score> allscores = highscoremanager.getScores();
 
         // create the frame.
-        frame = new JFrame("Highscores");
+        JFrame frame = new JFrame("Highscores");
         frame.setVisible(true);
         frame.setSize(new Dimension(635, 470));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // create the main panel
-        p = new JPanel();
+        JPanel p = new JPanel();
 
         // set layout manager
         p.setLayout(new BorderLayout());
@@ -67,7 +58,7 @@ public class TempShowScores {
         Score Score10 = allscores.get(9);
 
         // the large text saying highscores add the top.
-        top = new JLabel("                                    Highscores");
+        JLabel top = new JLabel("                                    Highscores");
 
         top.setForeground(Color.white);
         top.setFont(new Font("Calibri", Font.PLAIN, 30));
@@ -119,11 +110,6 @@ public class TempShowScores {
 
         // add the panel to the frame.
         frame.add(p);
-        
-    }
-
-    public static void main(String argv[]) {
-        new TempShowScores();
     }
 
 }
