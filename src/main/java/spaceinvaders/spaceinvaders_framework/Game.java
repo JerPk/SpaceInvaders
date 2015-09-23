@@ -1,5 +1,6 @@
 package spaceinvaders.spaceinvaders_framework;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Canvas;
 import java.awt.Graphics;
@@ -7,11 +8,19 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  * The game class is the main class.
@@ -21,11 +30,12 @@ import javax.swing.JFrame;
  */
 public class Game extends Canvas implements Runnable, KeyListener {
 
+    private static JFrame frame = null;
     /**
      * The Widht of the screen.
      */
     public static final int WIDTH = 635;
-    
+
     /**
      * The Height of the screen.
      */
@@ -35,24 +45,25 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public final String TITLE = "Space Invaders";
 
-    /** running == true when the game is running. 
-    */
-    private boolean running = false; 
-    
     /**
-    // a boolean that is only true if the aliens need to be updated.
-    // here it used for moving all the aliens down simultaneously.
+     * running == true when the game is running.
+     */
+    private boolean running = false;
+
+    /**
+     * // a boolean that is only true if the aliens need to be updated. // here
+     * it used for moving all the aliens down simultaneously.
      * 
      */
     private boolean logicRequiredThisLoop = false;
 
     /**
-     *  boolean to update bullet
+     * boolean to update bullet
      */
     private boolean updateBullet = false;
 
     /**
-     *  booleans related to the spaceships action
+     * booleans related to the spaceships action
      */
     private boolean leftPressed = false;
     private boolean rightPressed = false;
@@ -63,12 +74,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * long that is used to set a limit between the spaceship
      *
-     *  being able to fire.
+     * being able to fire.
      */
     private long lastFire = 0;
 
     /**
-     *  Vector to store all alien, bullet and barrier objects
+     * Vector to store all alien, bullet and barrier objects
      */
     private Vector<Alien> aliens;
     private Vector<Bullet> alienBullets;
@@ -76,28 +87,32 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private Vector<Barrier> barriers;
 
     private int counter;
+    
+    private HighscoreManager highscoremanager;
 
     /**
-     *  the main Thread we use for the game.
+     * the main Thread we use for the game.
      */
     private Thread thread;
 
     /**
-     *  the main BufferedImage of the game class.
+     * the main BufferedImage of the game class.
      */
     private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
             BufferedImage.TYPE_INT_RGB);
 
     /**
-     *  the bufferdImage which will be the spritesheet that contains
+     * the bufferdImage which will be the spritesheet that contains
      *
-     *  all the sprites we use.
+     * all the sprites we use.
      */
     private BufferedImage SpriteSheet = null;
 
+    private int score = 0;
+    private String highscore = "";
 
     Spaceship spaceship;
-    
+
     public static LogFile logfile;
 
     public Game() {
@@ -118,7 +133,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         running = true;
-
+        
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
@@ -145,10 +160,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        
-        logfile.writeString("Game ended because of an error at " + System.currentTimeMillis());
+
+        logfile.writeString("Game ended because of an error at "
+                + System.currentTimeMillis());
         logfile.close();
-        
+
         // exits the application.
         System.exit(1);
     }
@@ -176,7 +192,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
-        
+
         logfile = new LogFile();
         logfile.open();
         logfile.writeString("Game started at " + System.currentTimeMillis());
@@ -191,10 +207,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
                     startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
             aliens.addElement(alien);
         }
+
+        spaceship = new Spaceship(this);    
         
-        spaceship = new Spaceship(this);
-
-
+        highscoremanager = new HighscoreManager();
+        
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
@@ -203,6 +220,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public static void main(String argv[]) {
+       
+        
         // creates the game object that will be used.
         Game game = new Game();
 
@@ -211,7 +230,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         // creates the JFrame that will be used.
-        JFrame frame = new JFrame(game.TITLE);
+        frame = new JFrame(game.TITLE);
         frame.add(game);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -221,6 +240,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         // calls the start method.
         game.start();
+        
     }
 
     /**
@@ -276,8 +296,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 shipBullets.addElement(spaceship.shoot());
                 spacePressed = false;
             }
-            
-            int hit = spaceship.ifHit(alienBullets); 
+
+            int hit = spaceship.ifHit(alienBullets);
             if (hit != -1) {
                 if (spaceship.getLives() > 0) {
                     alienBullets.removeElementAt(hit);
@@ -360,6 +380,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
             barriers.get(i).render(graphic);
         }
 
+        renderScore();
+        renderHighScore();
+        
         // Draw the bullet for the Aliens
         renderBulletShip();
         renderBulletAlien();
@@ -396,7 +419,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     /**
-     *  Temporal: Method to render the bullet for the alien
+     * Temporal: Method to render the bullet for the alien
      */
     public void renderBulletAlien() {
         BufferStrategy bs = this.getBufferStrategy();
@@ -412,10 +435,41 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         }
     }
+    /**
+     * renders the highscore on the screen.
+     */
+    public void renderHighScore() {
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.white);
+        ArrayList<Score> scores = highscoremanager.getScores();
+        Score topscore = scores.get(0);
+        
+        g.drawString("Highscore : " + topscore.getScore(), 550, 470);
+    }
 
     /**
-     * The method that that randomly selects an alien. and 
-     * adds its bullet to the vector.
+     * renders the players current score on the screen.
+     */
+    public void renderScore(){
+        BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.white);
+        g.drawString("Score : " + score, 550, 455); 
+    }
+    
+    
+    /**
+     * The method that that randomly selects an alien. and adds its bullet to
+     * the vector.
      */
     public void alienShoot() {
         Random rand = new Random();
@@ -424,13 +478,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     /**
-     * The method alien die compares every spaceship bullet with alien.
-     * if the alien is shot it is removed from the game.
+     * The method alien die compares every spaceship bullet with alien. if the
+     * alien is shot it is removed from the game.
      */
     public void alienDie() {
         for (int i = 0; i < aliens.size(); i++) {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {
+                score += 10;
                 aliens.removeElementAt(i);
                 shipBullets.removeElementAt(hit);
             }
@@ -443,14 +498,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
             if (alienBullets.get(i).getY() >= 450) {
-                Game.logfile.writeOffscreen("Alien", alienBullets.get(i).getX());
+                Game.logfile
+                        .writeOffscreen("Alien", alienBullets.get(i).getX());
                 alienBullets.removeElementAt(i);
                 i--;
             }
         }
         for (int j = 0; j < shipBullets.size(); j++) {
             if (shipBullets.get(j).getY() <= 0) {
-                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
+                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j)
+                        .getX());
                 shipBullets.removeElementAt(j);
                 j--;
             }
@@ -465,17 +522,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         updateBullet = true;
     }
 
-    /**
-     * the method we use to exit the application. this method is called when the
-     * aliens have reached the bottom of the screen
-     * 
-     */
-    public void end() {
-        logfile.writeString("Game ended at " + System.currentTimeMillis());
-        logfile.close();
-        System.exit(0);
-    }
-
+  
     /**
      * the keyPressed method is called when a key is pressed down.
      */
@@ -502,11 +549,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed = false;
-            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+            logfile.writeMove("Spaceship", spaceship.getPosX(),
+                    spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             rightPressed = false;
-            logfile.writeMove("Spaceship", spaceship.getPosX(), spaceship.getPosY());
+            logfile.writeMove("Spaceship", spaceship.getPosX(),
+                    spaceship.getPosY());
         }
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             spacePressed = false;
@@ -641,6 +690,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the getter metod that returns the alienvector.
+     * 
      * @return
      */
     public Vector<Alien> getAlienVector() {
@@ -649,6 +699,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the method that adds a bullet to the shipbullets vector.
+     * 
      * @param bill
      */
     public void addShipBullets(Bullet bill) {
@@ -657,6 +708,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the getter methdo that returns the shipbullets vector.
+     * 
      * @return
      */
     public Vector<Bullet> getShipBullets() {
@@ -665,6 +717,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the method that adds a bullet to the alienbullets vector.
+     * 
      * @param bill
      */
     public void addAlienBullets(Bullet bill) {
@@ -673,6 +726,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the getter method that returns the alienbullets vector.
+     * 
      * @return
      */
     public Vector<Bullet> getAlienBullets() {
@@ -681,6 +735,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the method that adds an alien to the alien vector.
+     * 
      * @param a
      */
     public void addAlien(Alien a) {
@@ -689,6 +744,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * The method that returns the right pressed boolean.
+     * 
      * @return
      */
     public boolean getRightPressed() {
@@ -698,6 +754,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the method that returns the space pressed boolean.
+     * 
      * @return
      */
     public boolean getSpacePressed() {
@@ -706,28 +763,58 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * the method that sets the left pressed boolean.
+     * 
      * @param b
      */
     public void setPressedLeft(boolean b) {
-       leftPressed = b;
-        
+        leftPressed = b;
+
     }
 
     /**
      * the method that sets the right pressed boolean.
+     * 
      * @param b
      */
     public void setPressedRight(boolean b) {
         rightPressed = b;
-        
+
     }
 
     /**
      * the method that sets the space pressed boolean.
+     * 
      * @param b
      */
     public void setPressedSpace(boolean b) {
         spacePressed = b;
+
+    }
+    
+    /**
+     * The addscore 
+     */
+    public void addscore(){
+        ArrayList<Score> scores = highscoremanager.getScores();
+        Score ninthscore = scores.get(9);
+        if(score >= ninthscore.getScore()){
+            String name = JOptionPane.showInputDialog("Congratulations you are on the leaderboards what is your name?");
+            highscoremanager.addScore(name, score);
+        }
+    }
+    
+    /**
+     * the method we use to exit the application. this method is called when the
+     * aliens have reached the bottom of the screen
+     * 
+     */
+    public void end() {
+        //checkscore();
+        addscore();
+        logfile.writeString("Game ended at " + System.currentTimeMillis());
+        logfile.close();
+        System.exit(0);
         
     }
+
 }
