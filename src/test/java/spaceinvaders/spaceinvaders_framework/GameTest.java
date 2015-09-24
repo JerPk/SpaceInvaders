@@ -382,5 +382,18 @@ public class GameTest {
     game.keyReleased(key);
     assertFalse(game.getSpacePressed());
   }
+  
+  /**
+   * tests the addscore method.
+   */
+  @Test
+  public void testaddScore(){
+      HighscoreManager manager = new HighscoreManager();
+      assertEquals(manager.getScores().get(0).getScore(),200 );
+    game.setHighscoremanager(manager);
+    game.setscore(-20);
+    game.addscore();
+      assertEquals(manager.getScores().get(0).getScore(),200 );
+  }
 
 }
