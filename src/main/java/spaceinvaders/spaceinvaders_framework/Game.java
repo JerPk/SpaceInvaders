@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -110,7 +111,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * The start method will be called once at the start of the game. it is
      * mainly used to start up the main thread of our game.
      */
-    private synchronized void start() {
+    public synchronized void start() {
         // an if statement that is to prevent that the start method creates
         // two threads if it accidently called twice.
         if (running) {
@@ -219,8 +220,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        
+        
         // calls the start method.
-        game.start();
+       Menu.createMenu();
+       game.start();
+       
     }
 
     /**
@@ -339,7 +344,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         BufferStrategy buff_strat = this.getBufferStrategy();
 
         if (buff_strat == null) {
-            createBufferStrategy(3);
+            createBufferStrategy(4);
             return;
         }
 
