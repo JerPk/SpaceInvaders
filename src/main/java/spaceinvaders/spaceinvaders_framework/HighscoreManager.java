@@ -129,7 +129,19 @@ public class HighscoreManager {
             }
         }
     }
-
+    
+    /**
+     * method that clears the highscores
+     */
+    public void clear() {
+    	scores.clear();
+    	updateScoreFile();
+    	for (int i=0; i<10; i++) {
+    		addScore("", 0);
+    	}
+    	updateScoreFile();
+    }
+    
     /**
      * method that sets the outputstream. this method is only used for Testing purposes.
      * 
@@ -140,4 +152,6 @@ public class HighscoreManager {
         outputStream = new ObjectOutputStream(new FileOutputStream(
                 "res/scores.dat"));
     }
+    
+
 }
