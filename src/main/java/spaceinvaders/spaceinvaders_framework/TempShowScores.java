@@ -29,7 +29,7 @@ import javax.swing.JTable;
  */
 public class TempShowScores {
 
-    public static void main(String argv[]) {
+    public static void show() {
         HighscoreManager highscoremanager = new HighscoreManager();
         ArrayList<Score> allscores = highscoremanager.getScores();
 
@@ -97,6 +97,13 @@ public class TempShowScores {
         southpanel.add(returns);
         southpanel.add(reset);
         southpanel.add(quit);
+        
+        returns.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.setVisible(false);
+			}
+		});
 
         reset.addActionListener(new ActionListener() {
 			@Override
