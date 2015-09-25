@@ -197,8 +197,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         logfile = new LogFile();
         logfile.open();
         logfile.writeString("Game started at " + new Date());
-//        new Date();
-//        System.out.print(new Date());
 
         // creates all the aliens and adds them to the Aliens vector
         for (int x = 0; x < amountAliens; x++) {
