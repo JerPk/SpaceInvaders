@@ -66,14 +66,15 @@ public class Menu {
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                JOptionPane.showMessageDialog(frame, "Here must be the statistics");
+                TempShowScores.show();
             }
         });
         //Quit game
         btnQuit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                game.end();
+//                game.end();
+            	System.exit(1);
             }
         });
     }
