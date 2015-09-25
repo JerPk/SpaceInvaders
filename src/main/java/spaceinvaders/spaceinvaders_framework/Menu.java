@@ -3,6 +3,7 @@ package spaceinvaders.spaceinvaders_framework;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Menu {
@@ -40,7 +42,14 @@ public class Menu {
         // set layout manager
         panel.setLayout(new BorderLayout());
         // set background colour.
-        panel.setBackground(Color.black);     
+        panel.setBackground(Color.black);  
+        
+        JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
+
+        title.setForeground(Color.white);
+        title.setFont(new Font("Courier", Font.BOLD, 30));
+        
+        panel.add(title, BorderLayout.CENTER);
         
         JButton btnNewGame = new JButton("New Game");
         JButton btnStatistics = new JButton("Highscores");
@@ -83,18 +92,18 @@ public class Menu {
             }
         });
         
-        
         // add the panel to the frame.
         frame.add(panel);
         frame.setVisible(true);
     }
 	
-	public void render(BufferStrategy bs) {
-
+	//Will be used later to show title
+	public void render() {
+		Game g = new Game();
+		BufferStrategy bs = g.getBufferStrategy();
+		
         Graphics graphic = bs.getDrawGraphics();
-        Game game = new Game();
-
-        graphic.drawImage(menu, 0, 0, width, height, game);
+        graphic.drawImage(menu, 0, 0, width, height, null);
 		
 	}
     
