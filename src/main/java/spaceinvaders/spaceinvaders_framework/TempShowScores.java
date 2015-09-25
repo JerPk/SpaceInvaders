@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -88,12 +90,21 @@ public class TempShowScores {
         // the returns and quit button of the highscores page.
         JButton returns = new JButton("return");
         JButton quit = new JButton("quit");
+        JButton reset = new JButton("reset");
 
         JPanel southpanel = new JPanel();
 
         southpanel.add(returns);
+        southpanel.add(reset);
         southpanel.add(quit);
 
+        reset.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				highscoremanager.clear();
+			}
+		});
+        
         // method that makes sure that when we press quit the application will
         // end.
         quit.addActionListener(new ActionListener() {
@@ -110,6 +121,7 @@ public class TempShowScores {
 
         // add the panel to the frame.
         frame.add(p);
+        frame.setVisible(true);
     }
 
 }
