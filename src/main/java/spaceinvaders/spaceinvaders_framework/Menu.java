@@ -39,9 +39,8 @@ public class Menu {
         // create the main panel
         JPanel panel = new JPanel();
 
-        // set layout manager
         panel.setLayout(new BorderLayout());
-        // set background colour.
+        
         panel.setBackground(Color.black);  
         
         JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
@@ -87,7 +86,6 @@ public class Menu {
         btnQuit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-//                game.end();
             	System.exit(1);
             }
         });
@@ -112,9 +110,4 @@ public class Menu {
         game.start();
     }
     
-    //public static void main(){
-      //  Game game = new Game();
-       // game.init();
-       // createMenu();
-   // }
 }
