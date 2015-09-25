@@ -191,7 +191,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         // creates the JFrame that will be used.
-        JFrame frame = new JFrame(TITLE);
+        frame = new JFrame(TITLE);
         frame.add(this);
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -828,11 +828,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      */
     public void end() {
+    	running = false;
         //checkscore();
         addscore();
+        TempShowScores.show();
         logfile.writeString("Game ended at " + System.currentTimeMillis());
         logfile.close();
-        System.exit(0);
+        frame.setVisible(false);
+//        System.exit(0);
         
     }
 
