@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -119,13 +120,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addKeyListener(this);
         setFocusable(true);
         counter = 0;
+        
+        BuffereImageLoader loader = new BuffereImageLoader();
+        
+        // tries to load the spritesheet from the png file.
+        try {
+            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
      * The start method will be called once at the start of the game. it is
      * mainly used to start up the main thread of our game.
      */
-    private synchronized void start() {
+    public synchronized void start() {
         // an if statement that is to prevent that the start method creates
         // two threads if it accidently called twice.
         if (running) {
@@ -174,20 +185,26 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * game.
      */
     public void init() {
-        BuffereImageLoader loader = new BuffereImageLoader();
+    	
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+
+        // creates the JFrame that will be used.
+        frame = new JFrame(TITLE);
+        frame.add(this);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    	
         int maxAlienRowCount = 18;
         int amountAliens = 36;
         int startYOffsetAlien = 0;
         int startXOffsetAlien = 75;
         int row = 0;
-
-        // tries to load the spritesheet from the png file.
-        try {
-            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        
         aliens = new Vector<Alien>(0);
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
@@ -226,23 +243,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
         
         // creates the game object that will be used.
         Game game = new Game();
-
-        game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-
-        // creates the JFrame that will be used.
-        frame = new JFrame(game.TITLE);
-        frame.add(game);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        // calls the start method.
-        game.start();
         
+        //Menu.createMenu();
+        game.menu();
+        //game.start();
+    }
+    
+    public void menu() {
+    	
+    	SpriteSheet ss = new SpriteSheet(SpriteSheet);
+    	Menu gameMenu = new Menu(ss);
+    	gameMenu.runMenu();
     }
 
     /**
@@ -362,10 +373,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
         BufferStrategy buff_strat = this.getBufferStrategy();
 
         if (buff_strat == null) {
-            createBufferStrategy(3);
+            createBufferStrategy(4);
             return;
         }
 
+        if (!running) {
+        	
+        	return;
+        }
         Graphics graphic = buff_strat.getDrawGraphics();
 
         // here we draw the black background.
@@ -814,11 +829,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      */
     public void end() {
+    	running = false;
         //checkscore();
         addscore();
+        TempShowScores.show();
         logfile.writeString("Game ended at " + System.currentTimeMillis());
         logfile.close();
-        System.exit(0);
+        frame.setVisible(false);
+//        System.exit(0);
         
     }
 
