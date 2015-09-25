@@ -254,6 +254,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     	SpriteSheet ss = new SpriteSheet(SpriteSheet);
     	Menu gameMenu = new Menu(ss);
     	gameMenu.runMenu();
+    	
     }
 
     /**

@@ -1,5 +1,8 @@
 package spaceinvaders.spaceinvaders_framework;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +11,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class Menu {
 
@@ -18,28 +20,30 @@ public class Menu {
     private int width = 603;
     private int height = 447;
 
-    private static JFrame frame = null;
-   
+    private static JFrame frame = null;   
     
     public Menu(SpriteSheet ss){
+		//Create frame
+		//Game game = new Game();
+        frame = new JFrame("Space Invaders - Menu");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(new Dimension(width,height));
+        frame.setResizable(false);
 
         menu = ss.grabImage(257, 226, 100, 470);
     }
 	
 	public void runMenu() {
-		//Create frame
-		Game game = new Game();
-        frame = new JFrame(game.TITLE);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        frame.setSize(width,height);
-        frame.setResizable(false);
-        frame.setLayout(null);
-     
+        // create the main panel
+        JPanel panel = new JPanel();
+
+        // set layout manager
+        panel.setLayout(new BorderLayout());
+        // set background colour.
+        panel.setBackground(Color.black);     
         
-        //Temporal: Add buttons
         JButton btnNewGame = new JButton("New Game");
-        JButton btnStatistics = new JButton("Statistics");
+        JButton btnStatistics = new JButton("Highscores");
         JButton btnQuit = new JButton("Quit Game");
         
         btnNewGame.setVisible(true);
@@ -60,6 +64,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e){
                 newGame();
+                frame.setVisible(false);
             }
         });
         //Statistics
@@ -77,6 +82,11 @@ public class Menu {
             	System.exit(1);
             }
         });
+        
+        
+        // add the panel to the frame.
+        frame.add(panel);
+        frame.setVisible(true);
     }
 	
 	public void render(BufferStrategy bs) {
