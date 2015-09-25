@@ -1,7 +1,9 @@
 package spaceinvaders.spaceinvaders_framework;
 
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
@@ -12,26 +14,25 @@ import javax.swing.JOptionPane;
 public class Menu {
 
     private BufferedImage menu;
-    //Bullet coordinates
-    private double xpos,ypos;
+    
+    private int width = 603;
+    private int height = 447;
+
     private static JFrame frame = null;
    
     
-    public Menu(double x, double y, SpriteSheet ss){
-        this.xpos = x;
-        this.ypos = y;
+    public Menu(SpriteSheet ss){
 
-        Game.logfile.writeCreate("Menu", xpos, ypos);
-        menu = ss.grabImage(257, 226, 635, 470);
+        menu = ss.grabImage(257, 226, 100, 470);
     }
 	
-	public static void createMenu() {
+	public void runMenu() {
 		//Create frame
 		Game game = new Game();
         frame = new JFrame(game.TITLE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.setSize(603,447);
+        frame.setSize(width,height);
         frame.setResizable(false);
         frame.setLayout(null);
      
@@ -53,9 +54,6 @@ public class Menu {
         frame.add(btnStatistics);
         frame.add(btnQuit);
        
-        
-        
-        
         //Add ActionListener to buttons
         //New game
         btnNewGame.addActionListener(new ActionListener(){
@@ -79,6 +77,15 @@ public class Menu {
             }
         });
     }
+	
+	public void render(BufferStrategy bs) {
+
+        Graphics graphic = bs.getDrawGraphics();
+        Game game = new Game();
+
+        graphic.drawImage(menu, 0, 0, width, height, game);
+		
+	}
     
     private static void newGame(){
       Game game = new Game();

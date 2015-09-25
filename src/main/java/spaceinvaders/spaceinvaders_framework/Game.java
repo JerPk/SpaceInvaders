@@ -105,6 +105,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addKeyListener(this);
         setFocusable(true);
         counter = 0;
+        
+        BuffereImageLoader loader = new BuffereImageLoader();
+        
+        // tries to load the spritesheet from the png file.
+        try {
+            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -159,20 +169,26 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * game.
      */
     public void init() {
-        BuffereImageLoader loader = new BuffereImageLoader();
+    	
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+
+        // creates the JFrame that will be used.
+        JFrame frame = new JFrame(TITLE);
+        frame.add(this);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    	
         int maxAlienRowCount = 18;
         int amountAliens = 36;
         int startYOffsetAlien = 0;
         int startXOffsetAlien = 75;
         int row = 0;
-
-        // tries to load the spritesheet from the png file.
-        try {
-            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        
         aliens = new Vector<Alien>(0);
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
@@ -206,26 +222,20 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static void main(String argv[]) {
         // creates the game object that will be used.
         Game game = new Game();
-
-        game.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        game.setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        game.setMinimumSize(new Dimension(WIDTH, HEIGHT));
-
-        // creates the JFrame that will be used.
-        JFrame frame = new JFrame(game.TITLE);
-        frame.add(game);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
         
-        
-        // calls the start method.
-       Menu.createMenu();
-       game.start();
+        //Menu.createMenu();
+        game.menu();
+        //game.start();
        
+    }
+    
+    public void menu() {
+    	
+    	SpriteSheet ss = new SpriteSheet(SpriteSheet);
+    	Menu gameMenu = new Menu(ss);
+    	gameMenu.runMenu();
+    	
+    	
     }
 
     /**
@@ -348,6 +358,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
             return;
         }
 
+        if (!running) {
+        	
+        	return;
+        }
         Graphics graphic = buff_strat.getDrawGraphics();
 
         // here we draw the black background.
