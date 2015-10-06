@@ -827,9 +827,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void end() {
     	running = false;
-        //checkscore();
         addscore();
-        TempShowScores.show();
+        ScoreMenu s_menu = new ScoreMenu();
+        s_menu.show();
         logfile.writeString("Game ended at " + System.currentTimeMillis());
         logfile.close();
         frame.setVisible(false);

@@ -23,15 +23,14 @@ public class Menu {
     private int height = 447;
 
     private static JFrame frame = null;  
-    JPanel panel;
+    private JPanel panel;
     
-    JButton btnNewGame;
-    JButton btnStatistics;
-    JButton btnQuit;
+    private JButton btnNewGame;
+    private JButton btnStatistics;
+    private JButton btnQuit;
     
     public Menu(){
-		//Create frame
-		//Game game = new Game();
+
         frame = new JFrame("Space Invaders - Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(width,height));
@@ -98,7 +97,8 @@ public class Menu {
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                TempShowScores.show();
+                ScoreMenu score_menu = new ScoreMenu();
+                score_menu.show();
             }
         });
         //Quit game
