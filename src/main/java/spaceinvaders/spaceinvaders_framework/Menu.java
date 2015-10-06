@@ -29,7 +29,7 @@ public class Menu {
     JButton btnStatistics;
     JButton btnQuit;
     
-    public Menu(SpriteSheet ss){
+    public Menu(){
 		//Create frame
 		//Game game = new Game();
         frame = new JFrame("Space Invaders - Menu");
@@ -44,8 +44,6 @@ public class Menu {
         btnNewGame = new JButton("New Game");
         btnStatistics = new JButton("Highscores");
         btnQuit = new JButton("Quit Game");
-        
-        menu = ss.grabImage(257, 226, 100, 470);
     }
 	
 	public void runMenu() {
