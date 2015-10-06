@@ -8,18 +8,10 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -110,7 +102,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private BufferedImage SpriteSheet = null;
 
     private int score = 0;
-    private String highscore = "";
 
     Spaceship spaceship;
 
@@ -257,22 +248,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alienShoot();
                 counter = 0;
             }
-            
-            moveAliens();
+            if (aliens.size() == 0
+                    || aliens.get(aliens.size() - 1).getY() >= 400) {
+                end();
+            }
+            else if (aliens.get(aliens.size() - 1).getY() >= 360) {
+                barriers.clear();
+            }
+
             render();
             alienDie();
             removeOffScreenBullets();
             listenForKeys();
             addBarriers();
             checkIfHit();
-
-            if (aliens.get(aliens.size() - 1).getY() >= 360) {
-                barriers.clear();
-            }
-            if (aliens.size() == 0
-                    || aliens.get(aliens.size() - 1).getY() >= 400) {
-                end();
-            }
+            moveAliens();
 
             try {
 
