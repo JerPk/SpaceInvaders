@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -177,7 +178,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         logfile.writeString("Game ended because of an error at "
-                + System.currentTimeMillis());
+                + new Date());
         logfile.close();
 
         // exits the application.
@@ -203,7 +204,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         logfile = new LogFile();
         logfile.open();
-        logfile.writeString("Game started at " + System.currentTimeMillis());
+        logfile.writeString("Game started at " + new Date());
 
         // creates all the aliens and adds them to the Aliens vector
         for (int x = 0; x < amountAliens; x++) {
@@ -820,7 +821,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addscore();
         ScoreMenu s_menu = new ScoreMenu();
         s_menu.show();
-        logfile.writeString("Game ended at " + System.currentTimeMillis());
+        logfile.writeString("Game ended at " + new Date());
         logfile.close();
         frame.setVisible(false);
 //        System.exit(0);
