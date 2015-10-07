@@ -22,26 +22,30 @@ public class Menu {
     private int width = 603;
     private int height = 447;
 
-    private static JFrame frame = null;   
+    private static JFrame frame = null;  
+    private JPanel panel;
     
-    public Menu(SpriteSheet ss){
-		//Create frame
-		//Game game = new Game();
+    private JButton btnNewGame;
+    private JButton btnStatistics;
+    private JButton btnQuit;
+    
+    public Menu(){
+
         frame = new JFrame("Space Invaders - Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(new Dimension(width,height));
         frame.setResizable(false);
 
-        menu = ss.grabImage(257, 226, 100, 470);
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.setBackground(Color.black);  
+        
+        btnNewGame = new JButton("New Game");
+        btnStatistics = new JButton("Highscores");
+        btnQuit = new JButton("Quit Game");
     }
 	
 	public void runMenu() {
-        // create the main panel
-        JPanel panel = new JPanel();
-
-        panel.setLayout(new BorderLayout());
-        
-        panel.setBackground(Color.black);  
         
         JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
 
@@ -49,10 +53,6 @@ public class Menu {
         title.setFont(new Font("Courier", Font.BOLD, 30));
         
         panel.add(title, BorderLayout.CENTER);
-        
-        JButton btnNewGame = new JButton("New Game");
-        JButton btnStatistics = new JButton("Highscores");
-        JButton btnQuit = new JButton("Quit Game");
         
         btnNewGame.setVisible(true);
         btnStatistics.setVisible(true);
@@ -65,30 +65,8 @@ public class Menu {
         frame.add(btnNewGame);
         frame.add(btnStatistics);
         frame.add(btnQuit);
-       
-        //Add ActionListener to buttons
-        //New game
-        btnNewGame.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                newGame();
-                frame.setVisible(false);
-            }
-        });
-        //Statistics
-        btnStatistics.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                TempShowScores.show();
-            }
-        });
-        //Quit game
-        btnQuit.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-            	System.exit(1);
-            }
-        });
+    
+        listenForActions();
         
         // add the panel to the frame.
         frame.add(panel);
@@ -103,6 +81,33 @@ public class Menu {
         Graphics graphic = bs.getDrawGraphics();
         graphic.drawImage(menu, 0, 0, width, height, null);
 		
+	}
+	
+	public void listenForActions() {
+        //Add ActionListener to buttons
+        //New game
+        btnNewGame.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                newGame();
+                frame.setVisible(false);
+            }
+        });
+        //Statistics
+        btnStatistics.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                ScoreMenu score_menu = new ScoreMenu();
+                score_menu.show();
+            }
+        });
+        //Quit game
+        btnQuit.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+            	System.exit(1);
+            }
+        });
 	}
     
     private static void newGame(){

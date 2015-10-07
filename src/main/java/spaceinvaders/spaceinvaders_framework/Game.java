@@ -8,19 +8,11 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 import java.util.Date;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -111,7 +103,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private BufferedImage SpriteSheet = null;
 
     private int score = 0;
-    private String highscore = "";
 
     Spaceship spaceship;
 
@@ -123,6 +114,18 @@ public class Game extends Canvas implements Runnable, KeyListener {
         counter = 0;
         
         BuffereImageLoader loader = new BuffereImageLoader();
+        
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setMaximumSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+
+        // creates the JFrame that will be used.
+        frame = new JFrame(TITLE);
+        frame.add(this);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
         
         // tries to load the spritesheet from the png file.
         try {
@@ -149,6 +152,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
+        frame.setVisible(true);
 
     }
 
@@ -187,19 +191,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void init() {
     	
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-
-        // creates the JFrame that will be used.
-        frame = new JFrame(TITLE);
-        frame.add(this);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    	
         int maxAlienRowCount = 18;
         int amountAliens = 36;
         int startYOffsetAlien = 0;
@@ -230,8 +221,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         
         highscoremanager = new HighscoreManager();        
         
-
-       
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
@@ -240,24 +229,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     public static void main(String argv[]) {
-       
-        
-        // creates the game object that will be used.
-        Game game = new Game();
-        
-        //Menu.createMenu();
-        game.menu();
-        //game.start();
+    	Menu gameMenu = new Menu();
+    	gameMenu.runMenu();
     }
     
-    public void menu() {
-    	
-    	SpriteSheet ss = new SpriteSheet(SpriteSheet);
-    	Menu gameMenu = new Menu(ss);
-    	gameMenu.runMenu();
-    	
-    }
-
     /**
      * the run method is the method that has the main game loop that will be
      * called repeatedly when the game is ongoing.
@@ -274,73 +249,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alienShoot();
                 counter = 0;
             }
-
-            // this if statement will only be used if all the aliens need to be
-            // updated simultaneously.
-            if (logicRequiredThisLoop) {
-
-                // the for loop gets
-                for (int i = 0; i < aliens.size(); i++) {
-                    Alien alien_obj = (Alien) aliens.get(i);
-                    alien_obj.vmovement();
-                }
-                logicRequiredThisLoop = false;
-                
-                Game.logfile.writeString("Aliens reached a border and moved down");
-            }
-            render();
-            alienDie();
-            removeOffScreenBullets();
-
-            // resolve the movement of the ship. First assume the ship
-            // isn't moving. If either cursor key is pressed then
-            // update the movement appropriately
-            if ((leftPressed) && (!rightPressed)) {
-                spaceship.moveLeft();
-                if (spacePressed) {
-                    spaceship.shoot();
-                }
-            } else if ((rightPressed) && (!leftPressed)) {
-                spaceship.moveRight();
-                if (spacePressed) {
-                    spaceship.shoot();
-                }
-            }
-
-            // if we're pressing fire, attempt to fire
-            if (spacePressed) {
-                shipBullets.addElement(spaceship.shoot());
-                spacePressed = false;
-            }
-
-            int hit = spaceship.ifHit(alienBullets);
-            if (hit != -1) {
-                if (spaceship.getLives() > 0) {
-                    alienBullets.removeElementAt(hit);
-                } else {
-                    end();
-                }
-            }
-
-            if (aliens.get(aliens.size() - 1).getY() >= 360) {
-                barriers.clear();
-            }
             if (aliens.size() == 0
                     || aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
             }
-
-            for (int i = 0; i < barriers.size(); i++) {
-                if (barriers.get(i).ifHit(alienBullets) != -1) {
-                    alienBullets.removeElementAt(barriers.get(i).ifHit(
-                            alienBullets));
-                    if (barriers.get(i).getState() < 4) {
-                        barriers.get(i).decreaseState();
-                    } else {
-                        barriers.removeElementAt(i);
-                    }
-                }
+            else if (aliens.get(aliens.size() - 1).getY() >= 360) {
+                barriers.clear();
             }
+
+            render();
+            alienDie();
+            removeOffScreenBullets();
+            listenForKeys();
+            addBarriers();
+            checkIfHit();
+            moveAliens();
 
             try {
 
@@ -350,8 +273,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
         }
 
-        // if the loop is ended due to some error the stop method
-        // is called immediately.
+        // if the loop is ended due to some error the stop method is called immediately.
         stop();
     }
 
@@ -365,6 +287,70 @@ public class Game extends Canvas implements Runnable, KeyListener {
             alien_obj.hmovement();
         }
 
+    }
+    
+    public void moveAliens() {
+        // this if statement will only be used if all the aliens need to be updated simultaneously.
+        if (logicRequiredThisLoop) {
+
+            // the for loop gets
+            for (int i = 0; i < aliens.size(); i++) {
+                Alien alien_obj = (Alien) aliens.get(i);
+                alien_obj.vmovement();
+            }
+            logicRequiredThisLoop = false;
+            
+            Game.logfile.writeString("Aliens reached a border and moved down");
+        }
+    }
+    
+    public void listenForKeys() {
+    	
+        // resolve the movement of the ship. First assume the ship
+        // isn't moving. If either cursor key is pressed then
+        // update the movement appropriately
+        if ((leftPressed) && (!rightPressed)) {
+            spaceship.moveLeft();
+            if (spacePressed) {
+                spaceship.shoot();
+            }
+        } else if ((rightPressed) && (!leftPressed)) {
+            spaceship.moveRight();
+            if (spacePressed) {
+                spaceship.shoot();
+            }
+        }
+
+        // if we're pressing fire, attempt to fire
+        if (spacePressed) {
+            shipBullets.addElement(spaceship.shoot());
+            spacePressed = false;
+        }
+    }
+    
+    public void addBarriers() {
+        for (int i = 0; i < barriers.size(); i++) {
+            if (barriers.get(i).ifHit(alienBullets) != -1) {
+                alienBullets.removeElementAt(barriers.get(i).ifHit(
+                        alienBullets));
+                if (barriers.get(i).getState() < 4) {
+                    barriers.get(i).decreaseState();
+                } else {
+                    barriers.removeElementAt(i);
+                }
+            }
+        }
+    }
+    
+    public void checkIfHit() {
+        int hit = spaceship.ifHit(alienBullets);
+        if (hit != -1) {
+            if (spaceship.getLives() > 0) {
+                alienBullets.removeElementAt(hit);
+            } else {
+                end();
+            }
+        }
     }
 
     /**
@@ -832,9 +818,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void end() {
     	running = false;
-        //checkscore();
         addscore();
-        TempShowScores.show();
+        ScoreMenu s_menu = new ScoreMenu();
+        s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         frame.setVisible(false);
