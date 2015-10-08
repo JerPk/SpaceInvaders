@@ -200,7 +200,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-        CreateAliens(aliens);
+        CreateAliens();
 
         spaceship = new Spaceship(this);
 
@@ -218,7 +218,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      * @param aliens
      */
-    public void CreateAliens(Vector<Alien> aliens) {
+    public void CreateAliens() {
 
         int startYOffsetAlien = 0;
         int startXOffsetAlien = 75;
