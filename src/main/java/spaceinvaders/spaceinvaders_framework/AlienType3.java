@@ -17,6 +17,7 @@ public class AlienType3 extends Alien{
      */
     public AlienType3(double x, double y, Game g) {
         super(x, y, g);
+        Game.logfile.writeCreate("AlienType3", x, y);
         setSpritesheet(74, 225, 22, 16);
         setScore(30);
         setHealth(3);
@@ -33,7 +34,7 @@ public class AlienType3 extends Alien{
     public Bullet shoot() {
       final SpriteSheet spritesheet = new SpriteSheet(getGame().getSpriteSheet());
       final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
-      Game.logfile.writeShoot("Alien", getX(), getY());
+      Game.logfile.writeShoot("AlienType3", getX(), getY());
       
       newBullet.setDownSpeed(6.6);
       newBullet.setSpritesheet(200,605,6,12);

@@ -29,7 +29,7 @@ public abstract class Alien {
      * the game the alien is a part of.
      */
     private Game game;
-    
+
     /**
      * the horizontal movement speed of the aliens.
      */
@@ -55,7 +55,6 @@ public abstract class Alien {
      *            g
      */
     public Alien(double x, double y, Game g) {
-        Game.logfile.writeCreate("Alien", x, y);
         this.x = x;
         this.y = y;
         game = g;
@@ -107,9 +106,11 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
-        final Bullet newBullet = new Bullet(x + 5, y + 2, spritesheet);
-        game.logfile.writeShoot("Alien", x, y);
+        final SpriteSheet spritesheet = new SpriteSheet(getGame()
+                .getSpriteSheet());
+        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
+        Game.logfile.writeShoot("Alien", getX(), getY());
+
         return newBullet;
     }
 
@@ -121,7 +122,8 @@ public abstract class Alien {
     /**
      * the method used to draw the aliens on the screen.
      * 
-     * @param Graphics g
+     * @param Graphics
+     *            g
      */
     public void render(Graphics g) {
         g.drawImage(Alien, (int) x, (int) y, null);
@@ -173,8 +175,8 @@ public abstract class Alien {
     }
 
     /**
-     * the method that returns 
-     * the score.
+     * the method that returns the score.
+     * 
      * @return score
      */
     public int getScore() {
@@ -182,9 +184,10 @@ public abstract class Alien {
     }
 
     /**
-     * The method that sets the 
-     * score. 
-     * @param Score the new score
+     * The method that sets the score.
+     * 
+     * @param Score
+     *            the new score
      */
     public void setScore(int Score) {
         score = Score;
@@ -192,6 +195,7 @@ public abstract class Alien {
 
     /**
      * the method that sets the alien's health.
+     * 
      * @param Health
      */
     public void setHealth(int Health) {
@@ -199,8 +203,8 @@ public abstract class Alien {
     }
 
     /**
-     * the method that returns the 
-     * health of the alien.
+     * the method that returns the health of the alien.
+     * 
      * @return
      */
     public int getHealth() {
@@ -208,8 +212,8 @@ public abstract class Alien {
     }
 
     /**
-     * the method that returns the game
-     * associated with the alien.
+     * the method that returns the game associated with the alien.
+     * 
      * @return
      */
     public Game getGame() {
