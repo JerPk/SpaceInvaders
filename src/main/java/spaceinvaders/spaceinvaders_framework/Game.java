@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -81,7 +82,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private Vector<Barrier> barriers;
 
     private int counter;
-    
+
     private HighscoreManager highscoremanager;
 
     /**
@@ -112,9 +113,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         addKeyListener(this);
         setFocusable(true);
         counter = 0;
-        
+
         BuffereImageLoader loader = new BuffereImageLoader();
-        
+
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
@@ -126,7 +127,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-        
+
         // tries to load the spritesheet from the png file.
         try {
             SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
@@ -148,7 +149,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         running = true;
-        
+
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
@@ -177,8 +178,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             e.printStackTrace();
         }
 
-        logfile.writeString("Game ended because of an error at "
-                + new Date());
+        logfile.writeString("Game ended because of an error at " + new Date());
         logfile.close();
 
         // exits the application.
@@ -190,13 +190,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * game.
      */
     public void init() {
-    	
-        int maxAlienRowCount = 18;
-        int amountAliens = 36;
-        int startYOffsetAlien = 0;
-        int startXOffsetAlien = 75;
-        int row = 0;
-        
+
         aliens = new Vector<Alien>(0);
         alienBullets = new Vector<Bullet>(0);
         shipBullets = new Vector<Bullet>(0);
@@ -206,21 +200,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-        // creates all the aliens and adds them to the Aliens vector
-        for (int x = 0; x < amountAliens; x++) {
-            if (row >= maxAlienRowCount) {
-                row = 0;
-            }
-            row++;
-            Alien alien = new Alien(startXOffsetAlien + (25 * row),
-                    startYOffsetAlien + (25 * (x / maxAlienRowCount)), this);
-            aliens.addElement(alien);
-        }
+        CreateAliens();
 
-        spaceship = new Spaceship(this);    
-        
-        highscoremanager = new HighscoreManager();        
-        
+        spaceship = new Spaceship(this);
+
+        highscoremanager = new HighscoreManager();
+
         // creates all barriers and adds them to the barrier vector
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
@@ -228,11 +213,40 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
-    public static void main(String argv[]) {
-    	Menu gameMenu = new Menu();
-    	gameMenu.runMenu();
+    /**
+     * creates all the aliens and adds them to the alien vector.
+     * 
+     * @param aliens
+     */
+    public void CreateAliens() {
+
+        int startYOffsetAlien = 0;
+        int startXOffsetAlien = 75;
+
+        for (int x = 0; x < 18; x++) {
+            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien
+                    + (25 * x) - 3, startYOffsetAlien, this);
+            aliens.addElement(alien);
+        }
+
+        for (int x = 0; x < 18; x++) {
+            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien
+                    + (25 * x) - 3, startYOffsetAlien + 25, this);
+            aliens.addElement(alien);
+        }
+
+        for (int x = 0; x < 18; x++) {
+            Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien
+                    + (25 * x) - 3, startYOffsetAlien + 50, this);
+            aliens.addElement(alien);
+        }
     }
-    
+
+    public static void main(String argv[]) {
+        Menu gameMenu = new Menu();
+        gameMenu.runMenu();
+    }
+
     /**
      * the run method is the method that has the main game loop that will be
      * called repeatedly when the game is ongoing.
@@ -252,8 +266,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             if (aliens.size() == 0
                     || aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
-            }
-            else if (aliens.get(aliens.size() - 1).getY() >= 360) {
+            } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
                 barriers.clear();
             }
 
@@ -273,7 +286,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
         }
 
-        // if the loop is ended due to some error the stop method is called immediately.
+        // if the loop is ended due to some error the stop method is called
+        // immediately.
         stop();
     }
 
@@ -288,9 +302,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
     }
-    
+
     public void moveAliens() {
-        // this if statement will only be used if all the aliens need to be updated simultaneously.
+        // this if statement will only be used if all the aliens need to be
+        // updated simultaneously.
         if (logicRequiredThisLoop) {
 
             // the for loop gets
@@ -299,13 +314,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alien_obj.vmovement();
             }
             logicRequiredThisLoop = false;
-            
+
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
     }
-    
+
     public void listenForKeys() {
-    	
+
         // resolve the movement of the ship. First assume the ship
         // isn't moving. If either cursor key is pressed then
         // update the movement appropriately
@@ -327,12 +342,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
             spacePressed = false;
         }
     }
-    
+
     public void addBarriers() {
         for (int i = 0; i < barriers.size(); i++) {
             if (barriers.get(i).ifHit(alienBullets) != -1) {
-                alienBullets.removeElementAt(barriers.get(i).ifHit(
-                        alienBullets));
+                alienBullets.removeElementAt(barriers.get(i)
+                        .ifHit(alienBullets));
                 if (barriers.get(i).getState() < 4) {
                     barriers.get(i).decreaseState();
                 } else {
@@ -341,7 +356,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
         }
     }
-    
+
     public void checkIfHit() {
         int hit = spaceship.ifHit(alienBullets);
         if (hit != -1) {
@@ -366,8 +381,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
 
         if (!running) {
-        	
-        	return;
+
+            return;
         }
         Graphics graphic = buff_strat.getDrawGraphics();
 
@@ -388,7 +403,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         renderScore();
         renderHighScore();
-        
+
         // Draw the bullet for the Aliens
         renderBulletShip();
         renderBulletAlien();
@@ -441,6 +456,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         }
     }
+
     /**
      * renders the highscore on the screen.
      */
@@ -454,14 +470,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
         g.setColor(Color.white);
         ArrayList<Score> scores = highscoremanager.getScores();
         Score topscore = scores.get(0);
-        
+
         g.drawString("Highscore : " + topscore.getScore(), 550, 470);
     }
 
     /**
      * renders the players current score on the screen.
      */
-    public void renderScore(){
+    public void renderScore() {
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
             createBufferStrategy(3);
@@ -469,10 +485,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.white);
-        g.drawString("Score : " + score, 550, 455); 
+        g.drawString("Score : " + score, 550, 455);
     }
-    
-    
+
     /**
      * The method that that randomly selects an alien. and adds its bullet to
      * the vector.
@@ -485,14 +500,22 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     /**
      * The method alien die compares every spaceship bullet with alien. if the
-     * alien is shot it is removed from the game.
+     * alien is shot its health is lowered. if the health is zero it is removed
+     * from the game.
      */
     public void alienDie() {
         for (int i = 0; i < aliens.size(); i++) {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {
-                score += 10;
-                aliens.removeElementAt(i);
+                Alien alien = aliens.get(i);
+                               
+                alien.setHealth(alien.getHealth() - 1);
+
+                if (aliens.get(i).getHealth() <= 0) {
+
+                    score += alien.getScore();
+                    aliens.removeElementAt(i);
+                }
                 shipBullets.removeElementAt(hit);
             }
         }
@@ -528,7 +551,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         updateBullet = true;
     }
 
-  
     /**
      * the keyPressed method is called when a key is pressed down.
      */
@@ -796,53 +818,54 @@ public class Game extends Canvas implements Runnable, KeyListener {
         spacePressed = b;
 
     }
-    
+
     /**
-     * The addscore method compares the players score to the 10 object
-     * in the scores array. if the player scores higher the object is added to
-     * the array.
+     * The addscore method compares the players score to the 10 object in the
+     * scores array. if the player scores higher the object is added to the
+     * array.
      */
-    public void addscore(){
+    public void addscore() {
         ArrayList<Score> scores = highscoremanager.getScores();
         Score ninthscore = scores.get(9);
-        if(score >= ninthscore.getScore()){
-            String name = JOptionPane.showInputDialog("Congratulations you are on the leaderboards what is your name?");
+        if (score >= ninthscore.getScore()) {
+            String name = JOptionPane
+                    .showInputDialog("Congratulations you are on the leaderboards what is your name?");
             highscoremanager.addScore(name, score);
         }
     }
-    
+
     /**
      * the method we use to exit the application. this method is called when the
      * aliens have reached the bottom of the screen
      * 
      */
     public void end() {
-    	running = false;
+        running = false;
         addscore();
         ScoreMenu s_menu = new ScoreMenu();
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         frame.setVisible(false);
-//        System.exit(0);
-        
+        // System.exit(0);
+
     }
 
     /**
-     * the set highscoremanager sets the new Highscoremanager.
-     * This method is used mainly for testing purposes.
+     * the set highscoremanager sets the new Highscoremanager. This method is
+     * used mainly for testing purposes.
      */
-    public void setHighscoremanager(HighscoreManager manager){
+    public void setHighscoremanager(HighscoreManager manager) {
         highscoremanager = manager;
     }
-    
+
     /**
-     * the set score method is able to manually set the score
-     * of the player. this method is only used for testing purposes.
+     * the set score method is able to manually set the score of the player.
+     * this method is only used for testing purposes.
      * 
      * @param score1
      */
-    public void setscore(int score1){
+    public void setscore(int score1) {
         score = score1;
     }
 }

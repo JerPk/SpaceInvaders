@@ -6,15 +6,18 @@ import java.awt.image.BufferedImage;
 public class Bullet {
 
     private BufferedImage bullet;
+    private SpriteSheet spritesheet;
     //Bullet coordinates
     private double xpos,ypos;
+    private double downspeed = 2.2;
     
     public Bullet(double x, double y, SpriteSheet ss){
         this.xpos = x;
         this.ypos = y;
 
         Game.logfile.writeCreate("Bullet", xpos, ypos);
-        bullet = ss.grabImage(413, 277, 6, 12);
+        spritesheet = ss;
+        bullet = spritesheet.grabImage(413, 277, 6, 12);
     }
     //Move the bullet up
     public void moveUp(){   
@@ -23,7 +26,7 @@ public class Bullet {
         
     //Move the bullet down
     public void moveDown(){
-        ypos += 2.2;
+        ypos += downspeed;
     }
     
     //Draw the bullet
@@ -54,6 +57,14 @@ public class Bullet {
         
         return result;
         
+    }
+    
+    public void setDownSpeed(double speed) {
+        downspeed = speed;
+    }
+    
+    public void setSpritesheet(int row, int col, int x, int y){
+       bullet = spritesheet.grabImage(row, col, x, y);
     }
     
 }
