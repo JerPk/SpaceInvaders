@@ -14,7 +14,7 @@ public abstract class Alien {
     /**
      * the score the player gets for killing an alien.
      */
-    private static int score;
+    private int score;
     /**
      * the x coordinate of the Alien.
      */
@@ -177,7 +177,7 @@ public abstract class Alien {
      * the score.
      * @return score
      */
-    public static int getScore() {
+    public int getScore() {
         return score;
     }
 

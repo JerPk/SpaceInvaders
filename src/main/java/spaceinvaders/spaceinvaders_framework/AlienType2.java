@@ -41,5 +41,4 @@ public class AlienType2 extends Alien{
       
       return newBullet;
     }
-
 }
