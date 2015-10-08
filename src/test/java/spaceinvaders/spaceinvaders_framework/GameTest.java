@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Vector;
+
 import javax.swing.JFrame;
 
 
@@ -96,11 +97,11 @@ public class GameTest {
     game.init();
     final Vector<Alien> Alienvector = game.getAlienVector();
     final Alien alien = Alienvector.get(0);
-    assertEquals(alien.getX(), 100, 0.0001);
+    assertEquals(alien.getX(), 72, 0.0001);
 
     game.doAction();
     final Alien alien2 = Alienvector.get(0);
-    assertEquals(alien2.getX(), 101, 0.0001);
+    assertEquals(alien2.getX(), 73, 0.0001);
 
   }
 
@@ -234,19 +235,19 @@ public class GameTest {
     public void testalienDie() {
     game.init();
 
-    final Alien alien = new Alien(3, 3, game);
+    final Alien alien = AlienFactory.getAlien("easy", 3, 3, game);
     game.addAlien(alien);
 
     final SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
     final Bullet newBullet = new Bullet(3, 3, spritesheet);
     game.addShipBullets(newBullet);
 
-    assertEquals(game.getAlienVector().size(), 37);
+    assertEquals(game.getAlienVector().size(), 55);
     assertEquals(game.getShipBullets().size(), 1);
 
     game.alienDie();
 
-    assertEquals(game.getAlienVector().size(), 36);
+    assertEquals(game.getAlienVector().size(), 54);
     assertEquals(game.getShipBullets().size(), 0);
   }
 

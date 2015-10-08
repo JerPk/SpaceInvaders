@@ -5,10 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
-
-
-
-
 import java.util.Vector;
 
 import org.junit.Before;
@@ -43,7 +39,8 @@ public class AlienTest {
    */
   @Test
     public void testConstructorAlien() {
-    final Alien alien = new Alien(3, 3, game);
+      
+    final Alien alien =  AlienFactory.getAlien("easy",3, 3, game);
     assertEquals((double) 3, alien.getX(), 0.00001);
     assertEquals((double) 3, alien.getY(), 0.00001);
 
@@ -54,7 +51,7 @@ public class AlienTest {
      */
   @Test
     public void testSuccessfulHMovement() {
-    final Alien alien = new Alien(33, 33, game);
+    final Alien alien =  AlienFactory.getAlien("easy",33, 33, game);
 
     assertFalse(game.getupdateLogic());
 
@@ -69,7 +66,7 @@ public class AlienTest {
      */
   @Test
     public void testHMovementRigamehtBorder() {
-    final Alien alien = new Alien(643, 33, game);
+    final Alien alien = AlienFactory.getAlien("easy",643, 33, game);
 
     assertFalse(game.getupdateLogic());
 
@@ -84,7 +81,7 @@ public class AlienTest {
      */
   @Test
     public void testHMovementLeftBorder() {
-    final Alien alien = new Alien(2, 33, game);
+    final Alien alien = AlienFactory.getAlien("easy",2, 33, game);
     alien.setMovementSpeed(-4);
 
     assertFalse(game.getupdateLogic());
@@ -100,7 +97,7 @@ public class AlienTest {
      */
   @Test
     public void testHMovementInverseMovement() {
-    final Alien alien = new Alien(7, 33, game);
+    final Alien alien = AlienFactory.getAlien("easy",7, 33, game);
     alien.setMovementSpeed(-5);
 
     assertFalse(game.getupdateLogic());
@@ -116,7 +113,7 @@ public class AlienTest {
      */
   @Test
     public void testVMovement() {
-    final Alien alien = new Alien(7, 30, game);
+    final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
     game.setrunning(true);
 
     alien.vmovement();
@@ -127,7 +124,7 @@ public class AlienTest {
 
   @Test
     public void testShoot() {
-    final Alien alien = new Alien(7, 30, game);
+    final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
     final Bullet bullet = alien.shoot();
 
     final SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
@@ -140,7 +137,7 @@ public class AlienTest {
 
   @Test
     public void testIfHit() {
-    final Alien alien = new Alien(7, 30, game);
+    final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
     final Vector<Bullet> shipBullets = new Vector<Bullet>(0);
 
     // assert that the ifhit method returns -1 if
@@ -157,5 +154,54 @@ public class AlienTest {
     assertEquals(alien.ifHit(shipBullets), 0);
 
   }
+  
+  @Test
+  public void testGetScore() {
+      final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
+      assertEquals(alien.getScore(),10);
+  }
+  
+  @Test
+  public void testGetHealth() {
+      final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
+      assertEquals(alien.getHealth(),1);
+  }
+  
+  @Test
+  public void testGetGame() {
+      final Alien alien = AlienFactory.getAlien("easy", 7, 30, game);
+      assertEquals(alien.getGame(),game);
+  }
+  
+  @Test
+  public void testAlienFactory() {
+      final Alien alien = AlienFactory.getAlien("Nonesense", 7, 30, game);
+      assertEquals(alien,null);
+  }
 
+  @Test
+  public void testShootAlienType2() {
+      final Alien alien = AlienFactory.getAlien("normal", 7, 30, game);
+      final Bullet bullet = alien.shoot();
+      
+      final SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
+
+      final Bullet testBullet = new Bullet(12, 32, spritesheet);
+
+      assertEquals(bullet, testBullet);
+      assertNotSame(bullet, testBullet);
+  }
+  
+  @Test
+  public void testShootAlienType3() {
+      final Alien alien = AlienFactory.getAlien("hard", 7, 30, game);
+      final Bullet bullet = alien.shoot();
+      
+      final SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
+
+      final Bullet testBullet = new Bullet(12, 32, spritesheet);
+
+      assertEquals(bullet, testBullet);
+      assertNotSame(bullet, testBullet);
+  }
 }

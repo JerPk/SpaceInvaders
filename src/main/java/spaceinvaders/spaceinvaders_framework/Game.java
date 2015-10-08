@@ -508,8 +508,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {
                 Alien alien = aliens.get(i);
-                System.out.println(alien.getScore());
-                
+                               
                 alien.setHealth(alien.getHealth() - 1);
 
                 if (aliens.get(i).getHealth() <= 0) {
