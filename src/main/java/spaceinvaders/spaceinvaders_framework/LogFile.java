@@ -4,7 +4,27 @@ import java.io.*;
 
 public class LogFile {
     
+	private volatile static LogFile uniqueInstance;
+	
     private BufferedWriter outbuf;
+    
+    private LogFile() {}
+    
+    /**
+     * method to get the instance of logfile
+     * 
+     * @return unique LogFile
+     */
+    public static LogFile getInstance() {
+    	if (uniqueInstance == null) {
+    		synchronized (LogFile.class) {
+    			if (uniqueInstance == null) {
+    				uniqueInstance = new LogFile();
+    			}
+    		}
+    	}
+    	return uniqueInstance;
+    }
     
     /**
      * method to open logfile

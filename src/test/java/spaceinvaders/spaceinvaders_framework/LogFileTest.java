@@ -11,9 +11,17 @@ public class LogFileTest {
     public static LogFile logfile;
 
     @Test
+    public void testSingleton() {
+    	logfile = LogFile.getInstance();
+    	LogFile logfile2 = LogFile.getInstance();
+    	
+    	assertEquals(logfile, logfile2);
+    }
+    
+    @Test
     public void testOpen() {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         
         assertEquals(outfile.exists(), true);
@@ -23,7 +31,7 @@ public class LogFileTest {
     @Test
     public void testClose() {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         
         logfile.close();
@@ -35,7 +43,7 @@ public class LogFileTest {
     @Test
     public void testWriteString() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Test message";
         logfile.writeString(msg);
@@ -48,7 +56,7 @@ public class LogFileTest {
     @Test
     public void testWriteCreate() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Obj";
         logfile.writeCreate(msg, 1, 1);
@@ -61,7 +69,7 @@ public class LogFileTest {
     @Test
     public void testWriteShoot() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Obj";
         logfile.writeShoot(msg, 1, 1);
@@ -74,7 +82,7 @@ public class LogFileTest {
     @Test
     public void testWriteMove() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Obj";
         logfile.writeMove(msg, 1, 1);
@@ -87,7 +95,7 @@ public class LogFileTest {
     @Test
     public void testWriteHit() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Obj";
         logfile.writeHit(msg, 1, 1);
@@ -100,7 +108,7 @@ public class LogFileTest {
     @Test
     public void testWriteOffscreen() throws IOException {
         File outfile = new File("logfile.txt");
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         String msg = "Obj";
         logfile.writeOffscreen(msg, 1);
