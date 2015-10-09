@@ -265,7 +265,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
             if (aliens.size() == 0
                     || aliens.get(aliens.size() - 1).getY() >= 400) {
-                end();
+            	nextlvl();
+//                end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
                 barriers.clear();
             }
@@ -289,6 +290,29 @@ public class Game extends Canvas implements Runnable, KeyListener {
         // if the loop is ended due to some error the stop method is called
         // immediately.
         stop();
+    }
+    
+    /**
+     * the emthod to start next level
+     */
+    public void nextlvl() {
+    	aliens.clear();
+    	barriers.clear();
+    	alienBullets.clear();
+    	shipBullets.clear();
+    	logfile.writeString("Next level");
+    	
+    	CreateAliens();
+
+//        spaceship = new Spaceship(this);
+//
+//        highscoremanager = new HighscoreManager();
+
+        // creates all barriers and adds them to the barrier vector
+        for (int i = 1; i <= 4; i++) {
+            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
+                    new SpriteSheet(getSpriteSheet())));
+        }
     }
 
     /**
