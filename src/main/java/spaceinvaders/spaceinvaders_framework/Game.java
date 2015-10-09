@@ -842,7 +842,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void end() {
         running = false;
         addscore();
+        Menu menu = new Menu();
         ScoreMenu s_menu = new ScoreMenu();
+        menu.runMenu();
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
