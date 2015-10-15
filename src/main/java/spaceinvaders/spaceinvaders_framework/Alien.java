@@ -219,4 +219,40 @@ public abstract class Alien {
     public Game getGame() {
         return game;
     }
+    
+    /**
+     * the method that creates and returns an alien of type 1.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType1(double x, double y, Game g){
+        Alien alien = new AlienType1(x,y,g);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 2.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType2(double x, double y, Game g){
+        Alien alien = new AlienType2(x,y,g);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 3.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType3(double x, double y, Game g){
+        Alien alien = new AlienType3(x,y,g);
+        return alien;        
+    }
 }
