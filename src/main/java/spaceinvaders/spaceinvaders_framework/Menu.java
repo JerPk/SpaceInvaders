@@ -23,6 +23,7 @@ public class Menu {
     private int height = 447;
 
     private static JFrame frame = null;  
+    private ScoreMenu score_menu; 
     private JPanel panel;
     
     private JButton btnNewGame;
@@ -97,7 +98,7 @@ public class Menu {
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ScoreMenu score_menu = new ScoreMenu();
+                score_menu = new ScoreMenu();
                 score_menu.show();
             }
         });
@@ -115,4 +116,12 @@ public class Menu {
         game.start();
     }
     
+    /**
+     * the getter method for the ScoreMenu of the menu class.
+     * mainly used for testing.
+     * @return score_menu
+     */
+    public ScoreMenu getScoreMenu() {
+        return score_menu;
+    }
 }

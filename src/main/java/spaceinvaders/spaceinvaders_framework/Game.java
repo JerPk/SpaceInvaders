@@ -44,6 +44,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * running == true when the game is running.
      */
     private boolean running = false;
+    
+    private ScoreMenu s_menu;
 
     /**
      * // a boolean that is only true if the aliens need to be updated. // here
@@ -843,7 +845,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         running = false;
         addscore();
         Menu menu = new Menu();
-        ScoreMenu s_menu = new ScoreMenu();
+        s_menu = new ScoreMenu();
         menu.runMenu();
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
@@ -869,5 +871,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void setscore(int score1) {
         score = score1;
+    }
+    
+    /**
+     * the getter method for the thread of the game.
+     * mainly used for testing.
+     * @return thread
+     */
+    public Thread getThread() {
+        return thread;
+    }
+    
+    /**
+     * the getter method for the scoremenu of the game.
+     * mainly used for testing.
+     * @return s_menu
+     */
+    public ScoreMenu getScoreMenu() {
+        return s_menu;
     }
 }
