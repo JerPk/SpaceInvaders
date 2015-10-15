@@ -164,10 +164,8 @@ public abstract class Alien {
                     && shipBullets.get(i).getX() <= x + 16) {
                 if (shipBullets.get(i).getY() >= y
                         && shipBullets.get(i).getY() <= y + 16) {
-                    game.logfile.writeHit("Alien", x, y);
-
+                    Game.logfile.writeHit("Alien", x, y);
                     return i;
-
                 }
             }
         }

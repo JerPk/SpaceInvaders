@@ -2,6 +2,7 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Vector;
 
 public class Barrier {
@@ -9,21 +10,31 @@ public class Barrier {
     private double xpos;
     private double ypos;
     private int state;
+    private SpriteSheet sprite_sheet;
     
     private BufferedImage[] barrier = new BufferedImage[5];
     
-    public Barrier(double x, double y, SpriteSheet ss){
+    public Barrier(double x, double y){
         this.xpos = x;
         this.ypos = y;
         this.state = 0;
         
+        BuffereImageLoader loader = new BuffereImageLoader();
+        BufferedImage BImg = null;
+        try {
+            BImg = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SpriteSheet sprite_sheet = new SpriteSheet(BImg);
+        
         Game.logfile.writeCreate("Barrier", xpos, ypos);
 
-        barrier[0] = ss.grabImage(316, 213, 44, 32);
-        barrier[1] = ss.grabImage(480, 210, 44, 32);
-        barrier[2] = ss.grabImage(480, 265, 44, 32);
-        barrier[3] = ss.grabImage(373, 211, 44, 32);
-        barrier[4] = ss.grabImage(428, 210, 44, 32);
+        barrier[0] = sprite_sheet.grabImage(316, 213, 44, 32);
+        barrier[1] = sprite_sheet.grabImage(480, 210, 44, 32);
+        barrier[2] = sprite_sheet.grabImage(480, 265, 44, 32);
+        barrier[3] = sprite_sheet.grabImage(373, 211, 44, 32);
+        barrier[4] = sprite_sheet.grabImage(428, 210, 44, 32);
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
