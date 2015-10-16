@@ -73,6 +73,8 @@ public class Spaceship {
         
         Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
         
+        newBullet.setSpritesheet(423, 277, 6, 12);
+        
         return newBullet;
     }
     

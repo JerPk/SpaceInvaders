@@ -202,7 +202,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
 
-        logfile = new LogFile();
+        logfile = LogFile.getInstance();
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
@@ -850,7 +850,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void end() {
         running = false;
         addscore();
+        Menu menu = new Menu();
         ScoreMenu s_menu = new ScoreMenu();
+        menu.runMenu();
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
