@@ -34,7 +34,6 @@ public class ScoreMenu {
 		
         // create the frame.
         frame = new JFrame("Highscores");
-        frame.setVisible(true);
         frame.setSize(new Dimension(635, 470));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         

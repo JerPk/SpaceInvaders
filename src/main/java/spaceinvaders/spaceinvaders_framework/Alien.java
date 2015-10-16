@@ -165,11 +165,38 @@ public abstract class Alien {
                 if (shipBullets.get(i).getY() >= y
                         && shipBullets.get(i).getY() <= y + 16) {
                     Game.logfile.writeHit("Alien", x, y);
+                    health--;
                     return i;
                 }
             }
         }
         return -1;
+    }
+    
+    /**
+     * This method checks if the alien has reached a certain height
+     * 
+     * @return true/false
+     */
+    public boolean reachedY(double i) {
+    	if (y >= i) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    /**
+     * the method that checks if the alien has any health left
+     *
+     * @return true/false
+     */
+    public boolean defeated() {
+    	if (health <= 0) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     /**

@@ -2,8 +2,6 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -67,8 +65,6 @@ public class Game extends Canvas implements Runnable {
     private BufferedImage SpriteSheet = null;
 
     public Game() {
-        //addKeyListener(this);
-        //setFocusable(true);
         counter = 0;
         screen = new Screen();
     }
@@ -145,7 +141,6 @@ public class Game extends Canvas implements Runnable {
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(635 / 5 * i - 22, 370));
         }
-        System.out.println("passed init");
     }
 
     ///DELETE///
@@ -156,8 +151,6 @@ public class Game extends Canvas implements Runnable {
         return SpriteSheet;
     }
 
-    
-    
     /**
      * creates all the aliens and adds them to the alien vector.
      * 
@@ -195,23 +188,20 @@ public class Game extends Canvas implements Runnable {
         // the while loop that will be active once the game is running.
         while (running) {
         	screen.render(this);
-            doAction();
             counter++;
-            if (counter >= 90) {
+            if (counter >= 30) {
                 alienShoot();
                 counter = 0;
             }
             if (aliens.size() == 0
-                    || aliens.get(aliens.size() - 1).getY() >= 400) {
+                    || aliens.get(aliens.size() - 1).reachedY(400)) {
                 end();
-            } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
+        	}	else if (aliens.get(aliens.size() - 1).reachedY(360)) {
                 barriers.clear();
             }
 
-            alienDie();
             removeOffScreenBullets();
             listenForKeys();
-            addBarriers();
             checkIfHit();
             moveAliens();
 
@@ -221,28 +211,17 @@ public class Game extends Canvas implements Runnable {
                 // Catch if needed
             }
         }
-
         // if the loop is ended due to some error the stop method is called immediately.
         stop();
     }
 
-    /**
-     * the method that is used for all the non player entities to perform their actions
-     */
-    public void doAction() {
+    public void moveAliens() {
         for (int i = 0; i < aliens.size(); i++) {
             Alien alien_obj = (Alien) aliens.get(i);
             alien_obj.hmovement();
-        }
-
-    }
-
-    public void moveAliens() {
-        // this if statement will only be used if all the aliens need to be
-        // updated simultaneously.
+        }	
+        // this if statement will only be used if all the aliens need to be updated simultaneously.
         if (logicRequiredThisLoop) {
-
-            // the for loop gets
             for (int i = 0; i < aliens.size(); i++) {
                 Alien alien_obj = (Alien) aliens.get(i);
                 alien_obj.vmovement();
@@ -273,27 +252,32 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public void addBarriers() {
-        for (int i = 0; i < barriers.size(); i++) {
-            if (barriers.get(i).ifHit(alienBullets) != -1) {
-                alienBullets.removeElementAt(barriers.get(i)
-                        .ifHit(alienBullets));
-                if (barriers.get(i).getState() < 4) {
-                    barriers.get(i).decreaseState();
-                } else {
-                    barriers.removeElementAt(i);
+    public void checkIfHit() {
+        if (!spaceship.defeated()) {
+        	int hit = spaceship.ifHit(alienBullets);
+            if (hit != -1) {
+                alienBullets.removeElementAt(hit);
+            }
+        } else {
+        	end();
+        }
+        for (int i = 0; i < aliens.size(); i++) {
+            int hit = aliens.get(i).ifHit(shipBullets);
+            if (hit != -1) {               
+                if (aliens.get(i).defeated()) {
+                    score += aliens.get(i).getScore();
+                    aliens.removeElementAt(i);
                 }
+                shipBullets.removeElementAt(hit);
             }
         }
-    }
-
-    public void checkIfHit() {
-        int hit = spaceship.ifHit(alienBullets);
-        if (hit != -1) {
-            if (spaceship.getLives() > 0) {
+        for (int i = 0; i < barriers.size(); i++) {
+        	int hit = barriers.get(i).ifHit(alienBullets);
+            if (hit != -1) {
                 alienBullets.removeElementAt(hit);
-            } else {
-                end();
+                if (barriers.get(i).destroyed()) {
+                    barriers.removeElementAt(i);
+                }
             }
         }
     }
@@ -308,32 +292,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     /**
-     * This method compares every spaceship bullet with alien. if the alien is shot its health is lowered. 
-     * If the health is zero it is removed from the game.
-     */
-    public void alienDie() {
-        for (int i = 0; i < aliens.size(); i++) {
-            int hit = aliens.get(i).ifHit(shipBullets);
-            if (hit != -1) {
-                Alien alien = aliens.get(i);               
-                alien.setHealth(alien.getHealth() - 1);
-
-                if (aliens.get(i).getHealth() <= 0) {
-
-                    score += alien.getScore();
-                    aliens.removeElementAt(i);
-                }
-                shipBullets.removeElementAt(hit);
-            }
-        }
-    }
-
-    /**
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
-            if (alienBullets.get(i).getY() >= 450) {
+            if (alienBullets.get(i).getY() >= 450) {	////
                 Game.logfile
                         .writeOffscreen("Alien", alienBullets.get(i).getX());
                 alienBullets.removeElementAt(i);
@@ -341,7 +304,7 @@ public class Game extends Canvas implements Runnable {
             }
         }
         for (int j = 0; j < shipBullets.size(); j++) {
-            if (shipBullets.get(j).getY() <= 0) {
+            if (shipBullets.get(j).getY() <= 0) {		////
                 Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j)
                         .getX());
                 shipBullets.removeElementAt(j);
@@ -532,10 +495,6 @@ public class Game extends Canvas implements Runnable {
     public void end() {
         running = false;
         addscore();
-        Menu menu = new Menu();
-        ScoreMenu s_menu = new ScoreMenu();
-        menu.runMenu();
-        s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         screen.close();

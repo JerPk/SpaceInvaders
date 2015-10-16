@@ -41,6 +41,8 @@ public class Barrier {
         for (int i = 0; i < alienBullets.size(); i++) {
             if (alienBullets.get(i).getX() >= xpos && alienBullets.get(i).getX() <= xpos+44) {
                 if (alienBullets.get(i).getY() >= ypos && alienBullets.get(i).getY() <= ypos+32) {
+                    Game.logfile.writeHit("Barrier", xpos, ypos);
+                    state++;
                     return i;
                 }
             }
@@ -48,12 +50,12 @@ public class Barrier {
         return -1;
     }
     
-    /**
-     * the method that returns the state
-     */
-    public void decreaseState() {
-        Game.logfile.writeHit("Barrier", xpos, ypos);
-        state++;
+    public boolean destroyed() {
+    	if (state >= 4) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     /**

@@ -48,7 +48,6 @@ public class Menu {
         btnQuit = new JButton("Quit Game");
         
         JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
-
         title.setForeground(Color.white);
         title.setFont(new Font("Courier", Font.BOLD, 30));
         
@@ -57,7 +56,6 @@ public class Menu {
         btnNewGame.setVisible(true);
         btnStatistics.setVisible(true);
         btnQuit.setVisible(true);
-        
         btnNewGame.setBounds(205,274,217,30);
         btnStatistics.setBounds(205,304,217,26);
         btnQuit.setBounds(205,330,217,26);
@@ -68,13 +66,13 @@ public class Menu {
         
         // add the panel to the frame.
         frame.add(panel);
-        frame.setVisible(true);
         
         runMenu();
     }
 	
 	public void runMenu() {
 		running = true;
+        frame.setVisible(true);
         listenForActions();
     }
 	
@@ -86,6 +84,13 @@ public class Menu {
         Graphics graphic = bs.getDrawGraphics();
         graphic.drawImage(menu, 0, 0, width, height, null);
 		
+	}
+	
+	//This method checks if the frame really disappeared when the new game button is pressed. Sometimes this is not the case. 
+	public void check() {
+		if (!running) {
+			frame.setVisible(false);
+		}
 	}
 	
 	public void listenForActions() {
@@ -102,8 +107,8 @@ public class Menu {
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                ScoreMenu score_menu = new ScoreMenu();
-                score_menu.show();
+                //ScoreMenu score_menu = new ScoreMenu();
+                //score_menu.show();
             }
         });
         //Quit game

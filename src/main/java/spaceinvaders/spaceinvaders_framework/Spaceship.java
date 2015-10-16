@@ -27,7 +27,7 @@ public class Spaceship {
      * @param  Game g
      */
     public Spaceship(Game g){
-        x = g.WIDTH/2-13;
+        x = Screen.WIDTH/2-13;
         game = g;
         lives = 3;
         
@@ -94,6 +94,19 @@ public class Spaceship {
             }
         }
         return -1;
+    }
+    
+    /**
+     * the method that checks if the ship has any lives left
+     *
+     * @return true/false
+     */
+    public boolean defeated() {
+    	if (lives <= 0) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     /**
