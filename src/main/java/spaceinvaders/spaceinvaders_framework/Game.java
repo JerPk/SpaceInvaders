@@ -17,6 +17,9 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import spaceinvaders.spaceinvaders_framework.Level.Level;
+import spaceinvaders.spaceinvaders_framework.Level.LevelFactory;
+
 /**
  * The game class is the main class.
  * 
@@ -110,6 +113,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public static LogFile logfile;
     
     Level level;
+    int levelNumber = 1;
 
     public Game() {
         addKeyListener(this);
@@ -208,7 +212,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         highscoremanager = new HighscoreManager();
         
-        level = LevelFactory.createLevel(1, spaceship, this);
+        level = LevelFactory.createLevel(levelNumber, spaceship, this);
 
 //        // creates all barriers and adds them to the barrier vector
 //        for (int i = 1; i <= 4; i++) {
@@ -242,7 +246,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
             if (aliens.size() == 0
                     || aliens.get(aliens.size() - 1).getY() >= 400) {
-            	level = LevelFactory.createLevel(1, spaceship, this);
+            	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
 //            	nextlvl();
 //                end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
@@ -496,8 +500,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void alienShoot() {
         Random rand = new Random();
-        int randNr = rand.nextInt(aliens.size());
-        alienBullets.addElement(aliens.get(randNr).shoot());
+        if(aliens.size() != 0) {
+        	int randNr = rand.nextInt(aliens.size());
+        	alienBullets.addElement(aliens.get(randNr).shoot());
+        }
     }
 
     /**
