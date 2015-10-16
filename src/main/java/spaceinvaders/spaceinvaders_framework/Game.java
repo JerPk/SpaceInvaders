@@ -406,6 +406,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             barriers.get(i).render(graphic);
         }
 
+        renderLevelNumber();
         renderScore();
         renderHighScore();
 
@@ -462,6 +463,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * renders level number on the screen.
+     */
+    public void renderLevelNumber() {
+    	BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.white);
+        g.drawString("Level: " + levelNumber, 550, 440);
+    }
+    
     /**
      * renders the highscore on the screen.
      */
