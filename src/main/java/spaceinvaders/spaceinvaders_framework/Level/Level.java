@@ -5,9 +5,7 @@ import java.util.Vector;
 import spaceinvaders.spaceinvaders_framework.Alien;
 import spaceinvaders.spaceinvaders_framework.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.Spaceship;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Level {
@@ -16,29 +14,20 @@ public class Level {
 	int levelNumber;
 
 	/**
+	 * constructor of Level class
 	 * 
-	 * @param number
-	 * @param spaceship
-	 * @param g
+	 * @param number Levelnumber
+	 * @param g The game
 	 */
-	public Level(int number, Spaceship spaceship, Game g) {
+	public Level(int number, Game g) {
 		game = g;
 		levelNumber = number;
-
-//		game.aliens.clear();
-//		game.barriers.clear();
-//		game.alienBullets.clear();
-//		game.shipBullets.clear();
-		spaceship.resetPosition();
-
-//		game.aliens = createAliens();
-//		game.barriers = createBarriers();
 	}
 
 	/**
-	 * creates all the aliens and adds them to the alien vector.
+	 * creates the aliens and returns them.
 	 * 
-	 * @param aliens
+	 * @return the created aliens
 	 */
 	public Vector<Alien> createAliens() {
 
@@ -64,9 +53,11 @@ public class Level {
 		
 		return tempAliens;
 	}
-
+	
 	/**
-	 * creates the four barriers and adds them to the barrier vector.
+	 * creates the four barriers and returns them.
+	 * 
+	 * @return the created barriers
 	 */
 	public Vector<Barrier> createBarriers() {
 		Vector<Barrier> tempBarriers = new Vector<Barrier>(0);

@@ -98,7 +98,7 @@ public class Spaceship {
     }
     
     /**
-     * 
+     * method to reset the position of the spaceship.
      */
     public void resetPosition() {
     	x = game.WIDTH/2-13;
