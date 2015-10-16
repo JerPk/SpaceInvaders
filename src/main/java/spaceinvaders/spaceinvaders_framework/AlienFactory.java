@@ -28,6 +28,9 @@ public class AlienFactory {
         else if (criteria.equals("hard"))
             return Alien.createAlienType3(x, y, g);
 
+        else if(criteria.equals("boss"))
+            return new BossAlien(x,y,g);
+        
         return null;
 
     }

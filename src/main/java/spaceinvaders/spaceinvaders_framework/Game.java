@@ -44,7 +44,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * running == true when the game is running.
      */
     private boolean running = false;
-    
+
     private ScoreMenu s_menu;
 
     /**
@@ -65,6 +65,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private boolean spacePressed = false;
+
+    private boolean bossLevel;
 
     private BufferStrategy bs;
 
@@ -224,24 +226,24 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         int startYOffsetAlien = 0;
         int startXOffsetAlien = 75;
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien, this);
-            aliens.addElement(alien);
-        }
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 25, this);
-            aliens.addElement(alien);
-        }
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 50, this);
-            aliens.addElement(alien);
-        }
+        /**
+         * for (int x = 0; x < 18; x++) { Alien alien =
+         * AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3,
+         * startYOffsetAlien, this); aliens.addElement(alien); }
+         * 
+         * for (int x = 0; x < 18; x++) { Alien alien =
+         * AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3,
+         * startYOffsetAlien + 25, this); aliens.addElement(alien); }
+         * 
+         * for (int x = 0; x < 18; x++) { Alien alien =
+         * AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3,
+         * startYOffsetAlien + 50, this); aliens.addElement(alien); }
+         */
+        bossLevel = true;
+        Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien,
+                startYOffsetAlien, this);
+        ;
+        aliens.addElement(alien);
     }
 
     public static void main(String argv[]) {
@@ -495,9 +497,14 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * the vector.
      */
     public void alienShoot() {
-        Random rand = new Random();
-        int randNr = rand.nextInt(aliens.size());
-        alienBullets.addElement(aliens.get(randNr).shoot());
+        if (bossLevel != true) {
+            Random rand = new Random();
+            int randNr = rand.nextInt(aliens.size());
+            alienBullets.addElement(aliens.get(randNr).shoot());
+        } else {
+
+            alienBullets.addAll(aliens.get(0).BossShoot());
+        }
     }
 
     /**
@@ -510,7 +517,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {
                 Alien alien = aliens.get(i);
-                               
+
                 alien.setHealth(alien.getHealth() - 1);
 
                 if (aliens.get(i).getHealth() <= 0) {
@@ -872,19 +879,19 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void setscore(int score1) {
         score = score1;
     }
-    
+
     /**
-     * the getter method for the thread of the game.
-     * mainly used for testing.
+     * the getter method for the thread of the game. mainly used for testing.
+     * 
      * @return thread
      */
     public Thread getThread() {
         return thread;
     }
-    
+
     /**
-     * the getter method for the scoremenu of the game.
-     * mainly used for testing.
+     * the getter method for the scoremenu of the game. mainly used for testing.
+     * 
      * @return s_menu
      */
     public ScoreMenu getScoreMenu() {

@@ -135,6 +135,21 @@ public abstract class Alien {
     public double getX() {
         return x;
     }
+    
+    /**
+     * the set method for the X coordinate.
+     */
+    public void setX(double newX) {
+        x = newX;
+    }
+    
+    /**
+     * the set method for the Y coordinate.
+     */
+    public void setY(double newY) {
+        y = newY;
+    }
+    
 
     /**
      * the get method for the Y coordinate
@@ -254,5 +269,9 @@ public abstract class Alien {
     public static Alien createAlienType3(double x, double y, Game g){
         Alien alien = new AlienType3(x,y,g);
         return alien;        
+    }
+    
+    public Vector<Bullet> BossShoot() {
+        return null;   
     }
 }

@@ -38,8 +38,16 @@ public class Bullet {
         return xpos;
     }
     
+    public void setX(double newX) {
+        xpos = newX;
+    }
+    
     public double getY() {
         return ypos;
+    }
+    
+    public void setY(double newY) {
+        ypos = newY;
     }
     
     @Override
