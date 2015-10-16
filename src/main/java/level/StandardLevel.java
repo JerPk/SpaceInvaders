@@ -32,8 +32,8 @@ public class StandardLevel extends Level {
 			alienType = "hard";
 		}
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 18; j++) {
+		for (int i = 0; i < 1; i++) {
+			for (int j = 0; j < 1; j++) {
 				Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien + (25 * j) - 3, startYOffsetAlien,
 						game);
 				tempAliens.addElement(alien);
