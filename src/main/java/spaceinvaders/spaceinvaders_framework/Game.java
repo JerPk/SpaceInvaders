@@ -244,11 +244,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alienShoot();
                 counter = 0;
             }
-            if (aliens.size() == 0
-                    || aliens.get(aliens.size() - 1).getY() >= 400) {
+            if (aliens.size() == 0) {
             	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
-//            	nextlvl();
-//                end();
+            } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
+                end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
                 barriers.clear();
             }
