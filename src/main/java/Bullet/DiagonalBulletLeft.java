@@ -25,7 +25,7 @@ public class DiagonalBulletLeft extends Bullet {
   //Move the bullet down and sideways.
     @Override
     public void moveDown(){
-        setY(getY() + 2.2);
+        setY(getY() + downspeed);
         setX(getX() - 0.7);
     }
 }

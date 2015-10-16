@@ -12,7 +12,7 @@ public class Bullet {
     private SpriteSheet spritesheet;
     //Bullet coordinates
     private double xpos,ypos;
-    private double downspeed = 2.2;
+    protected double downspeed = 2.2;
     
     public Bullet(double x, double y, SpriteSheet ss){
         this.xpos = x;
