@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework.Level;
+package level;
 
 import java.util.Vector;
 
@@ -6,25 +6,15 @@ import spaceinvaders.spaceinvaders_framework.Alien;
 import spaceinvaders.spaceinvaders_framework.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
 import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.Spaceship;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class StandardLevel extends Level {
 
-	public StandardLevel(int number, Spaceship spaceship, Game g) {
-		super(number, spaceship, g);
+	public StandardLevel(int number, Game g) {
+		super(number, g);
 
 		game = g;
 		levelNumber = number;
-
-//		game.aliens.clear();
-//		game.barriers.clear();
-//		game.alienBullets.clear();
-//		game.shipBullets.clear();
-		spaceship.resetPosition();
-
-//		createAliens();
-//		createBarriers();
 	}
 
 	@Override
