@@ -233,7 +233,7 @@ public class Game extends Canvas /*implements Runnable*/ {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {               
                 if (aliens.get(i).defeated()) {
-                    score += aliens.get(i).getScore();
+                    score = aliens.get(i).addScore(score);
                     aliens.removeElementAt(i);
                 }
                 shipBullets.removeElementAt(hit);
@@ -420,20 +420,6 @@ public class Game extends Canvas /*implements Runnable*/ {
     public void addAlien(Alien a) {
         aliens.add(a);
     }
-
-    /**
-     * The addscore method compares the players score to the 10 object in the scores array. 
-     * If the player scores higher the object is added to the array.
-     */
-    public void addscore() {
-        ArrayList<Score> scores = highscoremanager.getScores();
-        Score ninthscore = scores.get(9);
-        if (score >= ninthscore.getScore()) {
-            String name = JOptionPane
-                    .showInputDialog("Congratulations you are on the leaderboards what is your name?");
-            highscoremanager.addScore(name, score);
-        }
-    }
     
     public Vector<Barrier> getBarriers() {
     	return barriers;
@@ -444,7 +430,7 @@ public class Game extends Canvas /*implements Runnable*/ {
      */
     public void end() {
         running = false;
-        addscore();
+        highscoremanager.addScore(score);
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         screen.close();

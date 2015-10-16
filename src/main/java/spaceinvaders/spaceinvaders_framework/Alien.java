@@ -48,11 +48,6 @@ public abstract class Alien {
      * 
      */
     private static boolean logicRequiredThisLoop = false;
-
-    /**
-     * boolean to update bullet
-     */
-    private static boolean updateBullet = false;
     
     protected BufferedImage BImg = null;
 
@@ -122,6 +117,10 @@ public abstract class Alien {
 
         return newBullet;
     }
+    
+    public int addScore(int s) {
+    	return score + s;
+    }
 
     public void setSpritesheet(int row, int col, int x, int y) {
         SpriteSheet spritesheet = new SpriteSheet(BImg);
@@ -143,7 +142,6 @@ public abstract class Alien {
      */
     public void updateLogic() {
         logicRequiredThisLoop = true;
-        updateBullet = true;
     }
 
     /**
