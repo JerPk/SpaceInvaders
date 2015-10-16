@@ -17,6 +17,7 @@ public class Level {
 		game.barriers.clear();
 		game.alienBullets.clear();
 		game.shipBullets.clear();
+		spaceship.resetPosition();
         
         CreateAliens();
         CreateBarriers();
