@@ -189,7 +189,7 @@ public class Game extends Canvas implements Runnable {
         while (running) {
         	screen.render(this);
             counter++;
-            if (counter >= 30) {
+            if (counter >= 50) {
                 alienShoot();
                 counter = 0;
             }
@@ -296,7 +296,7 @@ public class Game extends Canvas implements Runnable {
      */
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
-            if (alienBullets.get(i).getY() >= 450) {	////
+            if (alienBullets.get(i).reachedY(450)) {
                 Game.logfile
                         .writeOffscreen("Alien", alienBullets.get(i).getX());
                 alienBullets.removeElementAt(i);
@@ -304,7 +304,7 @@ public class Game extends Canvas implements Runnable {
             }
         }
         for (int j = 0; j < shipBullets.size(); j++) {
-            if (shipBullets.get(j).getY() <= 0) {		////
+            if (shipBullets.get(j).getY() <= 0) {
                 Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j)
                         .getX());
                 shipBullets.removeElementAt(j);

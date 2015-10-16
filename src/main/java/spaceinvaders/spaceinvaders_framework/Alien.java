@@ -174,12 +174,12 @@ public abstract class Alien {
     }
     
     /**
-     * This method checks if the alien has reached a certain height
-     * 
+     * the method that checks if the alien has any health left
+     *
      * @return true/false
      */
-    public boolean reachedY(double i) {
-    	if (y >= i) {
+    public boolean defeated() {
+    	if (health <= 0) {
     		return true;
     	} else {
     		return false;
@@ -187,12 +187,12 @@ public abstract class Alien {
     }
     
     /**
-     * the method that checks if the alien has any health left
-     *
+     * This method checks if the alien has reached a certain height
+     * 
      * @return true/false
      */
-    public boolean defeated() {
-    	if (health <= 0) {
+    public boolean reachedY(double i) {
+    	if (y >= i) {
     		return true;
     	} else {
     		return false;

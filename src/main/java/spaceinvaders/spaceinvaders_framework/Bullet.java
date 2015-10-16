@@ -42,6 +42,19 @@ public class Bullet {
         return ypos;
     }
     
+    /**
+     * This method checks if the bullet has reached a certain height
+     * 
+     * @return true/false
+     */
+    public boolean reachedY(double i) {
+    	if (ypos >= i) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
     @Override
     public boolean equals(Object other){
         boolean result = false;
