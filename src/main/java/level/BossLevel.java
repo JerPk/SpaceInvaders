@@ -24,6 +24,7 @@ public class BossLevel extends Level {
 		
 		Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien - 3,
 	               startYOffsetAlien, game);
+		alien.setHealth(levelNumber);
 		tempAliens.addElement(alien);
 		
 		return tempAliens;
