@@ -138,4 +138,13 @@ public class ScoreMenu {
         
         return data;
     }
+    
+    /**
+     * This method return the JTable used by the scoreMenu.
+     * this method is mainly used for testing.
+     * @return table.
+     */
+    public JTable getTable(){
+        return table;
+    }
 }

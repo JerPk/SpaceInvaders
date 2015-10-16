@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import Bullet.Bullet;
+
 import java.util.Vector;
 /**
  * BarrierTest tests all the methods in the Barrier class.

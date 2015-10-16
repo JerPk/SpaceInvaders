@@ -2,12 +2,18 @@ package spaceinvaders.spaceinvaders_framework;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import Alien.Alien;
+import Alien.AlienFactory;
+import Bullet.Bullet;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -396,5 +402,33 @@ public class GameTest {
     game.addscore();
       assertEquals(manager.getScores().get(0).getScore(),200 );
   }
+  
+  /**
+   * tests the start method.
+   */
+  @Test
+  public void testStart() {
+      assertNull(game.getThread());
+      game.setrunning(true);
+      game.start();
+      assertNull(game.getThread());
+      game.setrunning(false);
+      game.start();
+      assertNotNull(game.getThread());
+  }
 
+  /**
+   * tests the start method.
+   */
+  @Test
+  public void testEnd() { 
+      
+      game.init();
+      game.start();
+      assertTrue(game.getrunning());
+      assertNull(game.getScoreMenu());
+      game.end();
+      assertFalse(game.getrunning());
+      assertNotNull(game.getScoreMenu());
+  }
 }

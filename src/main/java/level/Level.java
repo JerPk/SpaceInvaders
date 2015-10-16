@@ -2,8 +2,8 @@ package level;
 
 import java.util.Vector;
 
-import spaceinvaders.spaceinvaders_framework.Alien;
-import spaceinvaders.spaceinvaders_framework.AlienFactory;
+import Alien.Alien;
+import Alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
@@ -50,6 +50,14 @@ public class Level {
 			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50, game);
 			tempAliens.addElement(alien);
 		}
+		//this is how you add a boss alien.
+        /**
+       bossLevel = true;
+       Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien,
+               startYOffsetAlien, this);
+       
+       aliens.addElement(alien);
+  */
 		
 		return tempAliens;
 	}

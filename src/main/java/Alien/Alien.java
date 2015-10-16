@@ -1,8 +1,16 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
+
+import static org.junit.Assert.assertEquals;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
+
+import org.junit.Test;
+
+import Bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * The Alien class is the abstract super class of all the alien types.
@@ -135,6 +143,21 @@ public abstract class Alien {
     public double getX() {
         return xpos;
     }
+    
+    /**
+     * the set method for the X coordinate.
+     */
+    public void setX(double newX) {
+        xpos = newX;
+    }
+    
+    /**
+     * the set method for the Y coordinate.
+     */
+    public void setY(double newY) {
+        ypos = newY;
+    }
+    
 
     /**
      * the get method for the Y coordinate
@@ -216,4 +239,51 @@ public abstract class Alien {
     public Game getGame() {
         return game;
     }
+    
+    /**
+     * the method that creates and returns an alien of type 1.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType1(double x, double y, Game g){
+        Alien alien = new AlienType1(x,y,g);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 2.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType2(double x, double y, Game g){
+        Alien alien = new AlienType2(x,y,g);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 3.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType3(double x, double y, Game g){
+        Alien alien = new AlienType3(x,y,g);
+        return alien;        
+    }
+    
+    public Vector<Bullet> BossShoot() {
+        return null;   
+    }
+
+    public static Alien createBossAlien(int x2, int y2, Game g) {
+        Alien alien = new BossAlien(x2,y2,g);
+        return alien;        
+    }
+
+ 
 }

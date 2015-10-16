@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
+import Bullet.Bullet;
+import Bullet.MegaBullet;
+
 public class Barrier {
     
     private double xpos;
@@ -28,13 +31,31 @@ public class Barrier {
 
     public int ifHit(Vector<Bullet> alienBullets) {
         for (int i = 0; i < alienBullets.size(); i++) {
-        	if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+32) {
-            	if (alienBullets.get(i).getX() > xpos-6 && alienBullets.get(i).getX() < xpos+44) {
+            Bullet testBullet = alienBullets.get(i);
+            if (testBullet instanceof MegaBullet) {
+                if (ifHitMega(alienBullets,i) == true) {
+                    return i;
+                }
+
+            }
+            if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+32) {
+                if (alienBullets.get(i).getX() > xpos-6 && alienBullets.get(i).getX() < xpos+44) {
                     return i;
                 }
             }
         }
         return -1;
+    }
+    
+    private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
+        if (alienBullets.get(i).getX() + 15 >= xpos && alienBullets.get(i).getX() + 15 <= xpos+44) {
+            if (alienBullets.get(i).getY() + 50 >= ypos && alienBullets.get(i).getY() + 50 <= ypos+32) {
+                return true;
+            }
+        }
+    
+    return false;
+
     }
     
     /**

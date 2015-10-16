@@ -1,15 +1,18 @@
-package spaceinvaders.spaceinvaders_framework;
+package Bullet;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Bullet {
 
     private BufferedImage bullet;
     private SpriteSheet spritesheet;
     //Bullet coordinates
-    private double xpos, ypos;
-    private double downspeed = 2.2;
+    private double xpos,ypos;
+    protected double downspeed = 2.2;
     
     public Bullet(double x, double y, SpriteSheet ss){
         this.xpos = x;
@@ -38,8 +41,16 @@ public class Bullet {
         return xpos;
     }
     
+    public void setX(double newX) {
+        xpos = newX;
+    }
+    
     public double getY() {
         return ypos;
+    }
+    
+    public void setY(double newY) {
+        ypos = newY;
     }
     
     @Override

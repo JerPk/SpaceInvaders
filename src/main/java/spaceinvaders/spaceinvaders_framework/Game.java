@@ -17,8 +17,12 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import Alien.Alien;
+import Bullet.Bullet;
 import level.Level;
 import level.LevelFactory;
+
+
 
 /**
  * The game class is the main class.
@@ -48,6 +52,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     private boolean running = false;
 
+    private ScoreMenu s_menu;
+
     /**
      * // a boolean that is only true if the aliens need to be updated. // here
      * it used for moving all the aliens down simultaneously.
@@ -66,6 +72,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private boolean spacePressed = false;
+
+    private boolean bossLevel;
 
     private BufferStrategy bs;
 
@@ -214,7 +222,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         aliens = level.createAliens();
     	barriers = level.createBarriers();
     }
-
     
 
     public static void main(String argv[]) {
@@ -502,10 +509,13 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * the vector.
      */
     public void alienShoot() {
-        Random rand = new Random();
-        if(aliens.size() != 0) {
-        	int randNr = rand.nextInt(aliens.size());
-        	alienBullets.addElement(aliens.get(randNr).shoot());
+        if (bossLevel != true) {
+            Random rand = new Random();
+            int randNr = rand.nextInt(aliens.size());
+            alienBullets.addElement(aliens.get(randNr).shoot());
+        } else {
+
+            alienBullets.addAll(aliens.get(0).BossShoot());
         }
     }
 
@@ -519,7 +529,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             int hit = aliens.get(i).ifHit(shipBullets);
             if (hit != -1) {
                 Alien alien = aliens.get(i);
-                               
+
                 alien.setHealth(alien.getHealth() - 1);
 
                 if (aliens.get(i).getHealth() <= 0) {
@@ -854,7 +864,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         running = false;
         addscore();
         Menu menu = new Menu();
-        ScoreMenu s_menu = new ScoreMenu();
+        s_menu = new ScoreMenu();
         menu.runMenu();
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
@@ -880,5 +890,23 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void setscore(int score1) {
         score = score1;
+    }
+
+    /**
+     * the getter method for the thread of the game. mainly used for testing.
+     * 
+     * @return thread
+     */
+    public Thread getThread() {
+        return thread;
+    }
+
+    /**
+     * the getter method for the scoremenu of the game. mainly used for testing.
+     * 
+     * @return s_menu
+     */
+    public ScoreMenu getScoreMenu() {
+        return s_menu;
     }
 }

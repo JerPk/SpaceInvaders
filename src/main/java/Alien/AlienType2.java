@@ -1,4 +1,9 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
+
+import Bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+
 /**
  * the second alien type is considered normal.
  * it has both normal health and medium speed for the bullets

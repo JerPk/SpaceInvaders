@@ -1,4 +1,8 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
+
+import Bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * the first alien type is considered the easiest. it has the least health and

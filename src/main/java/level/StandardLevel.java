@@ -2,8 +2,8 @@ package level;
 
 import java.util.Vector;
 
-import spaceinvaders.spaceinvaders_framework.Alien;
-import spaceinvaders.spaceinvaders_framework.AlienFactory;
+import Alien.Alien;
+import Alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
