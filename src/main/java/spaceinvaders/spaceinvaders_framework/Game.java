@@ -254,6 +254,12 @@ public class Game extends Canvas implements Runnable, KeyListener {
             	spaceship.resetPosition();
             	aliens = level.createAliens();
             	barriers = level.createBarriers();
+            	if (levelNumber % 5 == 0) {
+            		bossLevel = true;
+            	}
+            	else {
+            		bossLevel = false;
+            	}
             } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {

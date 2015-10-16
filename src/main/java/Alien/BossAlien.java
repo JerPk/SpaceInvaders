@@ -186,4 +186,18 @@ public class BossAlien extends Alien{
         randomNum = random;
         overwrite = true;
     }
+    
+    @Override
+    public int ifHit(Vector<Bullet> shipBullets) {
+        for (int i = 0; i < shipBullets.size(); i++) {
+        	if (shipBullets.get(i).getY() > ypos-12 && shipBullets.get(i).getY() < ypos + 20) {
+        		if (shipBullets.get(i).getX() > xpos-6 && shipBullets.get(i).getX() < xpos + 50) {
+                    Game.logfile.writeHit("Alien", xpos, ypos);
+
+                    return i;
+                }
+            }
+        }
+        return -1;
+    }
 }
