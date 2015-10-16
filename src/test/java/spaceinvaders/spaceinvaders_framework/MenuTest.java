@@ -56,7 +56,7 @@ public class MenuTest {
       
         //we add time between the press and release of the input event
         // otherwise system may not think it is a click.
-        try{Thread.sleep(75);}catch(InterruptedException e){}
+       // try{Thread.sleep(75);}catch(InterruptedException e){}
         
         bot.mouseRelease(InputEvent.BUTTON1_MASK);        
         assertNotNull(menu2.getScoreMenu());
