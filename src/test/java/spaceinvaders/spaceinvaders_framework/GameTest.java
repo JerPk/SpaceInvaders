@@ -11,6 +11,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import Alien.Alien;
+import Alien.AlienFactory;
+import Bullet.Bullet;
+
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;

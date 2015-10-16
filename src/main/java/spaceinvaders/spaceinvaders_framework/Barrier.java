@@ -4,6 +4,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
+import Bullet.Bullet;
+import Bullet.MegaBullet;
+
 public class Barrier {
     
     private double xpos;

@@ -1,4 +1,6 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
+
+import spaceinvaders.spaceinvaders_framework.Game;
 
 /**
  * Alien factory is the class that is used to create all the different types of

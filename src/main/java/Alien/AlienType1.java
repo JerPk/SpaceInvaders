@@ -1,6 +1,5 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
 
-import Alien.Alien;
 import Bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;

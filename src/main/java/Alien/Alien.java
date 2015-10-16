@@ -1,8 +1,12 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
+
+import Bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * The Alien class is the abstract super class of all the alien types.

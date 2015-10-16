@@ -1,4 +1,6 @@
-package spaceinvaders.spaceinvaders_framework;
+package Bullet;
+
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * MegaBullet is a subclass of bullet.

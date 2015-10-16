@@ -1,7 +1,14 @@
-package spaceinvaders.spaceinvaders_framework;
+package Alien;
 
 import java.util.Random;
 import java.util.Vector;
+
+import Bullet.Bullet;
+import Bullet.DiagonalBulletLeft;
+import Bullet.DiagonalBulletRight;
+import Bullet.MegaBullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class BossAlien extends Alien{
     
