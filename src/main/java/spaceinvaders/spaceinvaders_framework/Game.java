@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  * @author Group 23
  *
  */
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas /*implements Runnable*/ {
 
     /**
      * running == true when the game is running.
@@ -47,11 +47,6 @@ public class Game extends Canvas implements Runnable {
     private HighscoreManager highscoremanager;
     private int score = 0;
 
-    /**
-     * the main Thread we use for the game.
-     */
-    private Thread thread;
-
     private Spaceship spaceship;
     public static LogFile logfile;
     private Screen screen;
@@ -79,10 +74,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         running = true;
-
-        // create and start the main thread of our game.
-        thread = new Thread(this);
-        thread.start();
+        // initialize all the entities
+        init();
     }
 
     /**
@@ -95,13 +88,15 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         running = false;
-
+        
+        /*
         // tries to join all the threads together.
         try {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        */
 
         logfile.writeString("Game ended because of an error at " + new Date());
         logfile.close();
@@ -181,38 +176,23 @@ public class Game extends Canvas implements Runnable {
      * the run method is the method that has the main game loop that will be
      * called repeatedly when the game is ongoing.
      */
-    public void run() {
-        // initialize all the entities
-        init();
-
-        // the while loop that will be active once the game is running.
-        while (running) {
-        	screen.render(this);
-            counter++;
-            if (counter >= 50) {
-                alienShoot();
-                counter = 0;
-            }
-            if (aliens.size() == 0
-                    || aliens.get(aliens.size() - 1).reachedY(400)) {
-                end();
-        	}	else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-                barriers.clear();
-            }
-
-            removeOffScreenBullets();
-            listenForKeys();
-            checkIfHit();
-            moveAliens();
-
-            try {
-                Thread.sleep(15);
-            } catch (Exception e) {
-                // Catch if needed
-            }
-        }
-        // if the loop is ended due to some error the stop method is called immediately.
-        stop();
+    public void runGame() {
+    	screen.render(this);
+    	counter++;
+    	if (counter >= 50) {
+    		alienShoot();
+    		counter = 0;
+    	}
+    	if (aliens.size() == 0
+    			|| aliens.get(aliens.size() - 1).reachedY(400)) {
+    		end();
+    	}	else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+    		barriers.clear();
+    	}
+    	removeOffScreenBullets();
+    	listenForKeys();
+    	checkIfHit();
+    	moveAliens();
     }
 
     public void moveAliens() {
