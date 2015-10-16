@@ -8,7 +8,7 @@ public class Bullet {
     private BufferedImage bullet;
     private SpriteSheet spritesheet;
     //Bullet coordinates
-    private double xpos,ypos;
+    private double xpos, ypos;
     private double downspeed = 2.2;
     
     public Bullet(double x, double y, SpriteSheet ss){
