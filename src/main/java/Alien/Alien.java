@@ -1,8 +1,12 @@
 package Alien;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
+
+import org.junit.Test;
 
 import Bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
@@ -278,4 +282,11 @@ public abstract class Alien {
     public Vector<Bullet> BossShoot() {
         return null;   
     }
+
+    public static Alien createBossAlien(int x2, int y2, Game g) {
+        Alien alien = new BossAlien(x2,y2,g);
+        return alien;        
+    }
+
+ 
 }
