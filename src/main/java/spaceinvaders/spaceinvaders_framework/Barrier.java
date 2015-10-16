@@ -10,7 +10,6 @@ public class Barrier {
     private double xpos;
     private double ypos;
     private int state;
-    private SpriteSheet sprite_sheet;
     
     private BufferedImage[] barrier = new BufferedImage[5];
     

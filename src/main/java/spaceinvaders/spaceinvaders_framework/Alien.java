@@ -2,6 +2,7 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -26,11 +27,6 @@ public abstract class Alien {
     private double y;
 
     /**
-     * the game the alien is a part of.
-     */
-    private Game game;
-
-    /**
      * the horizontal movement speed of the aliens.
      */
     private int movementSpeed = 1;
@@ -45,19 +41,38 @@ public abstract class Alien {
      * the alien before it dies.
      */
     private int health = 1;
+    
+    /**
+     * // a boolean that is only true if the aliens need to be updated. // here
+     * it used for moving all the aliens down simultaneously.
+     * 
+     */
+    private static boolean logicRequiredThisLoop = false;
+
+    /**
+     * boolean to update bullet
+     */
+    private static boolean updateBullet = false;
+    
+    protected BufferedImage BImg = null;
 
     /**
      * the constructor of the Alien class.
      * 
      * @param double x
      * @param double y
-     * @param Game
-     *            g
+     * @param Game g
      */
-    public Alien(double x, double y, Game g) {
+    public Alien(double x, double y) {
         this.x = x;
         this.y = y;
-        game = g;
+        
+        BuffereImageLoader loader = new BuffereImageLoader();
+        try {
+            BImg = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -67,13 +82,13 @@ public abstract class Alien {
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && x >= 630) {
-            game.updateLogic();
+            updateLogic();
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && x <= 2) {
-            game.updateLogic();
+        	updateLogic();
         }
 
         // moves the alien in the horizontal direction.
@@ -91,12 +106,7 @@ public abstract class Alien {
         // flip the movement speed so now the alien will move in
         // the other direction.
         movementSpeed = -movementSpeed;
-
-        // check if the alien has reached the bootom ofthe screen if so.
-        // end the game.
-        if (y > 450) {
-            game.end();
-        }
+        logicRequiredThisLoop = false;
     }
 
     /**
@@ -106,8 +116,7 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final SpriteSheet spritesheet = new SpriteSheet(getGame()
-                .getSpriteSheet());
+        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
         Game.logfile.writeShoot("Alien", getX(), getY());
 
@@ -115,7 +124,7 @@ public abstract class Alien {
     }
 
     public void setSpritesheet(int row, int col, int x, int y) {
-        SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
+        SpriteSheet spritesheet = new SpriteSheet(BImg);
         Alien = spritesheet.grabImage(row, col, x, y);
     }
 
@@ -127,6 +136,14 @@ public abstract class Alien {
      */
     public void render(Graphics g) {
         g.drawImage(Alien, (int) x, (int) y, null);
+    }
+    
+    /**
+     * the method used to put the logicRequiredThisLoop boolean to true.
+     */
+    public void updateLogic() {
+        logicRequiredThisLoop = true;
+        updateBullet = true;
     }
 
     /**
@@ -141,6 +158,16 @@ public abstract class Alien {
      */
     public double getY() {
         return y;
+    }
+    
+    /**
+     * getter method for the LogicrequiredThisLoop boolean
+     * 
+     * @return boolean
+     */
+    public static boolean getupdateLogic() {
+        return logicRequiredThisLoop;
+
     }
 
     /**
@@ -234,14 +261,5 @@ public abstract class Alien {
      */
     public int getHealth() {
         return health;
-    }
-
-    /**
-     * the method that returns the game associated with the alien.
-     * 
-     * @return
-     */
-    public Game getGame() {
-        return game;
     }
 }

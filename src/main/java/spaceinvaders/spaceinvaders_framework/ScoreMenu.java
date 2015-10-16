@@ -48,9 +48,11 @@ public class ScoreMenu {
         returns = new JButton("return");
         quit = new JButton("quit");
         reset = new JButton("reset");
+        
+        setup();
 	}
 	
-	public void show() {
+	private void setup() {
 
         // the large text saying highscores add the top.
         JLabel top = new JLabel("                                    Highscores");
@@ -73,7 +75,6 @@ public class ScoreMenu {
         southpanel.add(reset);
         southpanel.add(quit);
         
-        listenForActions();
 
         // add all the elements to the panel
         panel.add(top, BorderLayout.NORTH);
@@ -82,6 +83,10 @@ public class ScoreMenu {
 
         // add the panel to the frame.
         frame.add(panel);
+	}
+	
+	public void show() {
+        listenForActions();
         frame.setVisible(true);
     }
 

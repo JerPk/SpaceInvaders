@@ -24,18 +24,6 @@ public class Game extends Canvas /*implements Runnable*/ {
     private boolean running = false;
 
     /**
-     * // a boolean that is only true if the aliens need to be updated. // here
-     * it used for moving all the aliens down simultaneously.
-     * 
-     */
-    private boolean logicRequiredThisLoop = false;
-
-    /**
-     * boolean to update bullet
-     */
-    private boolean updateBullet = false;
-
-    /**
      * Vector to store all alien, bullet and barrier objects
      */
     private Vector<Alien> aliens;
@@ -129,7 +117,7 @@ public class Game extends Canvas /*implements Runnable*/ {
 
         CreateAliens();
 
-        spaceship = new Spaceship(this);
+        spaceship = new Spaceship();
         highscoremanager = new HighscoreManager();
 
         // creates all barriers and adds them to the barrier vector
@@ -157,17 +145,17 @@ public class Game extends Canvas /*implements Runnable*/ {
 
         for (int x = 0; x < 18; x++) {
             Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien, this);
+                    + (25 * x) - 3, startYOffsetAlien);
             aliens.addElement(alien);
         }
         for (int x = 0; x < 18; x++) {
             Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 25, this);
+                    + (25 * x) - 3, startYOffsetAlien + 25);
             aliens.addElement(alien);
         }
         for (int x = 0; x < 18; x++) {
             Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 50, this);
+                    + (25 * x) - 3, startYOffsetAlien + 50);
             aliens.addElement(alien);
         }
     }
@@ -201,12 +189,12 @@ public class Game extends Canvas /*implements Runnable*/ {
             alien_obj.hmovement();
         }	
         // this if statement will only be used if all the aliens need to be updated simultaneously.
-        if (logicRequiredThisLoop) {
+        if (Alien.getupdateLogic()) {
             for (int i = 0; i < aliens.size(); i++) {
                 Alien alien_obj = (Alien) aliens.get(i);
                 alien_obj.vmovement();
             }
-            logicRequiredThisLoop = false;
+            //logicRequiredThisLoop = false;
 
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
@@ -291,24 +279,6 @@ public class Game extends Canvas /*implements Runnable*/ {
                 j--;
             }
         }
-    }
-
-    /**
-     * the method used to put the logicRequiredThisLoop boolean to true.
-     */
-    public void updateLogic() {
-        logicRequiredThisLoop = true;
-        updateBullet = true;
-    }
-
-    /**
-     * getter method for the LogicrequiredThisLoop boolean
-     * 
-     * @return boolean
-     */
-    public boolean getupdateLogic() {
-        return logicRequiredThisLoop;
-
     }
 
     /**

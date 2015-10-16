@@ -2,6 +2,7 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Vector;
 
 public class Spaceship {
@@ -10,14 +11,10 @@ public class Spaceship {
     private double x;
     private static double y = 425;
     private int lives;
-    
-    // the game the alien is a part of.
-    private Game game;
-    // the horizontal movement speed of the aliens.
-    private int MovementSpeed = 1;
 
     // the bufferedImage of the spaceship.
     private BufferedImage Spaceship;
+    private SpriteSheet ss;
     
     /**
      * the constructor of the Spaceship class.
@@ -26,14 +23,21 @@ public class Spaceship {
      * @param int y
      * @param  Game g
      */
-    public Spaceship(Game g){
+    public Spaceship(){
         x = Screen.WIDTH/2-13;
-        game = g;
         lives = 3;
         
         Game.logfile.writeCreate("Spaceship", x, y);
         
-        SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+        BuffereImageLoader loader = new BuffereImageLoader();
+        BufferedImage BImg = null;
+        try {
+            BImg = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        ss = new SpriteSheet(BImg);
         Spaceship = ss.grabImage(277, 228, 26, 16);
         
     }
@@ -67,7 +71,6 @@ public class Spaceship {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
         Bullet newBullet = new Bullet(x+10, y+2, ss);
         
         Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
@@ -151,13 +154,6 @@ public class Spaceship {
     }
     
     /**
-     * the method that returns the game the spaceship was created in
-     */
-    public Game getGame(){
-        return game;
-    }
-    
-    /**
      * the method that returns the bufferedImage of the spaceship
      */
     public BufferedImage getImage(){
@@ -173,12 +169,9 @@ public class Spaceship {
         if(other instanceof Spaceship){
             Spaceship that = (Spaceship) other;
             if(this.getPosX() == that.getPosX()){
-                if(this.getGame().equals(that.getGame())){
-                    Game g = this.getGame();
-                    if(g.compareImages(this.getImage(), that.getImage())){
+                    //if(g.compareImages(this.getImage(), that.getImage())){
                         result = true;
-                    }
-                }
+                    //}
             }
         }
         return result;

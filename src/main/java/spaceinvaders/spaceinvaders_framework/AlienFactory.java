@@ -18,14 +18,14 @@ public class AlienFactory {
      * @param g
      * @return
      */
-    public static Alien getAlien(String criteria, int x, int y ,Game g){
+    public static Alien getAlien(String criteria, double x, double y){
         
         if ( criteria.equals("easy") )
-            return new AlienType1(x,y,g);
+            return new AlienType1(x,y);
           else if ( criteria.equals("normal") )
-            return new AlienType2(x,y,g);
+            return new AlienType2(x,y);
           else if ( criteria.equals("hard") )
-            return new AlienType3(x,y,g);
+            return new AlienType3(x,y);
         
         
         
