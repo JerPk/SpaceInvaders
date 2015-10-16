@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Group 23
  *
  */
-public class Game extends Canvas implements Runnable, KeyListener {
+public class Game extends Canvas implements Runnable {
 
     /**
      * running == true when the game is running.
@@ -36,19 +36,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * boolean to update bullet
      */
     private boolean updateBullet = false;
-
-    /**
-     * booleans related to the spaceships action
-     */
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-    private boolean spacePressed = false;
-
-    /**
-     * long that is used to set a limit between the spaceship
-     * being able to fire.
-     */
-    private long lastFire = 0;
 
     /**
      * Vector to store all alien, bullet and barrier objects
@@ -80,8 +67,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     private BufferedImage SpriteSheet = null;
 
     public Game() {
-        addKeyListener(this);
-        setFocusable(true);
+        //addKeyListener(this);
+        //setFocusable(true);
         counter = 0;
         screen = new Screen();
     }
@@ -158,6 +145,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(635 / 5 * i - 22, 370));
         }
+        System.out.println("passed init");
     }
 
     ///DELETE///
@@ -267,22 +255,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void listenForKeys() {
         // resolve the movement of the ship.
-        if ((leftPressed) && (!rightPressed)) {
+        if ((screen.getLeftPressed()) && (!screen.getRightPressed())) {
             spaceship.moveLeft();
-            if (spacePressed) {
+            if (screen.getSpacePressed()) {
                 spaceship.shoot();
             }
-        } else if ((rightPressed) && (!leftPressed)) {
+        } else if ((screen.getRightPressed()) && (!screen.getLeftPressed())) {
             spaceship.moveRight();
-            if (spacePressed) {
+            if (screen.getSpacePressed()) {
                 spaceship.shoot();
             }
         }
-
         // if we're pressing fire, attempt to fire
-        if (spacePressed) {
+        if (screen.getSpacePressed()) {
             shipBullets.addElement(spaceship.shoot());
-            spacePressed = false;
+            screen.blockSpace();
         }
     }
 
@@ -372,54 +359,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     /**
-     * the keyPressed method is called when a key is pressed down.
-     */
-    public void keyPressed(KeyEvent vkLeft) {
-        if (vkLeft.getKeyCode() == KeyEvent.VK_LEFT) {
-            leftPressed = true;
-            System.out.println("left key pressed");
-        }
-        if (vkLeft.getKeyCode() == KeyEvent.VK_RIGHT) {
-            rightPressed = true;
-            System.out.println("right key pressed");
-        }
-        if (vkLeft.getKeyCode() == KeyEvent.VK_SPACE) {
-            // check if the time interval in between bullets is large enough.
-            if (System.currentTimeMillis() - lastFire > 400) {
-                lastFire = System.currentTimeMillis();
-                spacePressed = true;
-            }
-        }
-    }
-
-    /**
-     * the keyReleased method is called when a key has been released.
-     */
-    public void keyReleased(KeyEvent e) {
-
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            leftPressed = false;
-            logfile.writeMove("Spaceship", spaceship.getPosX(),
-                    spaceship.getPosY());
-        }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            rightPressed = false;
-            logfile.writeMove("Spaceship", spaceship.getPosX(),
-                    spaceship.getPosY());
-        }
-        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            spacePressed = false;
-        }
-    }
-
-    /**
-     * The keytyped method isnt used in game class.
-     */
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    /**
      * getter method for the LogicrequiredThisLoop boolean
      * 
      * @return boolean
@@ -459,13 +398,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public Spaceship getSpaceship() {
         return spaceship;
-    }
-
-    /**
-     * getter method for the leftpressed boolean
-     */
-    public boolean getLeftPressed() {
-        return leftPressed;
     }
 
     /**
@@ -577,52 +509,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
 
     /**
-     * The method that returns the right pressed boolean.
-     * 
-     * @return
-     */
-    public boolean getRightPressed() {
-        return rightPressed;
-    }
-
-    /**
-     * the method that returns the space pressed boolean.
-     * 
-     * @return
-     */
-    public boolean getSpacePressed() {
-        return spacePressed;
-    }
-
-    /**
-     * the method that sets the left pressed boolean.
-     * 
-     * @param b
-     */
-    public void setPressedLeft(boolean b) {
-        leftPressed = b;
-    }
-
-    /**
-     * the method that sets the right pressed boolean.
-     * 
-     * @param b
-     */
-    public void setPressedRight(boolean b) {
-        rightPressed = b;
-
-    }
-
-    /**
-     * the method that sets the space pressed boolean.
-     * 
-     * @param b
-     */
-    public void setPressedSpace(boolean b) {
-        spacePressed = b;
-    }
-
-    /**
      * The addscore method compares the players score to the 10 object in the scores array. 
      * If the player scores higher the object is added to the array.
      */
@@ -652,6 +538,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         s_menu.show();
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
+        screen.close();
     }
     
     public int getScore() {

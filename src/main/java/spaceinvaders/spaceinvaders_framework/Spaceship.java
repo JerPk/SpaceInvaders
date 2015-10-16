@@ -6,7 +6,6 @@ import java.util.Vector;
 
 public class Spaceship {
 
-
     // the x and y coordinates of the Spaceship.
     private double x;
     private static double y = 425;
@@ -45,7 +44,6 @@ public class Spaceship {
      *
      */
     public void moveLeft() {
-    	System.out.println("ship moved left");
         if (x > 10) {
             x -= 2;
         }
@@ -57,7 +55,6 @@ public class Spaceship {
      *
      */
     public void moveRight() {
-    	System.out.println("ship moved right");
         if (x < 600) {
             x += 2;
         }
@@ -133,7 +130,6 @@ public class Spaceship {
      */
     public void render(Graphics g){
         g.drawImage(Spaceship,(int) x,(int) y, null);
-        //System.out.println("x = "+ x + ", y = " + y);
         
         for (int i=1; i<=lives; i++){
             g.drawImage(Spaceship, 10+30*(i-1), 452, null);

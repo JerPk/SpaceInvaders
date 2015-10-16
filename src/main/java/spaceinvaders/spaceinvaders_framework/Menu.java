@@ -118,10 +118,4 @@ public class Menu {
 	public boolean isRunning() {
 		return running;
 	}
-    
-    private static void newGame(){
-      Game game = new Game();
-        game.start();
-    }
-    
 }

@@ -4,21 +4,23 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
+
 import javax.swing.JFrame;
 
-public class Screen extends Canvas {
+public class Screen extends Canvas implements KeyListener {
 	
     private static JFrame frame = null;
     /**
      * The Widht of the screen.
      */
     public static final int WIDTH = 635;
-
     /**
      * The Height of the screen.
      */
@@ -30,8 +32,20 @@ public class Screen extends Canvas {
     /**
      * the main BufferedImage of the game class.
      */
-    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT,
-            BufferedImage.TYPE_INT_RGB);
+    private BufferedImage image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+    
+    /**
+     * booleans related to the spaceships action
+     */
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean spacePressed = false;
+    
+    /**
+     * long that is used to set a limit between the spaceship
+     * being able to fire.
+     */
+    private long lastFire = 0;
     
     private Game game;
     
@@ -44,6 +58,7 @@ public class Screen extends Canvas {
 	
 	public Screen() {
 		setFocusable(true);
+		addKeyListener(this);
 		
         BuffereImageLoader loader = new BuffereImageLoader();
 
@@ -93,8 +108,6 @@ public class Screen extends Canvas {
             alien_obj.render(graphic);
         }
 
-        game.getSpaceship().render(graphic);
-
         for (int i = 0; i < game.getBarriers().size(); i++) {
             game.getBarriers().get(i).render(graphic);
         }
@@ -102,9 +115,10 @@ public class Screen extends Canvas {
         renderScore(game.getScore());
         renderHighScore(game.getHSManager());
 
-        // Draw the bullet for the Aliens
+        // Draw the bullets and spaceship
         renderBulletShip(game.getShipBullets());
         renderBulletAlien(game.getAlienBullets());
+        game.getSpaceship().render(graphic);
 
         graphic.dispose();
         buff_strat.show();
@@ -115,7 +129,6 @@ public class Screen extends Canvas {
 
         BufferStrategy bs = this.getBufferStrategy();
         if (bs == null) {
-
             createBufferStrategy(3);
             return;
         }
@@ -176,12 +189,57 @@ public class Screen extends Canvas {
     }
     
     /**
+     * the keyPressed method is called when a key is pressed down.
+     */
+    public void keyPressed(KeyEvent vkLeft) {
+        if (vkLeft.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = true;
+        }
+        if (vkLeft.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = true;
+        }
+        if (vkLeft.getKeyCode() == KeyEvent.VK_SPACE) {
+            // check if the time interval in between bullets is large enough.
+            if (System.currentTimeMillis() - lastFire > 400) {
+                lastFire = System.currentTimeMillis();
+                spacePressed = true;
+            }
+        }
+    }
+
+    /**
+     * the keyReleased method is called when a key has been released.
+     */
+    public void keyReleased(KeyEvent e) {
+
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            leftPressed = false;
+            //logfile.writeMove("Spaceship", spaceship.getPosX(),
+                    //spaceship.getPosY());
+        }
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            rightPressed = false;
+            //logfile.writeMove("Spaceship", spaceship.getPosX(),
+                    //spaceship.getPosY());
+        }
+        if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            spacePressed = false;
+        }
+    }
+
+    /**
+     * The keytyped method isnt used in game class.
+     */
+    public void keyTyped(KeyEvent e) {
+
+    }
+    
+    /**
      * get method to get the spritesheet.
      */
     public BufferedImage getSpriteSheet() {
         return SpriteSheet;
     }
-
     
     /**
      * The setter method for the sprite sheet from the path that is written as a
@@ -197,6 +255,63 @@ public class Screen extends Canvas {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * The method that returns the right pressed boolean.
+     * 
+     * @return
+     */
+    public boolean getRightPressed() {
+        return rightPressed;
+    }
+    
+    /**
+     * getter method for the leftpressed boolean
+     */
+    public boolean getLeftPressed() {
+        return leftPressed;
+    }
+
+    /**
+     * the method that returns the space pressed boolean.
+     * 
+     * @return
+     */
+    public boolean getSpacePressed() {
+        return spacePressed;
+    }
+
+    /**
+     * the method that sets the left pressed boolean.
+     * 
+     * @param b
+     */
+    public void setPressedLeft(boolean b) {
+        leftPressed = b;
+    }
+
+    /**
+     * the method that sets the right pressed boolean.
+     * 
+     * @param b
+     */
+    public void setPressedRight(boolean b) {
+        rightPressed = b;
+
+    }
+    
+    public void blockSpace() {
+    	spacePressed = false;
+    }
+
+    /**
+     * the method that sets the space pressed boolean.
+     * 
+     * @param b
+     */
+    public void setPressedSpace(boolean b) {
+        spacePressed = b;
     }
     
     public void close() {
