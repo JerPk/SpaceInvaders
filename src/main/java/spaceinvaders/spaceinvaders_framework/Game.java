@@ -76,10 +76,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * Vector to store all alien, bullet and barrier objects
      */
-    private Vector<Alien> aliens;
-    private Vector<Bullet> alienBullets;
-    private Vector<Bullet> shipBullets;
-    private Vector<Barrier> barriers;
+    public Vector<Alien> aliens;
+    public Vector<Bullet> alienBullets;
+    public Vector<Bullet> shipBullets;
+    public Vector<Barrier> barriers;
 
     private int counter;
 
@@ -108,6 +108,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     Spaceship spaceship;
 
     public static LogFile logfile;
+    
+    Level level;
 
     public Game() {
         addKeyListener(this);
@@ -191,56 +193,31 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void init() {
 
-        aliens = new Vector<Alien>(0);
-        alienBullets = new Vector<Bullet>(0);
-        shipBullets = new Vector<Bullet>(0);
-        barriers = new Vector<Barrier>(0);
+//        aliens = new Vector<Alien>(0);
+//        alienBullets = new Vector<Bullet>(0);
+//        shipBullets = new Vector<Bullet>(0);
+//        barriers = new Vector<Barrier>(0);
 
         logfile = new LogFile();
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-        CreateAliens();
+//        CreateAliens();
 
         spaceship = new Spaceship(this);
 
         highscoremanager = new HighscoreManager();
+        
+        level = LevelFactory.createLevel(1, spaceship, this);
 
-        // creates all barriers and adds them to the barrier vector
-        for (int i = 1; i <= 4; i++) {
-            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
-                    new SpriteSheet(getSpriteSheet())));
-        }
+//        // creates all barriers and adds them to the barrier vector
+//        for (int i = 1; i <= 4; i++) {
+//            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
+//                    new SpriteSheet(getSpriteSheet())));
+//        }
     }
 
-    /**
-     * creates all the aliens and adds them to the alien vector.
-     * 
-     * @param aliens
-     */
-    public void CreateAliens() {
-
-        int startYOffsetAlien = 0;
-        int startXOffsetAlien = 75;
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien, this);
-            aliens.addElement(alien);
-        }
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 25, this);
-            aliens.addElement(alien);
-        }
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 50, this);
-            aliens.addElement(alien);
-        }
-    }
+    
 
     public static void main(String argv[]) {
         Menu gameMenu = new Menu();
@@ -265,7 +242,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             }
             if (aliens.size() == 0
                     || aliens.get(aliens.size() - 1).getY() >= 400) {
-            	nextlvl();
+            	level = LevelFactory.createLevel(1, spaceship, this);
+//            	nextlvl();
 //                end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
                 barriers.clear();
@@ -292,28 +270,28 @@ public class Game extends Canvas implements Runnable, KeyListener {
         stop();
     }
     
-    /**
-     * the emthod to start next level
-     */
-    public void nextlvl() {
-    	aliens.clear();
-    	barriers.clear();
-    	alienBullets.clear();
-    	shipBullets.clear();
-    	logfile.writeString("Next level");
-    	
-    	CreateAliens();
-
-//        spaceship = new Spaceship(this);
+//    /**
+//     * the emthod to start next level
+//     */
+//    public void nextlvl() {
+//    	aliens.clear();
+//    	barriers.clear();
+//    	alienBullets.clear();
+//    	shipBullets.clear();
+//    	logfile.writeString("Next level");
+//    	
+//    	CreateAliens();
 //
-//        highscoremanager = new HighscoreManager();
-
-        // creates all barriers and adds them to the barrier vector
-        for (int i = 1; i <= 4; i++) {
-            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
-                    new SpriteSheet(getSpriteSheet())));
-        }
-    }
+////        spaceship = new Spaceship(this);
+////
+////        highscoremanager = new HighscoreManager();
+//
+//        // creates all barriers and adds them to the barrier vector
+//        for (int i = 1; i <= 4; i++) {
+//            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
+//                    new SpriteSheet(getSpriteSheet())));
+//        }
+//    }
 
     /**
      * the method that is used for all the non player entities to perform their
