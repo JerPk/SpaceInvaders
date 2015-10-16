@@ -1,8 +1,11 @@
 package spaceinvaders.spaceinvaders_framework.Level;
 
+import java.util.Vector;
+
 import spaceinvaders.spaceinvaders_framework.Alien;
 import spaceinvaders.spaceinvaders_framework.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
+import spaceinvaders.spaceinvaders_framework.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.Spaceship;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
@@ -22,14 +25,14 @@ public class Level {
 		game = g;
 		levelNumber = number;
 
-		game.aliens.clear();
-		game.barriers.clear();
-		game.alienBullets.clear();
-		game.shipBullets.clear();
+//		game.aliens.clear();
+//		game.barriers.clear();
+//		game.alienBullets.clear();
+//		game.shipBullets.clear();
 		spaceship.resetPosition();
 
-		CreateAliens();
-		CreateBarriers();
+//		game.aliens = createAliens();
+//		game.barriers = createBarriers();
 	}
 
 	/**
@@ -37,34 +40,41 @@ public class Level {
 	 * 
 	 * @param aliens
 	 */
-	public void CreateAliens() {
+	public Vector<Alien> createAliens() {
 
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
+		Vector<Alien> tempAliens = new Vector<Alien>(0);
 
 		for (int x = 0; x < 18; x++) {
 			Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien, game);
-			game.aliens.addElement(alien);
+			tempAliens.addElement(alien);
 		}
 
 		for (int x = 0; x < 18; x++) {
 			Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25,
 					game);
-			game.aliens.addElement(alien);
+			tempAliens.addElement(alien);
 		}
 
 		for (int x = 0; x < 18; x++) {
 			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50, game);
-			game.aliens.addElement(alien);
+			tempAliens.addElement(alien);
 		}
+		
+		return tempAliens;
 	}
 
 	/**
 	 * creates the four barriers and adds them to the barrier vector.
 	 */
-	public void CreateBarriers() {
+	public Vector<Barrier> createBarriers() {
+		Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
+		
 		for (int i = 1; i <= 4; i++) {
-			game.barriers.addElement(new Barrier(game.WIDTH / 5 * i - 22, 370, new SpriteSheet(game.getSpriteSheet())));
+			tempBarriers.addElement(new Barrier(game.WIDTH / 5 * i - 22, 370, new SpriteSheet(game.getSpriteSheet())));
 		}
+		
+		return tempBarriers;
 	}
 }

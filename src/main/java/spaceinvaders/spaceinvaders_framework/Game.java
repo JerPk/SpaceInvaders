@@ -79,10 +79,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
     /**
      * Vector to store all alien, bullet and barrier objects
      */
-    public Vector<Alien> aliens;
-    public Vector<Bullet> alienBullets;
-    public Vector<Bullet> shipBullets;
-    public Vector<Barrier> barriers;
+    private Vector<Alien> aliens;
+    private Vector<Bullet> alienBullets;
+    private Vector<Bullet> shipBullets;
+    private Vector<Barrier> barriers;
 
     private int counter;
 
@@ -211,6 +211,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         highscoremanager = new HighscoreManager();
         
         level = LevelFactory.createLevel(levelNumber, spaceship, this);
+        aliens = level.createAliens();
+    	barriers = level.createBarriers();
     }
 
     
@@ -240,7 +242,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
             if (levelNumber > 15) {
             	end();
             } else if (aliens.size() == 0) {
+            	clearVectors();
             	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
+            	aliens = level.createAliens();
+            	barriers = level.createBarriers();
             } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
@@ -251,7 +256,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             alienDie();
             removeOffScreenBullets();
             listenForKeys();
-            addBarriers();
+            checkBarriers();
             checkIfHit();
             moveAliens();
 
@@ -277,7 +282,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Alien alien_obj = (Alien) aliens.get(i);
             alien_obj.hmovement();
         }
-
     }
 
     public void moveAliens() {
@@ -320,7 +324,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
-    public void addBarriers() {
+    public void checkBarriers() {
         for (int i = 0; i < barriers.size(); i++) {
             if (barriers.get(i).ifHit(alienBullets) != -1) {
                 alienBullets.removeElementAt(barriers.get(i)
@@ -343,6 +347,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 end();
             }
         }
+    }
+    
+    /**
+     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets and barriers,
+     * for the next level
+     */
+    private void clearVectors() {
+    	aliens.clear();
+		barriers.clear();
+		alienBullets.clear();
+		shipBullets.clear();
     }
 
     /**

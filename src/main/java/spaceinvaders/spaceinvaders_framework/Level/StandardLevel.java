@@ -1,5 +1,7 @@
 package spaceinvaders.spaceinvaders_framework.Level;
 
+import java.util.Vector;
+
 import spaceinvaders.spaceinvaders_framework.Alien;
 import spaceinvaders.spaceinvaders_framework.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
@@ -15,20 +17,21 @@ public class StandardLevel extends Level {
 		game = g;
 		levelNumber = number;
 
-		game.aliens.clear();
-		game.barriers.clear();
-		game.alienBullets.clear();
-		game.shipBullets.clear();
+//		game.aliens.clear();
+//		game.barriers.clear();
+//		game.alienBullets.clear();
+//		game.shipBullets.clear();
 		spaceship.resetPosition();
 
-		CreateAliens();
-		CreateBarriers();
+//		createAliens();
+//		createBarriers();
 	}
 
 	@Override
-	public void CreateAliens() {
+	public Vector<Alien> createAliens() {
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
+		Vector<Alien> tempAliens = new Vector<Alien>(0);
 		String alienType = "";
 
 		if (levelNumber > 0 && levelNumber <= 5) {
@@ -43,14 +46,17 @@ public class StandardLevel extends Level {
 			for (int j = 0; j < 18; j++) {
 				Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien + (25 * j) - 3, startYOffsetAlien,
 						game);
-				game.aliens.addElement(alien);
+				tempAliens.addElement(alien);
 			}
 			startYOffsetAlien += 25;
 		}
+		
+		return tempAliens;
 	}
 
 	@Override
-	public void CreateBarriers() {
+	public Vector<Barrier> createBarriers() {
+		Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
 		int numberOfBariers = 0;
 
 		if (levelNumber % 5 != 0) {
@@ -58,8 +64,10 @@ public class StandardLevel extends Level {
 		}
 
 		for (int i = 1; i <= numberOfBariers; i++) {
-			game.barriers.addElement(new Barrier(game.WIDTH / (numberOfBariers + 1) * i - 22, 370,
+			tempBarriers.addElement(new Barrier(game.WIDTH / (numberOfBariers + 1) * i - 22, 370,
 					new SpriteSheet(game.getSpriteSheet())));
 		}
+		
+		return tempBarriers;
 	}
 }
