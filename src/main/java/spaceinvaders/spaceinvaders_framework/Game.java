@@ -226,24 +226,27 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         int startYOffsetAlien = 0;
         int startXOffsetAlien = 75;
-        /**
-         * for (int x = 0; x < 18; x++) { Alien alien =
-         * AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3,
-         * startYOffsetAlien, this); aliens.addElement(alien); }
-         * 
-         * for (int x = 0; x < 18; x++) { Alien alien =
-         * AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3,
-         * startYOffsetAlien + 25, this); aliens.addElement(alien); }
-         * 
-         * for (int x = 0; x < 18; x++) { Alien alien =
-         * AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3,
-         * startYOffsetAlien + 50, this); aliens.addElement(alien); }
-         */
+        
+         for (int x = 0; x < 18; x++) { Alien alien =
+         AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3,
+         startYOffsetAlien, this); aliens.addElement(alien); }
+         
+         for (int x = 0; x < 18; x++) { Alien alien =
+         AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3,
+         startYOffsetAlien + 25, this); aliens.addElement(alien); }
+         
+         for (int x = 0; x < 18; x++) { Alien alien =
+         AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3,
+         startYOffsetAlien + 50, this); aliens.addElement(alien); }
+        
+         //this is how you add a boss alien.
+         /**
         bossLevel = true;
         Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien,
                 startYOffsetAlien, this);
-        ;
+        
         aliens.addElement(alien);
+   */
     }
 
     public static void main(String argv[]) {
