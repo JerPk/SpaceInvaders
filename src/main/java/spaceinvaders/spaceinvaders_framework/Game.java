@@ -69,6 +69,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     private Spaceship spaceship;
     public static LogFile logfile;
+    private Screen screen;
     
     //////DELETE//////
     /**
@@ -80,8 +81,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public Game() {
         addKeyListener(this);
-        //setFocusable(true);
+        setFocusable(true);
         counter = 0;
+        screen = new Screen();
     }
 
     /**
@@ -204,6 +206,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         // the while loop that will be active once the game is running.
         while (running) {
+        	screen.render(this);
             doAction();
             counter++;
             if (counter >= 90) {
@@ -374,9 +377,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
     public void keyPressed(KeyEvent vkLeft) {
         if (vkLeft.getKeyCode() == KeyEvent.VK_LEFT) {
             leftPressed = true;
+            System.out.println("left key pressed");
         }
         if (vkLeft.getKeyCode() == KeyEvent.VK_RIGHT) {
             rightPressed = true;
+            System.out.println("right key pressed");
         }
         if (vkLeft.getKeyCode() == KeyEvent.VK_SPACE) {
             // check if the time interval in between bullets is large enough.
@@ -429,7 +434,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
      * 
      * @return boolean
      */
-    public boolean getrunning() {
+    public boolean getRunning() {
         return running;
     }
 

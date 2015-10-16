@@ -29,7 +29,10 @@ public class Menu {
     private JButton btnStatistics;
     private JButton btnQuit;
     
+    private boolean running;
+    
     public Menu(){
+    	running = false;
 
         frame = new JFrame("Space Invaders - Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,9 +46,6 @@ public class Menu {
         btnNewGame = new JButton("New Game");
         btnStatistics = new JButton("Highscores");
         btnQuit = new JButton("Quit Game");
-    }
-	
-	public void runMenu() {
         
         JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
 
@@ -65,12 +65,17 @@ public class Menu {
         frame.add(btnNewGame);
         frame.add(btnStatistics);
         frame.add(btnQuit);
-    
-        listenForActions();
         
         // add the panel to the frame.
         frame.add(panel);
         frame.setVisible(true);
+        
+        runMenu();
+    }
+	
+	public void runMenu() {
+		running = true;
+        listenForActions();
     }
 	
 	//Will be used later to show title
@@ -89,7 +94,7 @@ public class Menu {
         btnNewGame.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                newGame();
+                running = false;
                 frame.setVisible(false);
             }
         });
@@ -108,6 +113,10 @@ public class Menu {
             	System.exit(1);
             }
         });
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
     
     private static void newGame(){
