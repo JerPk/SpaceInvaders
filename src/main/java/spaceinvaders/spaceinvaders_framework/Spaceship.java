@@ -28,13 +28,14 @@ public class Spaceship {
      * @param  Game g
      */
     public Spaceship(Game g){
+    	game = g;
         xpos = g.WIDTH/2-13;
-        game = g;
+        
         lives = 3;
         
         Game.logfile.writeCreate("Spaceship", xpos, ypos);
         
-        SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+        SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
         Spaceship = ss.grabImage(277, 228, 26, 16);
         
     }
@@ -95,6 +96,13 @@ public class Spaceship {
     		}
     	}
     	return -1;
+    }
+    
+    /**
+     * 
+     */
+    public void resetPosition() {
+    	xpos = game.WIDTH/2-13;
     }
 
     /**
