@@ -206,19 +206,11 @@ public class Game extends Canvas implements Runnable, KeyListener {
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-//        CreateAliens();
-
         spaceship = new Spaceship(this);
 
         highscoremanager = new HighscoreManager();
         
         level = LevelFactory.createLevel(levelNumber, spaceship, this);
-
-//        // creates all barriers and adds them to the barrier vector
-//        for (int i = 1; i <= 4; i++) {
-//            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
-//                    new SpriteSheet(getSpriteSheet())));
-//        }
     }
 
     
@@ -244,7 +236,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alienShoot();
                 counter = 0;
             }
-            if (aliens.size() == 0) {
+            
+            if (levelNumber > 15) {
+            	end();
+            } else if (aliens.size() == 0) {
             	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
             } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
@@ -272,29 +267,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
         // immediately.
         stop();
     }
-    
-//    /**
-//     * the emthod to start next level
-//     */
-//    public void nextlvl() {
-//    	aliens.clear();
-//    	barriers.clear();
-//    	alienBullets.clear();
-//    	shipBullets.clear();
-//    	logfile.writeString("Next level");
-//    	
-//    	CreateAliens();
-//
-////        spaceship = new Spaceship(this);
-////
-////        highscoremanager = new HighscoreManager();
-//
-//        // creates all barriers and adds them to the barrier vector
-//        for (int i = 1; i <= 4; i++) {
-//            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
-//                    new SpriteSheet(getSpriteSheet())));
-//        }
-//    }
 
     /**
      * the method that is used for all the non player entities to perform their
