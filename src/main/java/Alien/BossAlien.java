@@ -16,6 +16,8 @@ public class BossAlien extends Alien{
      * the horizontal movement speed of the aliens.
      */
     private int movementSpeed = 1;
+    private int randomNum;
+    private boolean overwrite;
     
     /**
      * the constructor of alien type 3.
@@ -86,8 +88,9 @@ public class BossAlien extends Alien{
       // Usually this can be a field rather than a method variable
       Random rand = new Random();
       
-      int randomNum = rand.nextInt(3) + 1;
-      System.out.println(randomNum);
+      if(overwrite == false){
+      randomNum = rand.nextInt(3) + 1;
+      }
       
       Game.logfile.writeShoot("BossAlien", getX(), getY());
       
@@ -177,5 +180,10 @@ public class BossAlien extends Alien{
         newBullets.add(newBullet2);
         return newBullets;
         
+    }
+    
+    public void setRand(int random){
+        randomNum = random;
+        overwrite = true;
     }
 }
