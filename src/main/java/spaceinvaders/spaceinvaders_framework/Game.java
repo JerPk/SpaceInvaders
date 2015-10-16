@@ -19,8 +19,9 @@ import javax.swing.JOptionPane;
 
 import Alien.Alien;
 import Bullet.Bullet;
-import spaceinvaders.spaceinvaders_framework.Level.Level;
-import spaceinvaders.spaceinvaders_framework.Level.LevelFactory;
+import level.Level;
+import level.LevelFactory;
+
 
 
 /**
@@ -217,7 +218,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
         highscoremanager = new HighscoreManager();
         
-        level = LevelFactory.createLevel(levelNumber, spaceship, this);
+        level = LevelFactory.createLevel(levelNumber, this);
         aliens = level.createAliens();
     	barriers = level.createBarriers();
     }
@@ -249,7 +250,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
             	end();
             } else if (aliens.size() == 0) {
             	clearVectors();
-            	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
+            	level = LevelFactory.createLevel(++levelNumber, this);
+            	spaceship.resetPosition();
             	aliens = level.createAliens();
             	barriers = level.createBarriers();
             } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
@@ -356,8 +358,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
     }
     
     /**
-     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets and barriers,
-     * for the next level
+     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets
+     * and barriers for the next level.
      */
     private void clearVectors() {
     	aliens.clear();

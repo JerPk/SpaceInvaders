@@ -38,8 +38,8 @@ public class Barrier {
                 }
 
             }
-            if (alienBullets.get(i).getX() >= xpos && alienBullets.get(i).getX() <= xpos+44) {
-                if (alienBullets.get(i).getY() >= ypos && alienBullets.get(i).getY() <= ypos+32) {
+            if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+32) {
+                if (alienBullets.get(i).getX() > xpos-6 && alienBullets.get(i).getX() < xpos+44) {
                     return i;
                 }
             }

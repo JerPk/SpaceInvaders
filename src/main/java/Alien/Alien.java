@@ -26,12 +26,12 @@ public abstract class Alien {
     /**
      * the x coordinate of the Alien.
      */
-    private double x;
+    private double xpos;
 
     /**
      * the y coordinate of the Alien.
      */
-    private double y;
+    private double ypos;
 
     /**
      * the game the alien is a part of.
@@ -63,8 +63,8 @@ public abstract class Alien {
      *            g
      */
     public Alien(double x, double y, Game g) {
-        this.x = x;
-        this.y = y;
+        this.xpos = x;
+        this.ypos = y;
         game = g;
     }
 
@@ -74,18 +74,18 @@ public abstract class Alien {
     public void hmovement() {
         // check if the alien has reached if the alien has reached the right
         // hand border.
-        if (movementSpeed > 0 && x >= 630) {
+        if (movementSpeed > 0 && xpos >= 630) {
             game.updateLogic();
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
-        if (movementSpeed < 0 && x <= 2) {
+        if (movementSpeed < 0 && xpos <= 2) {
             game.updateLogic();
         }
 
         // moves the alien in the horizontal direction.
-        x += movementSpeed;
+        xpos += movementSpeed;
     }
 
     /**
@@ -94,7 +94,7 @@ public abstract class Alien {
     public void vmovement() {
         // move the alien in the vertical direction
 
-        y += 20;
+        ypos += 20;
 
         // flip the movement speed so now the alien will move in
         // the other direction.
@@ -102,7 +102,7 @@ public abstract class Alien {
 
         // check if the alien has reached the bootom ofthe screen if so.
         // end the game.
-        if (y > 450) {
+        if (ypos > 450) {
             game.end();
         }
     }
@@ -134,28 +134,28 @@ public abstract class Alien {
      *            g
      */
     public void render(Graphics g) {
-        g.drawImage(Alien, (int) x, (int) y, null);
+        g.drawImage(Alien, (int) xpos, (int) ypos, null);
     }
 
     /**
      * the get method for the X coordinate.
      */
     public double getX() {
-        return x;
+        return xpos;
     }
     
     /**
      * the set method for the X coordinate.
      */
     public void setX(double newX) {
-        x = newX;
+        xpos = newX;
     }
     
     /**
      * the set method for the Y coordinate.
      */
     public void setY(double newY) {
-        y = newY;
+        ypos = newY;
     }
     
 
@@ -163,7 +163,7 @@ public abstract class Alien {
      * the get method for the Y coordinate
      */
     public double getY() {
-        return y;
+        return ypos;
     }
 
     /**
@@ -183,14 +183,11 @@ public abstract class Alien {
      */
     public int ifHit(Vector<Bullet> shipBullets) {
         for (int i = 0; i < shipBullets.size(); i++) {
-            if (shipBullets.get(i).getX() >= x
-                    && shipBullets.get(i).getX() <= x + 16) {
-                if (shipBullets.get(i).getY() >= y
-                        && shipBullets.get(i).getY() <= y + 16) {
-                    game.logfile.writeHit("Alien", x, y);
+        	if (shipBullets.get(i).getY() > ypos-12 && shipBullets.get(i).getY() < ypos + 16) {
+        		if (shipBullets.get(i).getX() > xpos-6 && shipBullets.get(i).getX() < xpos + 16) {
+                    Game.logfile.writeHit("Alien", xpos, ypos);
 
                     return i;
-
                 }
             }
         }
