@@ -18,8 +18,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Alien.Alien;
-import Alien.AlienFactory;
 import Bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Level.Level;
+import spaceinvaders.spaceinvaders_framework.Level.LevelFactory;
+
 
 /**
  * The game class is the main class.
@@ -116,6 +118,9 @@ public class Game extends Canvas implements Runnable, KeyListener {
     Spaceship spaceship;
 
     public static LogFile logfile;
+    
+    Level level;
+    int levelNumber = 1;
 
     public Game() {
         addKeyListener(this);
@@ -208,50 +213,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-        CreateAliens();
-
         spaceship = new Spaceship(this);
 
         highscoremanager = new HighscoreManager();
-
-        // creates all barriers and adds them to the barrier vector
-        for (int i = 1; i <= 4; i++) {
-            barriers.addElement(new Barrier(WIDTH / 5 * i - 22, 370,
-                    new SpriteSheet(getSpriteSheet())));
-        }
+        
+        level = LevelFactory.createLevel(levelNumber, spaceship, this);
+        aliens = level.createAliens();
+    	barriers = level.createBarriers();
     }
-
-    /**
-     * creates all the aliens and adds them to the alien vector.
-     * 
-     * @param aliens
-     */
-    public void CreateAliens() {
-
-        int startYOffsetAlien = 0;
-        int startXOffsetAlien = 75;
-        
-         for (int x = 0; x < 18; x++) { Alien alien =
-         AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3,
-         startYOffsetAlien, this); aliens.addElement(alien); }
-         
-         for (int x = 0; x < 18; x++) { Alien alien =
-         AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3,
-         startYOffsetAlien + 25, this); aliens.addElement(alien); }
-         
-         for (int x = 0; x < 18; x++) { Alien alien =
-         AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3,
-         startYOffsetAlien + 50, this); aliens.addElement(alien); }
-        
-         //this is how you add a boss alien.
-         /**
-        bossLevel = true;
-        Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien,
-                startYOffsetAlien, this);
-        
-        aliens.addElement(alien);
-   */
-    }
+    
 
     public static void main(String argv[]) {
         Menu gameMenu = new Menu();
@@ -274,8 +244,15 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 alienShoot();
                 counter = 0;
             }
-            if (aliens.size() == 0
-                    || aliens.get(aliens.size() - 1).getY() >= 400) {
+            
+            if (levelNumber > 15) {
+            	end();
+            } else if (aliens.size() == 0) {
+            	clearVectors();
+            	level = LevelFactory.createLevel(++levelNumber, spaceship, this);
+            	aliens = level.createAliens();
+            	barriers = level.createBarriers();
+            } else if (aliens.get(aliens.size() - 1).getY() >= 400) {
                 end();
             } else if (aliens.get(aliens.size() - 1).getY() >= 360) {
                 barriers.clear();
@@ -285,7 +262,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             alienDie();
             removeOffScreenBullets();
             listenForKeys();
-            addBarriers();
+            checkBarriers();
             checkIfHit();
             moveAliens();
 
@@ -311,7 +288,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
             Alien alien_obj = (Alien) aliens.get(i);
             alien_obj.hmovement();
         }
-
     }
 
     public void moveAliens() {
@@ -354,7 +330,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
-    public void addBarriers() {
+    public void checkBarriers() {
         for (int i = 0; i < barriers.size(); i++) {
             if (barriers.get(i).ifHit(alienBullets) != -1) {
                 alienBullets.removeElementAt(barriers.get(i)
@@ -377,6 +353,17 @@ public class Game extends Canvas implements Runnable, KeyListener {
                 end();
             }
         }
+    }
+    
+    /**
+     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets and barriers,
+     * for the next level
+     */
+    private void clearVectors() {
+    	aliens.clear();
+		barriers.clear();
+		alienBullets.clear();
+		shipBullets.clear();
     }
 
     /**
@@ -412,6 +399,7 @@ public class Game extends Canvas implements Runnable, KeyListener {
             barriers.get(i).render(graphic);
         }
 
+        renderLevelNumber();
         renderScore();
         renderHighScore();
 
@@ -468,6 +456,21 @@ public class Game extends Canvas implements Runnable, KeyListener {
         }
     }
 
+    /**
+     * renders level number on the screen.
+     */
+    public void renderLevelNumber() {
+    	BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.white);
+        g.drawString("Level: " + levelNumber, 550, 440);
+    }
+    
     /**
      * renders the highscore on the screen.
      */

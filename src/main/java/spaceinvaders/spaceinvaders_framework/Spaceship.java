@@ -30,14 +30,18 @@ public class Spaceship {
      * @param Game
      *            g
      */
-    public Spaceship(Game g) {
-        x = g.WIDTH / 2 - 13;
+
+    public Spaceship(Game g){
+
         game = g;
+        x = game.WIDTH/2-13;
+        
         lives = 3;
 
         Game.logfile.writeCreate("Spaceship", x, y);
 
-        SpriteSheet ss = new SpriteSheet(g.getSpriteSheet());
+        SpriteSheet ss = new SpriteSheet(game.getSpriteSheet());
+
         Spaceship = ss.grabImage(277, 228, 26, 16);
 
     }
@@ -108,6 +112,13 @@ public class Spaceship {
             }
         }
         return -1;
+    }
+    
+    /**
+     * 
+     */
+    public void resetPosition() {
+    	x = game.WIDTH/2-13;
     }
 
     private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
