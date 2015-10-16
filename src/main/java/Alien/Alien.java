@@ -26,12 +26,12 @@ public abstract class Alien {
     /**
      * the x coordinate of the Alien.
      */
-    private double xpos;
+    protected double xpos;
 
     /**
      * the y coordinate of the Alien.
      */
-    private double ypos;
+    protected double ypos;
 
     /**
      * the game the alien is a part of.
