@@ -17,8 +17,8 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import spaceinvaders.spaceinvaders_framework.Level.Level;
-import spaceinvaders.spaceinvaders_framework.Level.LevelFactory;
+import level.Level;
+import level.LevelFactory;
 
 /**
  * The game class is the main class.

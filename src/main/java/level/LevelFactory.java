@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework.Level;
+package level;
 
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.Spaceship;

@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework.Level;
+package level;
 
 import java.util.Vector;
 
