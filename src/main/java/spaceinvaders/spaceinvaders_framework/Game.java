@@ -193,10 +193,10 @@ public class Game extends Canvas implements Runnable, KeyListener {
      */
     public void init() {
 
-//        aliens = new Vector<Alien>(0);
-//        alienBullets = new Vector<Bullet>(0);
-//        shipBullets = new Vector<Bullet>(0);
-//        barriers = new Vector<Barrier>(0);
+        aliens = new Vector<Alien>(0);
+        alienBullets = new Vector<Bullet>(0);
+        shipBullets = new Vector<Bullet>(0);
+        barriers = new Vector<Barrier>(0);
 
         logfile = new LogFile();
         logfile.open();
