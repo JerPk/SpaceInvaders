@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.*;
 
 import org.junit.Test;
+
+import spaceinvaders.spaceinvaders_framework.LogFile;
 public class LogFileTest {
     
     public static LogFile logfile;

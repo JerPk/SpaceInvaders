@@ -6,7 +6,10 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import Bullet.Bullet;
+import bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.Spaceship;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 import java.util.Vector;
 

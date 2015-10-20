@@ -1,4 +1,4 @@
-package Bullet;
+package bullet;
 
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
@@ -9,7 +9,7 @@ import spaceinvaders.spaceinvaders_framework.SpriteSheet;
  * @author Group 23
  *
  */
-public class DiagonalBulletLeft extends Bullet {
+public class DiagonalBulletRight extends Bullet {
 
     /**
      * the constructor method of the Diagonal bullet.
@@ -18,7 +18,7 @@ public class DiagonalBulletLeft extends Bullet {
      * @param y
      * @param ss
      */
-    public DiagonalBulletLeft(double x, double y, SpriteSheet ss) {
+    public DiagonalBulletRight(double x, double y, SpriteSheet ss) {
         super(x, y, ss);
     }
 
@@ -26,6 +26,6 @@ public class DiagonalBulletLeft extends Bullet {
     @Override
     public void moveDown(){
         setY(getY() + downspeed);
-        setX(getX() - 0.7);
+        setX(getX() + 0.7);
     }
 }

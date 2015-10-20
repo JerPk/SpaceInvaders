@@ -1,12 +1,12 @@
-package Alien;
+package alien;
 
 import java.util.Random;
 import java.util.Vector;
 
-import Bullet.Bullet;
-import Bullet.DiagonalBulletLeft;
-import Bullet.DiagonalBulletRight;
-import Bullet.MegaBullet;
+import bullet.Bullet;
+import bullet.DiagonalBulletLeft;
+import bullet.DiagonalBulletRight;
+import bullet.MegaBullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 

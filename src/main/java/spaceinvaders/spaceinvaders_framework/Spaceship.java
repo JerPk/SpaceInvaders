@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
-import Bullet.Bullet;
-import Bullet.MegaBullet;
+import bullet.Bullet;
+import bullet.MegaBullet;
 
 public class Spaceship {
 

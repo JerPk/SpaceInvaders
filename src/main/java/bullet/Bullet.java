@@ -1,4 +1,4 @@
-package Bullet;
+package bullet;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;

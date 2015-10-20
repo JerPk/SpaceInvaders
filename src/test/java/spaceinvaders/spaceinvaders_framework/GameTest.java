@@ -11,9 +11,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import Alien.Alien;
-import Alien.AlienFactory;
-import Bullet.Bullet;
+import alien.Alien;
+import alien.AlienFactory;
+import bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.HighscoreManager;
+import spaceinvaders.spaceinvaders_framework.Spaceship;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;

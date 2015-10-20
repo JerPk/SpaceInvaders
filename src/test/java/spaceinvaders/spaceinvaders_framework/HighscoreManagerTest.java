@@ -8,6 +8,8 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import spaceinvaders.spaceinvaders_framework.HighscoreManager;
+
 public class HighscoreManagerTest {
 
     /**

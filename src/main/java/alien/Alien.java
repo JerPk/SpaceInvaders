@@ -1,4 +1,4 @@
-package Alien;
+package alien;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,7 +8,7 @@ import java.util.Vector;
 
 import org.junit.Test;
 
-import Bullet.Bullet;
+import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
