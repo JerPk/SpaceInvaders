@@ -8,6 +8,8 @@ import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
 
+import spaceinvaders.spaceinvaders_framework.ScoreMenu;
+
 
 /**
  * ScoreMenuTest tests all the methods in the ScoreMenu class.

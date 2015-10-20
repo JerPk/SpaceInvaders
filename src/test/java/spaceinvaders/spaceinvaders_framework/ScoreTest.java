@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
+import spaceinvaders.spaceinvaders_framework.Score;
+
 public class ScoreTest {
 
     /**

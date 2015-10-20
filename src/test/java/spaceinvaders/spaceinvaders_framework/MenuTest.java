@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 
 import org.junit.Test;
 
+import spaceinvaders.spaceinvaders_framework.Menu;
+
 /**
  * MenuTest tests all the methods in the Menu class.
  * 

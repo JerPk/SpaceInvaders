@@ -17,8 +17,8 @@ import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import Alien.Alien;
-import Bullet.Bullet;
+import alien.Alien;
+import bullet.Bullet;
 import level.Level;
 import level.LevelFactory;
 

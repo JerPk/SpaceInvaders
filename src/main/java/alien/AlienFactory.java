@@ -1,4 +1,4 @@
-package Alien;
+package alien;
 
 import spaceinvaders.spaceinvaders_framework.Game;
 

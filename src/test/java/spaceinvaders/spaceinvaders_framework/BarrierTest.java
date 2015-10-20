@@ -5,7 +5,10 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import Bullet.Bullet;
+import bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Barrier;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 import java.util.Vector;
 /**

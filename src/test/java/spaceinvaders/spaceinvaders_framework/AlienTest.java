@@ -10,10 +10,12 @@ import java.util.Vector;
 import org.junit.Before;
 import org.junit.Test;
 
-import Alien.Alien;
-import Alien.AlienFactory;
-import Alien.BossAlien;
-import Bullet.Bullet;
+import alien.Alien;
+import alien.AlienFactory;
+import alien.BossAlien;
+import bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * AlienTest tests all the methods in the alien class.

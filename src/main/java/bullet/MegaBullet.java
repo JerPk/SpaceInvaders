@@ -1,4 +1,4 @@
-package Bullet;
+package bullet;
 
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
