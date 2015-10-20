@@ -10,6 +10,10 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
+import alien.Alien;
+import alien.AlienFactory;
+import bullet.Bullet;
+
 /**
  * The game class is the main class.
  * 

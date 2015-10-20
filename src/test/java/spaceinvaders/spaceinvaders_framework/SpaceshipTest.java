@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import bullet.Bullet;
+
 import java.util.Vector;
 
 /**

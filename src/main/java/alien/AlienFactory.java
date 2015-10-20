@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework;
+package alien;
 /**
  * Alien factory is the class that is used to 
  * create all the different types of aliens.

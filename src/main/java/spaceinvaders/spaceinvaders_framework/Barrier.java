@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Vector;
 
+import bullet.Bullet;
+
 public class Barrier {
     
     private double xpos;

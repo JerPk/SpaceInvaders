@@ -1,7 +1,10 @@
-package spaceinvaders.spaceinvaders_framework;
+package bullet;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+
+import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Bullet {
 

@@ -14,6 +14,9 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
+import alien.Alien;
+import bullet.Bullet;
+
 public class Screen extends Canvas implements KeyListener {
 	
     private static JFrame frame = null;
