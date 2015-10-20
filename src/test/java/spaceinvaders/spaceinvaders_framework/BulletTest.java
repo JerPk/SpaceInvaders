@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import Bullet.Bullet;
+import bullet.Bullet;
 
 /**
  * BulletTest tests all the methods in the bullet class.
