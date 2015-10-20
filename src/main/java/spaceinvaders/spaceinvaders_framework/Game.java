@@ -2,13 +2,9 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Vector;
 import java.util.Date;
-
-import javax.swing.JOptionPane;
 
 import alien.Alien;
 import alien.AlienFactory;
@@ -20,7 +16,7 @@ import bullet.Bullet;
  * @author Group 23
  *
  */
-public class Game extends Canvas /*implements Runnable*/ {
+public class Game extends Canvas {
 
     /**
      * running == true when the game is running.
@@ -42,14 +38,6 @@ public class Game extends Canvas /*implements Runnable*/ {
     private Spaceship spaceship;
     public static LogFile logfile;
     private Screen screen;
-    
-    //////DELETE//////
-    /**
-     * the bufferdImage which will be the spritesheet that contains
-     *
-     * all the sprites we use.
-     */
-    private BufferedImage SpriteSheet = null;
 
     public Game() {
         counter = 0;
@@ -110,14 +98,6 @@ public class Game extends Canvas /*implements Runnable*/ {
         logfile = LogFile.getInstance();
         logfile.open();
         logfile.writeString("Game started at " + new Date());
-        
-        ///DELETE///
-        BuffereImageLoader loader = new BuffereImageLoader();
-        try {
-            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         CreateAliens();
 
@@ -128,14 +108,6 @@ public class Game extends Canvas /*implements Runnable*/ {
         for (int i = 1; i <= 4; i++) {
             barriers.addElement(new Barrier(635 / 5 * i - 22, 370));
         }
-    }
-
-    ///DELETE///
-    /**
-     * get method to get the spritesheet.
-     */
-    public BufferedImage getSpriteSheet() {
-        return SpriteSheet;
     }
 
     /**
