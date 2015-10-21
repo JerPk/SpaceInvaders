@@ -117,6 +117,7 @@ public class Screen extends Canvas implements KeyListener {
 
         renderScore(game.getScore());
         renderHighScore(game.getHSManager());
+        renderLevelNumber(game.getLevelNumber());
 
         // Draw the bullets and spaceship
         renderBulletShip(game.getShipBullets());
@@ -208,6 +209,21 @@ public class Screen extends Canvas implements KeyListener {
                 spacePressed = true;
             }
         }
+    }
+    
+    /**
+     * renders level number on the screen.
+     */
+    public void renderLevelNumber(int levelNumber) {
+    	BufferStrategy bs = this.getBufferStrategy();
+        if (bs == null) {
+            createBufferStrategy(3);
+            return;
+        }
+        
+        Graphics g = bs.getDrawGraphics();
+        g.setColor(Color.white);
+        g.drawString("Level: " + levelNumber, 550, 440);
     }
 
     /**

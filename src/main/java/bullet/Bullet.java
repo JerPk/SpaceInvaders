@@ -12,7 +12,7 @@ public class Bullet {
     private SpriteSheet spritesheet;
     //Bullet coordinates
     private double xpos,ypos;
-    private double downspeed = 2.2;
+    protected double downspeed = 2.2;
     
     public Bullet(double x, double y, SpriteSheet ss){
         this.xpos = x;
@@ -41,8 +41,16 @@ public class Bullet {
         return xpos;
     }
     
+    public void setX(double newX) {
+        xpos = newX;
+    }
+    
     public double getY() {
         return ypos;
+    }
+    
+    public void setY(double newY) {
+        ypos = newY;
     }
     
     /**
@@ -61,7 +69,6 @@ public class Bullet {
     @Override
     public boolean equals(Object other){
         boolean result = false;
-        
         if(other instanceof Bullet){
             Bullet that = (Bullet) other;
             if(this.getX() == that.getX()){

@@ -1,5 +1,7 @@
 package alien;
 
+import static org.junit.Assert.assertEquals;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -7,6 +9,9 @@ import java.util.Vector;
 
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
+import org.junit.Test;
+
+import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
@@ -24,12 +29,12 @@ public abstract class Alien {
     /**
      * the x coordinate of the Alien.
      */
-    private double x;
+    protected double xpos;
 
     /**
      * the y coordinate of the Alien.
      */
-    private double y;
+    protected double ypos;
 
     /**
      * the horizontal movement speed of the aliens.
@@ -61,11 +66,10 @@ public abstract class Alien {
      * 
      * @param double x
      * @param double y
-     * @param Game g
      */
     public Alien(double x, double y) {
-        this.x = x;
-        this.y = y;
+        this.xpos = x;
+        this.ypos = y;
         
         BuffereImageLoader loader = new BuffereImageLoader();
         try {
@@ -81,18 +85,18 @@ public abstract class Alien {
     public void hmovement() {
         // check if the alien has reached if the alien has reached the right
         // hand border.
-        if (movementSpeed > 0 && x >= 630) {
+        if (movementSpeed > 0 && xpos >= 630) {
             updateLogic();
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
-        if (movementSpeed < 0 && x <= 2) {
+        if (movementSpeed < 0 && xpos <= 2) {
         	updateLogic();
         }
 
         // moves the alien in the horizontal direction.
-        x += movementSpeed;
+        xpos += movementSpeed;
     }
 
     /**
@@ -101,7 +105,7 @@ public abstract class Alien {
     public void vmovement() {
         // move the alien in the vertical direction
 
-        y += 20;
+        ypos += 20;
 
         // flip the movement speed so now the alien will move in
         // the other direction.
@@ -139,7 +143,7 @@ public abstract class Alien {
      *            g
      */
     public void render(Graphics g) {
-        g.drawImage(Alien, (int) x, (int) y, null);
+        g.drawImage(Alien, (int) xpos, (int) ypos, null);
     }
     
     /**
@@ -153,14 +157,29 @@ public abstract class Alien {
      * the get method for the X coordinate.
      */
     public double getX() {
-        return x;
+        return xpos;
     }
+    
+    /**
+     * the set method for the X coordinate.
+     */
+    public void setX(double newX) {
+        xpos = newX;
+    }
+    
+    /**
+     * the set method for the Y coordinate.
+     */
+    public void setY(double newY) {
+        ypos = newY;
+    }
+    
 
     /**
      * the get method for the Y coordinate
      */
     public double getY() {
-        return y;
+        return ypos;
     }
     
     /**
@@ -190,11 +209,9 @@ public abstract class Alien {
      */
     public int ifHit(Vector<Bullet> shipBullets) {
         for (int i = 0; i < shipBullets.size(); i++) {
-            if (shipBullets.get(i).getX() >= x
-                    && shipBullets.get(i).getX() <= x + 16) {
-                if (shipBullets.get(i).getY() >= y
-                        && shipBullets.get(i).getY() <= y + 16) {
-                    Game.logfile.writeHit("Alien", x, y);
+        	if (shipBullets.get(i).getY() > ypos-12 && shipBullets.get(i).getY() < ypos + 16) {
+        		if (shipBullets.get(i).getX() > xpos-6 && shipBullets.get(i).getX() < xpos + 16) {
+                    Game.logfile.writeHit("Alien", xpos, ypos);
                     health--;
                     return i;
                 }
@@ -222,7 +239,7 @@ public abstract class Alien {
      * @return true/false
      */
     public boolean reachedY(double i) {
-    	if (y >= i) {
+    	if (ypos >= i) {
     		return true;
     	} else {
     		return false;
@@ -264,5 +281,50 @@ public abstract class Alien {
      */
     public int getHealth() {
         return health;
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 1.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType1(double x, double y){
+        Alien alien = new AlienType1(x,y);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 2.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType2(double x, double y){
+        Alien alien = new AlienType2(x,y);
+        return alien;        
+    }
+    
+    /**
+     * the method that creates and returns an alien of type 3.
+     * @param x
+     * @param y
+     * @param g
+     * @return
+     */
+    public static Alien createAlienType3(double x, double y){
+        Alien alien = new AlienType3(x,y);
+        return alien;        
+    }
+    
+    public Vector<Bullet> BossShoot() {
+        return null;   
+    }
+
+    public static Alien createBossAlien(int x2, int y2, Game g) {
+        Alien alien = new BossAlien(x2,y2,g);
+        return alien;        
     }
 }

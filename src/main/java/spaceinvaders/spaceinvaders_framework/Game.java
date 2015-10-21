@@ -10,6 +10,13 @@ import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
 
+import bullet.Bullet;
+import alien.Alien;
+import level.Level;
+import level.LevelFactory;
+
+
+
 /**
  * The game class is the main class.
  * 
@@ -22,6 +29,24 @@ public class Game extends Canvas {
      * running == true when the game is running.
      */
     private boolean running = false;
+
+    private ScoreMenu s_menu;
+
+    /**
+     * booleans related to the spaceships action
+     */
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
+    private boolean spacePressed = false;
+
+    private boolean bossLevel;
+
+    /**
+     * long that is used to set a limit between the spaceship
+     *
+     * being able to fire.
+     */
+    private long lastFire = 0;
 
     /**
      * Vector to store all alien, bullet and barrier objects
@@ -38,6 +63,9 @@ public class Game extends Canvas {
     private Spaceship spaceship;
     public static LogFile logfile;
     private Screen screen;
+    
+    private Level level;
+    private int levelNumber = 1;
 
     public Game() {
         counter = 0;
@@ -99,42 +127,15 @@ public class Game extends Canvas {
         logfile.open();
         logfile.writeString("Game started at " + new Date());
 
-        CreateAliens();
-
         spaceship = new Spaceship();
+
         highscoremanager = new HighscoreManager();
-
-        // creates all barriers and adds them to the barrier vector
-        for (int i = 1; i <= 4; i++) {
-            barriers.addElement(new Barrier(635 / 5 * i - 22, 370));
-        }
+        
+        level = LevelFactory.createLevel(levelNumber);
+        aliens = level.createAliens();
+    	barriers = level.createBarriers();
     }
-
-    /**
-     * creates all the aliens and adds them to the alien vector.
-     * 
-     * @param aliens
-     */
-    public void CreateAliens() {
-        int startYOffsetAlien = 0;
-        int startXOffsetAlien = 75;
-
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien);
-            aliens.addElement(alien);
-        }
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 25);
-            aliens.addElement(alien);
-        }
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien
-                    + (25 * x) - 3, startYOffsetAlien + 50);
-            aliens.addElement(alien);
-        }
-    }
+    
 
     /**
      * the run method is the method that has the main game loop that will be
@@ -147,10 +148,23 @@ public class Game extends Canvas {
     		alienShoot();
     		counter = 0;
     	}
-    	if (aliens.size() == 0
-    			|| aliens.get(aliens.size() - 1).reachedY(400)) {
+    	if (levelNumber > 15) {
     		end();
-    	}	else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+    	} else if (aliens.size() == 0) {
+        	clearVectors();
+        	level = LevelFactory.createLevel(++levelNumber);
+        	spaceship.resetPosition();
+        	aliens = level.createAliens();
+        	barriers = level.createBarriers();
+        	if (levelNumber % 5 == 0) {
+        		bossLevel = true;
+        	}
+        	else {
+        		bossLevel = false;
+        	}
+    	} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+    		end();
+    	} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
     		barriers.clear();
     	}
     	removeOffScreenBullets();
@@ -225,14 +239,29 @@ public class Game extends Canvas {
             }
         }
     }
+    
+    /**
+     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets
+     * and barriers for the next level.
+     */
+    private void clearVectors() {
+    	aliens.clear();
+		barriers.clear();
+		alienBullets.clear();
+		shipBullets.clear();
+    }
 
     /**
      * The method that that randomly selects an alien. and adds its bullet to the vector.
      */
     public void alienShoot() {
-        Random rand = new Random();
-        int randNr = rand.nextInt(aliens.size());
-        alienBullets.addElement(aliens.get(randNr).shoot());
+        if (bossLevel != true) {
+            Random rand = new Random();
+            int randNr = rand.nextInt(aliens.size());
+            alienBullets.addElement(aliens.get(randNr).shoot());
+        } else {
+            alienBullets.addAll(aliens.get(0).BossShoot());
+        }
     }
 
     /**
@@ -241,16 +270,14 @@ public class Game extends Canvas {
     public void removeOffScreenBullets() {
         for (int i = 0; i < alienBullets.size(); i++) {
             if (alienBullets.get(i).reachedY(450)) {
-                Game.logfile
-                        .writeOffscreen("Alien", alienBullets.get(i).getX());
+                Game.logfile.writeOffscreen("Alien", alienBullets.get(i).getX());
                 alienBullets.removeElementAt(i);
                 i--;
             }
         }
         for (int j = 0; j < shipBullets.size(); j++) {
             if (shipBullets.get(j).getY() <= 0) {
-                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j)
-                        .getX());
+                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
                 shipBullets.removeElementAt(j);
                 j--;
             }
@@ -412,6 +439,10 @@ public class Game extends Canvas {
         screen.close();
     }
     
+    public int getLevelNumber() {
+    	return levelNumber;
+    }
+    
     public int getScore() {
         return score;
     }
@@ -437,5 +468,14 @@ public class Game extends Canvas {
      */
     public void setscore(int score1) {
         score = score1;
+    }
+
+    /**
+     * the getter method for the scoremenu of the game. mainly used for testing.
+     * 
+     * @return s_menu
+     */
+    public ScoreMenu getScoreMenu() {
+        return s_menu;
     }
 }

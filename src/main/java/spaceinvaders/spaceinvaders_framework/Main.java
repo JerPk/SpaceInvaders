@@ -16,10 +16,10 @@ public class Main implements Runnable {
         while (gameMenu.isRunning()) {
         	gameMenu.runMenu();
         }
-        gameMenu.check();
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
+        gameMenu.check();
     }
     
     public void restart() {
@@ -30,7 +30,6 @@ public class Main implements Runnable {
     }
     
     public void run() {
-    	System.out.println("running");
         Game game = new Game();
         game.start();
         
@@ -53,4 +52,14 @@ public class Main implements Runnable {
         //s_menu.show();  
         restart();
     }
+    
+    /**
+     * the getter method for the thread of the game. mainly used for testing.
+     * 
+     * @return thread
+    
+    public Thread getThread() {
+        return thread;
+    }
+    */
 }

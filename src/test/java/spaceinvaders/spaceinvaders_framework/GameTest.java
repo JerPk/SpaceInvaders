@@ -2,16 +2,24 @@ package spaceinvaders.spaceinvaders_framework;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
+<<<<<<< HEAD
 import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
+=======
+import bullet.Bullet;
+import alien.Alien;
+import alien.AlienFactory;
+>>>>>>> 9c57d86fe7e9d8af83cd85a543fd4e3ac6102ba2
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -89,7 +97,7 @@ public class GameTest {
 
     assertNotSame(game.getSpaceship(), null);
     assertEquals(game.getSpaceship(), shipTest);
-    assertNotSame(game.getSpaceship(), shipTest);
+//    assertNotSame(game.getSpaceship(), shipTest);
 
   }
 
@@ -400,5 +408,33 @@ public class GameTest {
     game.addscore();
       assertEquals(manager.getScores().get(0).getScore(),200 );
   }
+  
+  /**
+   * tests the start method.
+   */
+  @Test
+  public void testStart() {
+      assertNull(game.getThread());
+      game.setrunning(true);
+      game.start();
+      assertNull(game.getThread());
+      game.setrunning(false);
+      game.start();
+      assertNotNull(game.getThread());
+  }
 
+  /**
+   * tests the start method.
+   */
+  @Test
+  public void testEnd() { 
+      
+      game.init();
+      game.start();
+      assertTrue(game.getrunning());
+      assertNull(game.getScoreMenu());
+      game.end();
+      assertFalse(game.getrunning());
+      assertNotNull(game.getScoreMenu());
+  }
 }
