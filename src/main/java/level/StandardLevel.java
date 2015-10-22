@@ -5,15 +5,12 @@ import java.util.Vector;
 import alien.Alien;
 import alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.spaceinvaders_framework.Screen;
 
 public class StandardLevel extends Level {
 
-	public StandardLevel(int number, Game g) {
-		super(number, g);
-
-		game = g;
+	public StandardLevel(int number) {
+		super(number);
 		levelNumber = number;
 	}
 
@@ -34,8 +31,7 @@ public class StandardLevel extends Level {
 
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 18; j++) {
-				Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien + (25 * j) - 3, startYOffsetAlien,
-						game);
+				Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien + (25 * j) - 3, startYOffsetAlien);
 				tempAliens.addElement(alien);
 			}
 			startYOffsetAlien += 25;
@@ -54,8 +50,7 @@ public class StandardLevel extends Level {
 		}
 
 		for (int i = 1; i <= numberOfBariers; i++) {
-			tempBarriers.addElement(new Barrier(game.WIDTH / (numberOfBariers + 1) * i - 22, 370,
-					new SpriteSheet(game.getSpriteSheet())));
+			tempBarriers.addElement(new Barrier(Screen.WIDTH / (numberOfBariers + 1) * i - 22, 370));
 		}
 		
 		return tempBarriers;

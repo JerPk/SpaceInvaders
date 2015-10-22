@@ -3,6 +3,8 @@ package spaceinvaders.spaceinvaders_framework;
 import java.util.*;
 import java.io.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * The HihgscoreManager is the main class in terms of reading and writing the
  * highscores from a file(scores.dat to be precise) to an arraylist that will be
@@ -75,6 +77,19 @@ public class HighscoreManager {
         loadScoreFile();
         scores.add(new Score(name, score));
         updateScoreFile();
+    }
+    
+    /**
+     * The addscore method compares the players score to the 10 object in the scores array. 
+     * If the player scores higher the object is added to the array.
+     */
+    public void addScore(int score) {
+    	Score ninthscore = scores.get(9);
+    	if (score >= ninthscore.getScore()) {
+    		String name = JOptionPane
+    				.showInputDialog("Congratulations you are on the leaderboards what is your name?");
+    		addScore(name, score);
+    	}
     }
 
     /**

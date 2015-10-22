@@ -10,15 +10,15 @@ import org.junit.Test;
 
 public class HighscoreManagerTest {
 
-    /**
-     * tests the add score method.
-     */
-    @Test
-    public void testaddScore(){
-        HighscoreManager manager = new HighscoreManager();
-        manager.addScore("name", 0);
-        assertNotNull(manager);
-    }
+//    /**
+//     * tests the add score method.
+//     */
+//    @Test
+//    public void testaddScore(){
+//        HighscoreManager manager = new HighscoreManager();
+//        manager.addScore("name", 0);
+//        assertNotNull(manager);
+//    }
     
     /**
      * tests the loadscoremethod while the outputstram is in use thus causing an error.
@@ -31,15 +31,15 @@ public class HighscoreManagerTest {
         assertNotNull(manager);
     }
     
-    /**
-     * tests the loadscore method. if everything goes well.
-     */
-    @Test
-    public void testloadScoreFile() throws FileNotFoundException, IOException{
-        HighscoreManager manager = new HighscoreManager();
-        manager.loadScoreFile();
-        assertNotNull(manager);
-    }
+//    /**
+//     * tests the loadscore method. if everything goes well.
+//     */
+//    @Test
+//    public void testloadScoreFile() throws FileNotFoundException, IOException{
+//        HighscoreManager manager = new HighscoreManager();
+//        manager.loadScoreFile();
+//        assertNotNull(manager);
+//    }
   
     /**
      * tests the updatescore method.

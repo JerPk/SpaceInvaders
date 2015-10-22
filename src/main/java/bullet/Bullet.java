@@ -4,23 +4,22 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.spaceinvaders_framework.Screen;
 
 public class Bullet {
 
     private BufferedImage bullet;
-    private SpriteSheet spritesheet;
     //Bullet coordinates
     private double xpos,ypos;
     protected double downspeed = 2.2;
     
-    public Bullet(double x, double y, SpriteSheet ss){
+    public Bullet(double x, double y){
         this.xpos = x;
         this.ypos = y;
 
         Game.logfile.writeCreate("Bullet", xpos, ypos);
-        spritesheet = ss;
-        bullet = spritesheet.grabImage(413, 277, 6, 12);
+        
+        bullet = Screen.spritesheet.grabImage(413, 277, 6, 12);
     }
     //Move the bullet up
     public void moveUp(){   
@@ -53,10 +52,22 @@ public class Bullet {
         ypos = newY;
     }
     
+    /**
+     * This method checks if the bullet has reached a certain height
+     * 
+     * @return true/false
+     */
+    public boolean reachedY(double i) {
+    	if (ypos >= i) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
     @Override
     public boolean equals(Object other){
         boolean result = false;
-        
         if(other instanceof Bullet){
             Bullet that = (Bullet) other;
             if(this.getX() == that.getX()){
@@ -75,7 +86,7 @@ public class Bullet {
     }
     
     public void setSpritesheet(int row, int col, int x, int y){
-       bullet = spritesheet.grabImage(row, col, x, y);
+       bullet = Screen.spritesheet.grabImage(row, col, x, y);
     }
     
 }

@@ -5,12 +5,11 @@ import java.util.Vector;
 import alien.Alien;
 import alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.Screen;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Level {
 
-	Game game;
 	int levelNumber;
 
 	/**
@@ -19,8 +18,7 @@ public class Level {
 	 * @param number Levelnumber
 	 * @param g The game
 	 */
-	public Level(int number, Game g) {
-		game = g;
+	public Level(int number) {
 		levelNumber = number;
 	}
 
@@ -36,18 +34,17 @@ public class Level {
 		Vector<Alien> tempAliens = new Vector<Alien>(0);
 
 		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien, game);
+			Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien);
 			tempAliens.addElement(alien);
 		}
 
 		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25,
-					game);
+			Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25);
 			tempAliens.addElement(alien);
 		}
 
 		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50, game);
+			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50);
 			tempAliens.addElement(alien);
 		}
 		//this is how you add a boss alien.
@@ -71,7 +68,7 @@ public class Level {
 		Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
 		
 		for (int i = 1; i <= 4; i++) {
-			tempBarriers.addElement(new Barrier(game.WIDTH / 5 * i - 22, 370, new SpriteSheet(game.getSpriteSheet())));
+			tempBarriers.addElement(new Barrier(Screen.WIDTH / 5 * i - 22, 370));
 		}
 		
 		return tempBarriers;

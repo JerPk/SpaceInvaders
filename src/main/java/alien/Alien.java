@@ -6,11 +6,13 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
+import bullet.Bullet;
+import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
 import org.junit.Test;
 
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.spaceinvaders_framework.Screen;
 
 /**
  * The Alien class is the abstract super class of all the alien types.
@@ -34,11 +36,6 @@ public abstract class Alien {
     protected double ypos;
 
     /**
-     * the game the alien is a part of.
-     */
-    private Game game;
-
-    /**
      * the horizontal movement speed of the aliens.
      */
     private int movementSpeed = 1;
@@ -53,19 +50,25 @@ public abstract class Alien {
      * the alien before it dies.
      */
     private int health = 1;
+    
+    /**
+     * // a boolean that is only true if the aliens need to be updated. // here
+     * it used for moving all the aliens down simultaneously.
+     * 
+     */
+    private static boolean logicRequiredThisLoop = false;
+    
+    protected BufferedImage BImg = null;
 
     /**
      * the constructor of the Alien class.
      * 
      * @param double x
      * @param double y
-     * @param Game
-     *            g
      */
-    public Alien(double x, double y, Game g) {
+    public Alien(double x, double y) {
         this.xpos = x;
         this.ypos = y;
-        game = g;
     }
 
     /**
@@ -75,13 +78,13 @@ public abstract class Alien {
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && xpos >= 630) {
-            game.updateLogic();
+            updateLogic();
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && xpos <= 2) {
-            game.updateLogic();
+        	updateLogic();
         }
 
         // moves the alien in the horizontal direction.
@@ -99,12 +102,7 @@ public abstract class Alien {
         // flip the movement speed so now the alien will move in
         // the other direction.
         movementSpeed = -movementSpeed;
-
-        // check if the alien has reached the bootom ofthe screen if so.
-        // end the game.
-        if (ypos > 450) {
-            game.end();
-        }
+        logicRequiredThisLoop = false;
     }
 
     /**
@@ -114,17 +112,18 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final SpriteSheet spritesheet = new SpriteSheet(getGame()
-                .getSpriteSheet());
-        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
+        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
         Game.logfile.writeShoot("Alien", getX(), getY());
 
         return newBullet;
     }
+    
+    public int addScore(int s) {
+    	return score + s;
+    }
 
     public void setSpritesheet(int row, int col, int x, int y) {
-        SpriteSheet spritesheet = new SpriteSheet(game.getSpriteSheet());
-        Alien = spritesheet.grabImage(row, col, x, y);
+        Alien = Screen.spritesheet.grabImage(row, col, x, y);
     }
 
     /**
@@ -135,6 +134,13 @@ public abstract class Alien {
      */
     public void render(Graphics g) {
         g.drawImage(Alien, (int) xpos, (int) ypos, null);
+    }
+    
+    /**
+     * the method used to put the logicRequiredThisLoop boolean to true.
+     */
+    public void updateLogic() {
+        logicRequiredThisLoop = true;
     }
 
     /**
@@ -165,6 +171,16 @@ public abstract class Alien {
     public double getY() {
         return ypos;
     }
+    
+    /**
+     * getter method for the LogicrequiredThisLoop boolean
+     * 
+     * @return boolean
+     */
+    public static boolean getupdateLogic() {
+        return logicRequiredThisLoop;
+
+    }
 
     /**
      * the set method for the MovementSpeed.
@@ -186,12 +202,38 @@ public abstract class Alien {
         	if (shipBullets.get(i).getY() > ypos-12 && shipBullets.get(i).getY() < ypos + 16) {
         		if (shipBullets.get(i).getX() > xpos-6 && shipBullets.get(i).getX() < xpos + 16) {
                     Game.logfile.writeHit("Alien", xpos, ypos);
-
+                    health--;
                     return i;
                 }
             }
         }
         return -1;
+    }
+    
+    /**
+     * the method that checks if the alien has any health left
+     *
+     * @return true/false
+     */
+    public boolean defeated() {
+    	if (health <= 0) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    
+    /**
+     * This method checks if the alien has reached a certain height
+     * 
+     * @return true/false
+     */
+    public boolean reachedY(double i) {
+    	if (ypos >= i) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
 
     /**
@@ -230,15 +272,6 @@ public abstract class Alien {
     public int getHealth() {
         return health;
     }
-
-    /**
-     * the method that returns the game associated with the alien.
-     * 
-     * @return
-     */
-    public Game getGame() {
-        return game;
-    }
     
     /**
      * the method that creates and returns an alien of type 1.
@@ -247,8 +280,8 @@ public abstract class Alien {
      * @param g
      * @return
      */
-    public static Alien createAlienType1(double x, double y, Game g){
-        Alien alien = new AlienType1(x,y,g);
+    public static Alien createAlienType1(double x, double y){
+        Alien alien = new AlienType1(x,y);
         return alien;        
     }
     
@@ -259,8 +292,8 @@ public abstract class Alien {
      * @param g
      * @return
      */
-    public static Alien createAlienType2(double x, double y, Game g){
-        Alien alien = new AlienType2(x,y,g);
+    public static Alien createAlienType2(double x, double y){
+        Alien alien = new AlienType2(x,y);
         return alien;        
     }
     
@@ -271,8 +304,8 @@ public abstract class Alien {
      * @param g
      * @return
      */
-    public static Alien createAlienType3(double x, double y, Game g){
-        Alien alien = new AlienType3(x,y,g);
+    public static Alien createAlienType3(double x, double y){
+        Alien alien = new AlienType3(x,y);
         return alien;        
     }
     
@@ -284,6 +317,4 @@ public abstract class Alien {
         Alien alien = new BossAlien(x2,y2,g);
         return alien;        
     }
-
- 
 }

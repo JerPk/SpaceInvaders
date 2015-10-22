@@ -30,7 +30,10 @@ public class Menu {
     private JButton btnStatistics;
     private JButton btnQuit;
     
+    private boolean running;
+    
     public Menu(){
+    	running = false;
 
         frame = new JFrame("Space Invaders - Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,12 +47,8 @@ public class Menu {
         btnNewGame = new JButton("New Game");
         btnStatistics = new JButton("Highscores");
         btnQuit = new JButton("Quit Game");
-    }
-	
-	public void runMenu() {
         
         JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
-
         title.setForeground(Color.white);
         title.setFont(new Font("Courier", Font.BOLD, 30));
         
@@ -58,7 +57,6 @@ public class Menu {
         btnNewGame.setVisible(true);
         btnStatistics.setVisible(true);
         btnQuit.setVisible(true);
-        
         btnNewGame.setBounds(205,274,217,30);
         btnStatistics.setBounds(205,304,217,26);
         btnQuit.setBounds(205,330,217,26);
@@ -66,12 +64,17 @@ public class Menu {
         frame.add(btnNewGame);
         frame.add(btnStatistics);
         frame.add(btnQuit);
-    
-        listenForActions();
         
         // add the panel to the frame.
         frame.add(panel);
+        
+        runMenu();
+    }
+	
+	public void runMenu() {
+		running = true;
         frame.setVisible(true);
+        listenForActions();
     }
 	
 	//Will be used later to show title
@@ -84,13 +87,20 @@ public class Menu {
 		
 	}
 	
+	//This method checks if the frame really disappeared when the new game button is pressed. Sometimes this is not the case. 
+	public void check() {
+		if (!running) {
+			frame.setVisible(false);
+		}
+	}
+	
 	public void listenForActions() {
         //Add ActionListener to buttons
         //New game
         btnNewGame.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                newGame();
+                running = false;
                 frame.setVisible(false);
             }
         });
@@ -98,8 +108,8 @@ public class Menu {
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                score_menu = new ScoreMenu();
-                score_menu.show();
+                //score_menu = new ScoreMenu();
+                //score_menu.show();
             }
         });
         //Quit game
@@ -109,6 +119,10 @@ public class Menu {
             	System.exit(1);
             }
         });
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
     
     private static void newGame(){

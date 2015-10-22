@@ -15,18 +15,18 @@ public class Barrier {
     
     private BufferedImage[] barrier = new BufferedImage[5];
     
-    public Barrier(double x, double y, SpriteSheet ss){
+    public Barrier(double x, double y){
         this.xpos = x;
         this.ypos = y;
         this.state = 0;
         
         Game.logfile.writeCreate("Barrier", xpos, ypos);
 
-        barrier[0] = ss.grabImage(316, 213, 44, 32);
-        barrier[1] = ss.grabImage(480, 210, 44, 32);
-        barrier[2] = ss.grabImage(480, 265, 44, 32);
-        barrier[3] = ss.grabImage(373, 211, 44, 32);
-        barrier[4] = ss.grabImage(428, 210, 44, 32);
+        barrier[0] = Screen.spritesheet.grabImage(316, 213, 44, 32);
+        barrier[1] = Screen.spritesheet.grabImage(480, 210, 44, 32);
+        barrier[2] = Screen.spritesheet.grabImage(480, 265, 44, 32);
+        barrier[3] = Screen.spritesheet.grabImage(373, 211, 44, 32);
+        barrier[4] = Screen.spritesheet.grabImage(428, 210, 44, 32);
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
@@ -38,8 +38,10 @@ public class Barrier {
                 }
 
             }
-            if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+32) {
+            else if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+32) {
                 if (alienBullets.get(i).getX() > xpos-6 && alienBullets.get(i).getX() < xpos+44) {
+                	Game.logfile.writeHit("Barrier", xpos, ypos);
+                	state++;
                     return i;
                 }
             }
@@ -47,23 +49,21 @@ public class Barrier {
         return -1;
     }
     
-    private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
-        if (alienBullets.get(i).getX() + 15 >= xpos && alienBullets.get(i).getX() + 15 <= xpos+44) {
-            if (alienBullets.get(i).getY() + 50 >= ypos && alienBullets.get(i).getY() + 50 <= ypos+32) {
-                return true;
-            }
-        }
-    
-    return false;
-
+    public boolean destroyed() {
+    	if (state >= 4) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
-    
-    /**
-     * the method that returns the state
-     */
-    public void decreaseState() {
-        Game.logfile.writeHit("Barrier", xpos, ypos);
-        state++;
+
+    private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
+    	if (alienBullets.get(i).getX() + 15 >= xpos && alienBullets.get(i).getX() + 15 <= xpos+44) {
+    		if (alienBullets.get(i).getY() + 50 >= ypos && alienBullets.get(i).getY() + 50 <= ypos+32) {
+    			return true;
+    		}
+    	}
+    	return false;
     }
     
     /**

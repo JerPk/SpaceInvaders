@@ -1,19 +1,44 @@
 package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class SpriteSheet {
 
     // the bufferedImage used by the SpriteSheet class.
     private BufferedImage image;
     
+    private volatile static SpriteSheet uniqueInstance;
+    
+    private SpriteSheet() {}
+    
     /**
-     * the constructor method of the SpriteSheet class.
+     * method to get the instance of spritesheet
      * 
-     * @param BufferedImage ss
+     * @return unique SpriteSheet
      */
-    public SpriteSheet(BufferedImage ss){
-        this.image = ss;
+    public static SpriteSheet getInstance() {
+    	if (uniqueInstance == null) {
+    		synchronized (SpriteSheet.class) {
+    			if (uniqueInstance == null) {
+    				uniqueInstance = new SpriteSheet();
+    			}
+    		}
+    	}
+    	return uniqueInstance;
+    }
+    
+    /**
+     * method to load the spritesheet from the png file.
+     */
+    public void init() {
+    	BuffereImageLoader loader = new BuffereImageLoader();
+        try {
+        	image = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     /**

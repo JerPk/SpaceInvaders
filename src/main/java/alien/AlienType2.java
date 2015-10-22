@@ -20,8 +20,8 @@ public class AlienType2 extends Alien{
      * @param y
      * @param g
      */
-    public AlienType2(double x, double y, Game g) {
-        super(x, y, g);
+    public AlienType2(double x, double y) {
+        super(x, y);
         Game.logfile.writeCreate("AlienType2", x, y);
         setSpritesheet(40, 225, 16, 16);
         setScore(20);
@@ -37,8 +37,7 @@ public class AlienType2 extends Alien{
      */
     @Override
     public Bullet shoot() {
-      final SpriteSheet spritesheet = new SpriteSheet(getGame().getSpriteSheet());
-      final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
+      final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
       Game.logfile.writeShoot("AlienType2", getX(), getY());
       
       newBullet.setDownSpeed(4.4);

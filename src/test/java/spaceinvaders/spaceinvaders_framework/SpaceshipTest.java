@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import bullet.Bullet;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Vector;
 
 /**
@@ -28,7 +30,6 @@ public class SpaceshipTest {
   @Before
   public void setUpGame() {
     game = new Game();
-    game.setSpriteSheet("res/sprite_sheet.png");
     game.init();
   }
   
@@ -37,7 +38,7 @@ public class SpaceshipTest {
    */
   @Test
   public void testSpaceship() {
-    final Spaceship ship = new Spaceship(game);
+    final Spaceship ship = new Spaceship();
     assertEquals((double) 304, ship.getPosX(), 0.00001);
     assertEquals((double) 425, ship.getPosY(), 0.00001);
   }
@@ -47,12 +48,12 @@ public class SpaceshipTest {
    */
   @Test
   public void testMoveLeft() {
-    final Spaceship ship = new Spaceship(game);
-    game.setrunning(true);
+    final Spaceship ship = new Spaceship();
+    game.setRunning(true);
     
     ship.moveLeft();
     assertEquals((double) 302, ship.getPosX(), 0.00001);
-    assertTrue(game.getrunning());
+    assertTrue(game.getRunning());
   }
 
   /**
@@ -60,12 +61,12 @@ public class SpaceshipTest {
    */
   @Test
   public void testMoveRight() {
-    final Spaceship ship = new Spaceship(game);
-    game.setrunning(true);
+    final Spaceship ship = new Spaceship();
+    game.setRunning(true);
     
     ship.moveRight();
     assertEquals((double) 306, ship.getPosX(), 0.00001);
-    assertTrue(game.getrunning());
+    assertTrue(game.getRunning());
   }
 
   /**
@@ -73,13 +74,13 @@ public class SpaceshipTest {
    */
   @Test
   public void testShoot() {
-    final Spaceship ship = new Spaceship(game);
-    game.setrunning(true);
+    final Spaceship ship = new Spaceship();
+    game.setRunning(true);
     
     final Bullet bullet = ship.shoot();
     assertEquals((double) ship.getPosX() + 10, bullet.getX(), 0.00001);
     assertEquals((double) ship.getPosY() + 2, bullet.getY(), 0.00001);
-    assertTrue(game.getrunning());
+    assertTrue(game.getRunning());
   }
 
   /**
@@ -87,15 +88,15 @@ public class SpaceshipTest {
    */
   @Test
   public void testIfHit() {
-    final Spaceship ship = new Spaceship(game);
-    game.setrunning(true);
+    final Spaceship ship = new Spaceship();
+    game.setRunning(true);
     final Vector<Bullet> alienBullets = new Vector<Bullet>(0);
         
-    alienBullets.add(new Bullet(5, 5, new SpriteSheet(game.getSpriteSheet())));
+    alienBullets.add(new Bullet(5, 5));
     assertEquals(ship.ifHit(alienBullets),-1); 
     alienBullets.removeAllElements();
         
-    alienBullets.add(new Bullet(317, 425, new SpriteSheet(game.getSpriteSheet())));
+    alienBullets.add(new Bullet(317, 425));
     assertEquals(ship.ifHit(alienBullets),0);
     assertEquals(ship.getLives(),2);
   }
@@ -106,7 +107,7 @@ public class SpaceshipTest {
    */
   @Test
   public void testGetLives() {
-    final Spaceship ship = new Spaceship(game);
+    final Spaceship ship = new Spaceship();
     assertEquals(ship.getLives(),3);
   }
 

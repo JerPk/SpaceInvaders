@@ -1,7 +1,5 @@
 package bullet;
 
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
-
 /**
  * DiagonalBulletLeft is a subclass of bullet.
  * this new Bullet moves both vertically and horizontally at the same time.
@@ -18,8 +16,8 @@ public class DiagonalBulletRight extends Bullet {
      * @param y
      * @param ss
      */
-    public DiagonalBulletRight(double x, double y, SpriteSheet ss) {
-        super(x, y, ss);
+    public DiagonalBulletRight(double x, double y) {
+        super(x, y);
     }
 
   //Move the bullet down and sideways.

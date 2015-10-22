@@ -5,14 +5,11 @@ import java.util.Vector;
 import alien.Alien;
 import alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Game;
 
 public class BossLevel extends Level {
 
-	public BossLevel(int number, Game g) {
-		super(number, g);
-
-		game = g;
+	public BossLevel(int number) {
+		super(number);
 		levelNumber = number;
 	}
 	
@@ -22,8 +19,7 @@ public class BossLevel extends Level {
 		int startXOffsetAlien = 75;
 		Vector<Alien> tempAliens = new Vector<Alien>(0);
 		
-		Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien - 3,
-	               startYOffsetAlien, game);
+		Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien - 3, startYOffsetAlien);
 		alien.setHealth(levelNumber);
 		tempAliens.addElement(alien);
 		
