@@ -47,13 +47,6 @@ public class GameTest {
     public void setupGame() {
     game = new Game();
     screen = new Screen();
-    
-    BuffereImageLoader loader = new BuffereImageLoader();
-    try {
-        BImg = loader.LoadImage("res/sprite_sheet.png");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
   }
 
     /**
@@ -68,26 +61,26 @@ public class GameTest {
 
   }
 
-    /**
-     * the JUnit test of the init method. This particular test case tests
-     * whether or not the spritesheet was successfully loaded from the png file.
-     */
-  @Test
-    public void testInitSpriteSheet() {
-
-    //assertSame(game.getSpriteSheet(), null);
-
-    game.init();
-    try {
-      final BuffereImageLoader loader = new BuffereImageLoader();
-      final BufferedImage testSprite = loader.LoadImage("res/sprite_sheet.png");
-      assertTrue(game.compareImages(BImg, testSprite));
-      assertNotSame(BImg, testSprite);
-      assertNotSame(BImg, null);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+//    /**
+//     * the JUnit test of the init method. This particular test case tests
+//     * whether or not the spritesheet was successfully loaded from the png file.
+//     */
+//  @Test
+//    public void testInitSpriteSheet() {
+//
+//    //assertSame(game.getSpriteSheet(), null);
+//
+//    game.init();
+//    try {
+//      final BuffereImageLoader loader = new BuffereImageLoader();
+//      final BufferedImage testSprite = loader.LoadImage("res/sprite_sheet.png");
+//      assertTrue(game.compareImages(BImg, testSprite));
+//      assertNotSame(BImg, testSprite);
+//      assertNotSame(BImg, null);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//  }
 
     /**
      * The JUnit test of the init method. This particual test case tests wheter
@@ -130,8 +123,7 @@ public class GameTest {
 
     game.init();
 
-    final SpriteSheet spritesheet = new SpriteSheet(BImg);
-    final Bullet newBullet = new Bullet(10, 2, spritesheet);
+    final Bullet newBullet = new Bullet(10, 2);
 
     game.addShipBullets(newBullet);
 
@@ -163,8 +155,7 @@ public class GameTest {
     public void testRenderBulletAlien() {
     game.init();
 
-    final SpriteSheet spritesheet = new SpriteSheet(BImg);
-    final Bullet newBullet = new Bullet(10, 2, spritesheet);
+    final Bullet newBullet = new Bullet(10, 2);
 
     game.addAlienBullets(newBullet);
 
@@ -235,9 +226,8 @@ public class GameTest {
   @Test
     public void testalienShoot() {
     game.init();
-
-    final SpriteSheet spritesheet = new SpriteSheet(BImg);
-    final Bullet newBullet = new Bullet(10, 2, spritesheet);
+    
+    final Bullet newBullet = new Bullet(10, 2);
 
     game.addAlienBullets(newBullet);
     assertEquals(game.getAlienBullets().size(), 1);
@@ -277,9 +267,8 @@ public class GameTest {
     public void testRemoveBullets() {
     game.init();
 
-    final SpriteSheet spritesheet = new SpriteSheet(BImg);
-    final Bullet newBullet = new Bullet(10, 500, spritesheet);
-    final Bullet newBullet2 = new Bullet(10, -2, spritesheet);
+    final Bullet newBullet = new Bullet(10, 500);
+    final Bullet newBullet2 = new Bullet(10, -2);
 
     game.addAlienBullets(newBullet);
     game.addAlienBullets(newBullet2);

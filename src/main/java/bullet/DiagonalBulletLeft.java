@@ -18,8 +18,8 @@ public class DiagonalBulletLeft extends Bullet {
      * @param y
      * @param ss
      */
-    public DiagonalBulletLeft(double x, double y, SpriteSheet ss) {
-        super(x, y, ss);
+    public DiagonalBulletLeft(double x, double y) {
+        super(x, y);
     }
 
   //Move the bullet down and sideways.

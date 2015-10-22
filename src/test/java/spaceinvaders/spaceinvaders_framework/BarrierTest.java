@@ -22,8 +22,6 @@ public class BarrierTest {
      * The game object that is used in all of the test cases.
      */ 
   private Game game;
-  
-  protected BufferedImage BImg = null;
 
   /**
    * This method is executed before every test.
@@ -33,13 +31,6 @@ public class BarrierTest {
     public void setUpGame() {
     game = new Game();
     game.init();
-    
-    BuffereImageLoader loader = new BuffereImageLoader();
-    try {
-        BImg = loader.LoadImage("res/sprite_sheet.png");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
   }
 
     /**
@@ -65,9 +56,7 @@ public class BarrierTest {
 
     assertEquals(barrier.ifHit(alienBullets), -1);
 
-    final SpriteSheet spritesheet = new SpriteSheet(BImg);
-
-    final Bullet testBullet = new Bullet(20, 15, spritesheet);
+    final Bullet testBullet = new Bullet(20, 15);
     alienBullets.add(testBullet);
         
     assertEquals(barrier.ifHit(alienBullets),0);

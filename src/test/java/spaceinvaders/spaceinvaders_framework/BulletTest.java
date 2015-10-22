@@ -23,8 +23,6 @@ public class BulletTest {
      * The game object that is used in all of the test cases.
      */
   private Game game;
-  
-  protected BufferedImage BImg = null;
 
   /**
    * This method is executed before every test.
@@ -34,13 +32,6 @@ public class BulletTest {
   public void setUpGame() {
     game = new Game();
     game.init();
-    
-    BuffereImageLoader loader = new BuffereImageLoader();
-    try {
-        BImg = loader.LoadImage("res/sprite_sheet.png");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
   }
 
   /**
@@ -48,7 +39,7 @@ public class BulletTest {
    */
   @Test
   public void testBullet() {
-    final Bullet bullet = new Bullet(1, 1, new SpriteSheet(BImg));
+    final Bullet bullet = new Bullet(1, 1);
     assertEquals((double) 1, bullet.getX(), 0.00001);
     assertEquals((double) 1, bullet.getY(), 0.00001);
   }
@@ -58,7 +49,7 @@ public class BulletTest {
    */
   @Test
   public void testMoveUp() {
-    final Bullet bullet = new Bullet(1, 20, new SpriteSheet(BImg));
+    final Bullet bullet = new Bullet(1, 20);
     game.setRunning(true);
     
     bullet.moveUp();
@@ -71,7 +62,7 @@ public class BulletTest {
    */
   @Test
   public void testMoveDown() {
-    final Bullet bullet = new Bullet(1, 20, new SpriteSheet(BImg));
+    final Bullet bullet = new Bullet(1, 20);
     game.setRunning(true);
     
     bullet.moveDown();
@@ -85,8 +76,8 @@ public class BulletTest {
    */
   @Test
   public void testEquals() {
-    final Bullet bullet1 = new Bullet(1, 20, new SpriteSheet(BImg));
-    final Bullet bullet2 = new Bullet(1, 20, new SpriteSheet(BImg));
+    final Bullet bullet1 = new Bullet(1, 20);
+    final Bullet bullet2 = new Bullet(1, 20);
       
     assertEquals(bullet1,bullet2);
     assertNotSame(bullet1,bullet2);

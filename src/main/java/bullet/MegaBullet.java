@@ -18,8 +18,8 @@ public class MegaBullet extends Bullet{
      * @param y
      * @param ss
      */
-    public MegaBullet(double x, double y, SpriteSheet ss) {
-        super(x, y, ss);
+    public MegaBullet(double x, double y) {
+        super(x, y);
         setSpritesheet(475,890,30,60);
     }
 

@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.Screen;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Bullet {
@@ -14,13 +15,13 @@ public class Bullet {
     private double xpos,ypos;
     protected double downspeed = 2.2;
     
-    public Bullet(double x, double y, SpriteSheet ss){
+    public Bullet(double x, double y){
         this.xpos = x;
         this.ypos = y;
 
         Game.logfile.writeCreate("Bullet", xpos, ypos);
-        spritesheet = ss;
-        bullet = spritesheet.grabImage(413, 277, 6, 12);
+//        spritesheet = ss;
+        bullet = Screen.spritesheet.grabImage(413, 277, 6, 12);
     }
     //Move the bullet up
     public void moveUp(){   
@@ -87,7 +88,7 @@ public class Bullet {
     }
     
     public void setSpritesheet(int row, int col, int x, int y){
-       bullet = spritesheet.grabImage(row, col, x, y);
+       bullet = Screen.spritesheet.grabImage(row, col, x, y);
     }
     
 }

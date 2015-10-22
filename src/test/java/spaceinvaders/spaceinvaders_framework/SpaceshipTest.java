@@ -24,8 +24,6 @@ public class SpaceshipTest {
      */
   private Game game;
   
-  protected BufferedImage BImg = null;
-  
   /**
    * Launch the user interface.
    */
@@ -33,13 +31,6 @@ public class SpaceshipTest {
   public void setUpGame() {
     game = new Game();
     game.init();
-    
-    BuffereImageLoader loader = new BuffereImageLoader();
-    try {
-        BImg = loader.LoadImage("res/sprite_sheet.png");
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
   }
   
   /**
@@ -101,11 +92,11 @@ public class SpaceshipTest {
     game.setRunning(true);
     final Vector<Bullet> alienBullets = new Vector<Bullet>(0);
         
-    alienBullets.add(new Bullet(5, 5, new SpriteSheet(BImg)));
+    alienBullets.add(new Bullet(5, 5));
     assertEquals(ship.ifHit(alienBullets),-1); 
     alienBullets.removeAllElements();
         
-    alienBullets.add(new Bullet(317, 425, new SpriteSheet(BImg)));
+    alienBullets.add(new Bullet(317, 425));
     assertEquals(ship.ifHit(alienBullets),0);
     assertEquals(ship.getLives(),2);
   }

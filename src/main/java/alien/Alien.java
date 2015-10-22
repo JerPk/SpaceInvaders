@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.spaceinvaders_framework.Screen;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
@@ -120,8 +121,8 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
+//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
+        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
         Game.logfile.writeShoot("Alien", getX(), getY());
 
         return newBullet;
@@ -132,8 +133,8 @@ public abstract class Alien {
     }
 
     public void setSpritesheet(int row, int col, int x, int y) {
-        SpriteSheet spritesheet = new SpriteSheet(BImg);
-        Alien = spritesheet.grabImage(row, col, x, y);
+//        SpriteSheet spritesheet = new SpriteSheet(BImg);
+        Alien = Screen.spritesheet.grabImage(row, col, x, y);
     }
 
     /**

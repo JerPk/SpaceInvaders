@@ -57,13 +57,14 @@ public class Screen extends Canvas implements KeyListener {
      *
      * all the sprites we use.
      */
-    private BufferedImage SpriteSheet = null;
+//    private BufferedImage SpriteSheet = null;
+    public static SpriteSheet spritesheet;
 	
 	public Screen() {
 		setFocusable(true);
 		addKeyListener(this);
 		
-        BuffereImageLoader loader = new BuffereImageLoader();
+//        BuffereImageLoader loader = new BuffereImageLoader();
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -77,12 +78,15 @@ public class Screen extends Canvas implements KeyListener {
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
 
-        // tries to load the spritesheet from the png file.
-        try {
-            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        // tries to load the spritesheet from the png file.
+//        try {
+//            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+        
+        spritesheet = SpriteSheet.getInstance();
+        spritesheet.init();
         
         frame.setVisible(true);
 	}
@@ -253,28 +257,28 @@ public class Screen extends Canvas implements KeyListener {
 
     }
     
-    /**
-     * get method to get the spritesheet.
-     */
-    public BufferedImage getSpriteSheet() {
-        return SpriteSheet;
-    }
-    
-    /**
-     * The setter method for the sprite sheet from the path that is written as a
-     * string.
-     * 
-     * @param s
-     */
-    public void setSpriteSheet(String s) {
-        BuffereImageLoader loader = new BuffereImageLoader();
-        // tries to load the spritesheet from the string.
-        try {
-            SpriteSheet = loader.LoadImage(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    /**
+//     * get method to get the spritesheet.
+//     */
+//    public BufferedImage getSpriteSheet() {
+//        return SpriteSheet;
+//    }
+//    
+//    /**
+//     * The setter method for the sprite sheet from the path that is written as a
+//     * string.
+//     * 
+//     * @param s
+//     */
+//    public void setSpriteSheet(String s) {
+//        BuffereImageLoader loader = new BuffereImageLoader();
+//        // tries to load the spritesheet from the string.
+//        try {
+//            SpriteSheet = loader.LoadImage(s);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     
     /**
      * The method that returns the right pressed boolean.

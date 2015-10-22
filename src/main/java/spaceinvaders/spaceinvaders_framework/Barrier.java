@@ -21,22 +21,22 @@ public class Barrier {
         this.ypos = y;
         this.state = 0;
         
-        BuffereImageLoader loader = new BuffereImageLoader();
-        BufferedImage BImg = null;
-        try {
-            BImg = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        SpriteSheet sprite_sheet = new SpriteSheet(BImg);
+//        BuffereImageLoader loader = new BuffereImageLoader();
+//        BufferedImage BImg = null;
+//        try {
+//            BImg = loader.LoadImage("res/sprite_sheet.png");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        SpriteSheet sprite_sheet = new SpriteSheet(BImg);
         
         Game.logfile.writeCreate("Barrier", xpos, ypos);
 
-        barrier[0] = sprite_sheet.grabImage(316, 213, 44, 32);
-        barrier[1] = sprite_sheet.grabImage(480, 210, 44, 32);
-        barrier[2] = sprite_sheet.grabImage(480, 265, 44, 32);
-        barrier[3] = sprite_sheet.grabImage(373, 211, 44, 32);
-        barrier[4] = sprite_sheet.grabImage(428, 210, 44, 32);
+        barrier[0] = Screen.spritesheet.grabImage(316, 213, 44, 32);
+        barrier[1] = Screen.spritesheet.grabImage(480, 210, 44, 32);
+        barrier[2] = Screen.spritesheet.grabImage(480, 265, 44, 32);
+        barrier[3] = Screen.spritesheet.grabImage(373, 211, 44, 32);
+        barrier[4] = Screen.spritesheet.grabImage(428, 210, 44, 32);
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {

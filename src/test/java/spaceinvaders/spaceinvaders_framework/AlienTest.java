@@ -28,8 +28,6 @@ public class AlienTest {
      * The game object that is used in all of the test cases.
      */
     private Game game;
-    
-    protected BufferedImage BImg = null;
 
     /**
      * This method is executed before every test. It creates the game class and
@@ -39,13 +37,6 @@ public class AlienTest {
     public void setUpGame() {
         game = new Game();
         game.init();
-        
-        BuffereImageLoader loader = new BuffereImageLoader();
-        try {
-            BImg = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -141,9 +132,7 @@ public class AlienTest {
         final Alien alien = AlienFactory.getAlien("easy", 7, 30);
         final Bullet bullet = alien.shoot();
 
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-
-        final Bullet testBullet = new Bullet(12, 32, spritesheet);
+        final Bullet testBullet = new Bullet(12, 32);
 
         assertEquals(bullet, testBullet);
         assertNotSame(bullet, testBullet);
@@ -158,9 +147,7 @@ public class AlienTest {
         // the vector is empty.
         assertEquals(alien.ifHit(shipBullets), -1);
 
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-
-        final Bullet testBullet = new Bullet(7, 30, spritesheet);
+        final Bullet testBullet = new Bullet(7, 30);
         shipBullets.add(testBullet);
 
         // test that ifhit method results in 0
@@ -192,9 +179,7 @@ public class AlienTest {
         final Alien alien = AlienFactory.getAlien("normal", 7, 30);
         final Bullet bullet = alien.shoot();
 
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-
-        final Bullet testBullet = new Bullet(12, 32, spritesheet);
+        final Bullet testBullet = new Bullet(12, 32);
 
         assertEquals(bullet, testBullet);
         assertNotSame(bullet, testBullet);
@@ -205,9 +190,7 @@ public class AlienTest {
         final Alien alien = AlienFactory.getAlien("hard", 7, 30);
         final Bullet bullet = alien.shoot();
 
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-
-        final Bullet testBullet = new Bullet(12, 32, spritesheet);
+        final Bullet testBullet = new Bullet(12, 32);
 
         assertEquals(bullet, testBullet);
         assertNotSame(bullet, testBullet);

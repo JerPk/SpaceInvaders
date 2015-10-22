@@ -114,10 +114,10 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> MegaBullet() {
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
+//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
-        final Bullet MegaBullet0 = new MegaBullet(getX() + 20, getY() + 13, spritesheet);
+        final Bullet MegaBullet0 = new MegaBullet(getX() + 20, getY() + 13);
         newBullets.add(MegaBullet0);
         
         return newBullets; 
@@ -128,14 +128,14 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> multipleSpeedBullets() {
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
+//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
-        final Bullet newSpeedBullet0 = new Bullet(getX() + 0, getY() + 13, spritesheet);
-        final Bullet newSpeedBullet1 = new Bullet(getX() + 10, getY() + 13, spritesheet);
-        final Bullet newSpeedBullet2 = new Bullet(getX() + 20, getY() + 13, spritesheet);
-        final Bullet newSpeedBullet3 = new Bullet(getX() + 30, getY() + 13, spritesheet);
-        final Bullet newSpeedBullet4 = new Bullet(getX() + 40, getY() + 13, spritesheet);
+        final Bullet newSpeedBullet0 = new Bullet(getX() + 0, getY() + 13);
+        final Bullet newSpeedBullet1 = new Bullet(getX() + 10, getY() + 13);
+        final Bullet newSpeedBullet2 = new Bullet(getX() + 20, getY() + 13);
+        final Bullet newSpeedBullet3 = new Bullet(getX() + 30, getY() + 13);
+        final Bullet newSpeedBullet4 = new Bullet(getX() + 40, getY() + 13);
         
         newSpeedBullet0.setDownSpeed(6.6);
         newSpeedBullet0.setSpritesheet(200,605,6,12);
@@ -162,12 +162,12 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> tridentBullets() {
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
+//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
-        final Bullet newBullet0 = new DiagonalBulletLeft(getX() + 20, getY() + 13, spritesheet);
-        final Bullet newBullet1 = new Bullet(getX() + 20, getY() + 13, spritesheet);
-        final Bullet newBullet2 = new DiagonalBulletRight(getX() + 20, getY() + 13, spritesheet);
+        final Bullet newBullet0 = new DiagonalBulletLeft(getX() + 20, getY() + 13);
+        final Bullet newBullet1 = new Bullet(getX() + 20, getY() + 13);
+        final Bullet newBullet2 = new DiagonalBulletRight(getX() + 20, getY() + 13);
         
         newBullets.add(newBullet0);
         newBullets.add(newBullet1);

@@ -36,8 +36,8 @@ public class AlienType1 extends Alien {
      */
     @Override
     public Bullet shoot() {
-        final SpriteSheet spritesheet = new SpriteSheet(BImg);
-        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2, spritesheet);
+//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
+        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
         Game.logfile.writeShoot("AlienType1", getX(), getY());
         return newBullet;
     }

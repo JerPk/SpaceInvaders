@@ -43,8 +43,8 @@ public class Spaceship {
             e.printStackTrace();
         }
         
-        ss = new SpriteSheet(BImg);
-        Spaceship = ss.grabImage(277, 228, 26, 16);
+//        ss = new SpriteSheet(BImg);
+        Spaceship = Screen.spritesheet.grabImage(277, 228, 26, 16);
 
     }
 
@@ -77,7 +77,7 @@ public class Spaceship {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        Bullet newBullet = new Bullet(xpos+10, ypos+2, ss);
+        Bullet newBullet = new Bullet(xpos+10, ypos+2);
         Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
 
         newBullet.setSpritesheet(423, 277, 6, 12);
