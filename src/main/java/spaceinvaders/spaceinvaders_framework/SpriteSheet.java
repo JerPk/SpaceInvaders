@@ -29,15 +29,9 @@ public class SpriteSheet {
     	return uniqueInstance;
     }
     
-//    /**
-//     * the constructor method of the SpriteSheet class.
-//     * 
-//     * @param BufferedImage ss
-//     */
-//    public SpriteSheet(BufferedImage ss){
-//        this.image = ss;
-//    }
-    
+    /**
+     * method to load the spritesheet from the png file.
+     */
     public void init() {
     	BuffereImageLoader loader = new BuffereImageLoader();
         try {

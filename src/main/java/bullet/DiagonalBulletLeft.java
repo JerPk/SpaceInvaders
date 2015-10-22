@@ -1,7 +1,5 @@
 package bullet;
 
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
-
 /**
  * DiagonalBulletLeft is a subclass of bullet.
  * this new Bullet moves both vertically and horizontally at the same time.

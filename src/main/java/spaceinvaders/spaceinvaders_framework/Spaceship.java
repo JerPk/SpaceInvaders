@@ -2,7 +2,6 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Vector;
 
 import bullet.Bullet;
@@ -17,10 +16,6 @@ public class Spaceship {
 
     // the bufferedImage of the spaceship.
     private BufferedImage Spaceship;
-    private SpriteSheet ss;
-
-    // the horizontal movement speed of the aliens.
-    private int MovementSpeed = 1;
 
     /**
      * the constructor of the Spaceship class.
@@ -35,15 +30,7 @@ public class Spaceship {
         lives = 3;
         
         Game.logfile.writeCreate("Spaceship", xpos, ypos);
-        BuffereImageLoader loader = new BuffereImageLoader();
-        BufferedImage BImg = null;
-        try {
-            BImg = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-//        ss = new SpriteSheet(BImg);
+
         Spaceship = Screen.spritesheet.grabImage(277, 228, 26, 16);
 
     }

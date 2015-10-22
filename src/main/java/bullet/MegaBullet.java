@@ -1,7 +1,5 @@
 package bullet;
 
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
-
 /**
  * MegaBullet is a subclass of bullet.
  * this new Bullet is way larger than a normal bullet.

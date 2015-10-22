@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Vector;
 
 import bullet.Bullet;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.Screen;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * The Alien class is the abstract super class of all the alien types.
@@ -71,13 +69,6 @@ public abstract class Alien {
     public Alien(double x, double y) {
         this.xpos = x;
         this.ypos = y;
-        
-        BuffereImageLoader loader = new BuffereImageLoader();
-        try {
-            BImg = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -121,7 +112,6 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
         Game.logfile.writeShoot("Alien", getX(), getY());
 
@@ -133,7 +123,6 @@ public abstract class Alien {
     }
 
     public void setSpritesheet(int row, int col, int x, int y) {
-//        SpriteSheet spritesheet = new SpriteSheet(BImg);
         Alien = Screen.spritesheet.grabImage(row, col, x, y);
     }
 

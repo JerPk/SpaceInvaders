@@ -2,7 +2,6 @@ package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Vector;
 
 import bullet.Bullet;
@@ -20,15 +19,6 @@ public class Barrier {
         this.xpos = x;
         this.ypos = y;
         this.state = 0;
-        
-//        BuffereImageLoader loader = new BuffereImageLoader();
-//        BufferedImage BImg = null;
-//        try {
-//            BImg = loader.LoadImage("res/sprite_sheet.png");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        SpriteSheet sprite_sheet = new SpriteSheet(BImg);
         
         Game.logfile.writeCreate("Barrier", xpos, ypos);
 

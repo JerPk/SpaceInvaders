@@ -114,7 +114,6 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> MegaBullet() {
-//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet MegaBullet0 = new MegaBullet(getX() + 20, getY() + 13);
@@ -128,7 +127,6 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> multipleSpeedBullets() {
-//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet newSpeedBullet0 = new Bullet(getX() + 0, getY() + 13);
@@ -162,7 +160,6 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> tridentBullets() {
-//        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet newBullet0 = new DiagonalBulletLeft(getX() + 20, getY() + 13);

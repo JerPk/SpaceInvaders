@@ -5,12 +5,10 @@ import java.awt.image.BufferedImage;
 
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.Screen;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Bullet {
 
     private BufferedImage bullet;
-    private SpriteSheet spritesheet;
     //Bullet coordinates
     private double xpos,ypos;
     protected double downspeed = 2.2;
@@ -20,7 +18,7 @@ public class Bullet {
         this.ypos = y;
 
         Game.logfile.writeCreate("Bullet", xpos, ypos);
-//        spritesheet = ss;
+        
         bullet = Screen.spritesheet.grabImage(413, 277, 6, 12);
     }
     //Move the bullet up

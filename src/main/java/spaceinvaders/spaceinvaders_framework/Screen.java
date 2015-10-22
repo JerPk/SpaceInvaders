@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -53,11 +52,8 @@ public class Screen extends Canvas implements KeyListener {
     private Game game;
     
     /**
-     * the bufferdImage which will be the spritesheet that contains
-     *
-     * all the sprites we use.
+     * Spritesheet that contains all the sprites we use.
      */
-//    private BufferedImage SpriteSheet = null;
     public static SpriteSheet spritesheet;
 	
 	public Screen() {
@@ -77,13 +73,6 @@ public class Screen extends Canvas implements KeyListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
-
-//        // tries to load the spritesheet from the png file.
-//        try {
-//            SpriteSheet = loader.LoadImage("res/sprite_sheet.png");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
         
         spritesheet = SpriteSheet.getInstance();
         spritesheet.init();
