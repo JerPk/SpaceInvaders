@@ -31,15 +31,15 @@ public class HighscoreManagerTest {
         assertNotNull(manager);
     }
     
-    /**
-     * tests the loadscore method. if everything goes well.
-     */
-    @Test
-    public void testloadScoreFile() throws FileNotFoundException, IOException{
-        HighscoreManager manager = new HighscoreManager();
-        manager.loadScoreFile();
-        assertNotNull(manager);
-    }
+//    /**
+//     * tests the loadscore method. if everything goes well.
+//     */
+//    @Test
+//    public void testloadScoreFile() throws FileNotFoundException, IOException{
+//        HighscoreManager manager = new HighscoreManager();
+//        manager.loadScoreFile();
+//        assertNotNull(manager);
+//    }
   
     /**
      * tests the updatescore method.
