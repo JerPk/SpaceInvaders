@@ -219,16 +219,18 @@ public class Game extends Canvas {
         } else {
         	end();
         }
-        for (int i = 0; i < aliens.size(); i++) {
-            int hit = aliens.get(i).ifHit(shipBullets);
-            if (hit != -1) {               
-                if (aliens.get(i).defeated()) {
-                    score = aliens.get(i).addScore(score);
-                    aliens.removeElementAt(i);
-                }
-                shipBullets.removeElementAt(hit);
-            }
-        }
+		synchronized (aliens) {
+			for (int i = 0; i < aliens.size(); i++) {
+				int hit = aliens.get(i).ifHit(shipBullets);
+				if (hit != -1) {
+					if (aliens.get(i).defeated()) {
+						score = aliens.get(i).addScore(score);
+						aliens.removeElementAt(i);
+					}
+					shipBullets.removeElementAt(hit);
+				}
+			}
+		}
         for (int i = 0; i < barriers.size(); i++) {
         	int hit = barriers.get(i).ifHit(alienBullets);
             if (hit != -1) {
@@ -256,9 +258,11 @@ public class Game extends Canvas {
      */
     public void alienShoot() {
         if (bossLevel != true) {
-            Random rand = new Random();
-            int randNr = rand.nextInt(aliens.size());
-            alienBullets.addElement(aliens.get(randNr).shoot());
+			Random rand = new Random();
+			synchronized (aliens) {
+				int randNr = rand.nextInt(aliens.size());
+				alienBullets.addElement(aliens.get(randNr).shoot());
+			}
         } else {
             alienBullets.addAll(aliens.get(0).BossShoot());
         }
