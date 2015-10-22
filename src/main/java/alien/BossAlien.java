@@ -27,7 +27,7 @@ public class BossAlien extends Alien{
      * @param g
      */
     public BossAlien(double x, double y, Game g) {
-        super(x, y, g);
+        super(x, y);
         Game.logfile.writeCreate("BossAlien", x, y);
         setSpritesheet(215, 225, 50, 20);
         setScore(100);
@@ -43,13 +43,13 @@ public class BossAlien extends Alien{
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && getX() >= 600) {
-            getGame().updateLogic();
+            updateLogic();
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && getX() <= 2) {
-            getGame().updateLogic();
+            updateLogic();
         }
 
         // moves the alien in the horizontal direction.
@@ -68,12 +68,6 @@ public class BossAlien extends Alien{
         // flip the movement speed so now the alien will move in
         // the other direction.
         movementSpeed = -movementSpeed;
-
-        // check if the alien has reached the bootom ofthe screen if so.
-        // end the game.
-        if (getY() > 450) {
-            getGame().end();
-        }
     }
     
     /**
@@ -120,7 +114,7 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> MegaBullet() {
-        final SpriteSheet spritesheet = new SpriteSheet(getGame().getSpriteSheet());
+        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet MegaBullet0 = new MegaBullet(getX() + 20, getY() + 13, spritesheet);
@@ -134,7 +128,7 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> multipleSpeedBullets() {
-        final SpriteSheet spritesheet = new SpriteSheet(getGame().getSpriteSheet());
+        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet newSpeedBullet0 = new Bullet(getX() + 0, getY() + 13, spritesheet);
@@ -168,7 +162,7 @@ public class BossAlien extends Alien{
      * @return
      */
     public Vector<Bullet> tridentBullets() {
-        final SpriteSheet spritesheet = new SpriteSheet(getGame().getSpriteSheet());
+        final SpriteSheet spritesheet = new SpriteSheet(BImg);
         final Vector<Bullet> newBullets = new Vector<Bullet>();
         
         final Bullet newBullet0 = new DiagonalBulletLeft(getX() + 20, getY() + 13, spritesheet);

@@ -20,16 +20,13 @@ public class AlienFactory {
      */
     public static Alien getAlien(String criteria, double x, double y){
         
-        if ( criteria.equals("easy") )
-            return new AlienType1(x,y);
-          else if ( criteria.equals("normal") )
-            return new AlienType2(x,y);
-          else if ( criteria.equals("hard") )
-            return new AlienType3(x,y);
-        
-        
-        
-        return null;
-        
+		if (criteria.equals("easy"))
+			return new AlienType1(x, y);
+		else if (criteria.equals("normal"))
+			return new AlienType2(x, y);
+		else if (criteria.equals("hard"))
+			return new AlienType3(x, y);
+
+		return null;
     }
 }

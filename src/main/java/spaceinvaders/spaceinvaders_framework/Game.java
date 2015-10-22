@@ -298,7 +298,7 @@ public class Game extends Canvas {
      * 
      * @param boolean b
      */
-    public void setrunning(boolean b) {
+    public void setRunning(boolean b) {
         running = b;
     }
 

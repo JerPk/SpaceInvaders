@@ -56,7 +56,7 @@ public class ScoreMenuTest {
     public void testShow() { 
         ScoreMenu menu1 = new ScoreMenu();
         
-        assertNull(menu1.getTable());
+        assertNotNull(menu1.getTable());
         menu1.show();
         
         assertNotNull(menu1.getTable());
