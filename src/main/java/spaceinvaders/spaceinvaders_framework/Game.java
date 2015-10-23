@@ -1,6 +1,7 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import interfaces.Iterator;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
 
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,6 @@ import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
 import bullet.Bullet;
-import bullet.BulletAggregate;
 import alien.Alien;
 import level.Level;
 import level.LevelFactory;
@@ -41,7 +41,7 @@ public class Game extends Canvas {
 
     private boolean bossLevel;
 
-    private BulletAggregate BulletAggregate = new BulletAggregate();
+    private ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
     /**
      * long that is used to set a limit between the spaceship
      *
@@ -171,17 +171,24 @@ public class Game extends Canvas {
     }
 
     public void moveAliens() {
-        for (int i = 0; i < aliens.size(); i++) {
-            Alien alien_obj = (Alien) aliens.get(i);
-            alien_obj.hmovement();
+        Iterator iteralien = ConcreteAggregate.createIterator(aliens);
+
+        while (iteralien.hasNext()) {
+            Alien alien = (Alien) iteralien.next();
+            alien.hmovement();
         }
+
         // this if statement will only be used if all the aliens need to be
         // updated simultaneously.
         if (Alien.getupdateLogic()) {
-            for (int i = 0; i < aliens.size(); i++) {
-                Alien alien_obj = (Alien) aliens.get(i);
-                alien_obj.vmovement();
+
+            Iterator iteralien2 = ConcreteAggregate.createIterator(aliens);
+
+            while (iteralien2.hasNext()) {
+                Alien alien = (Alien) iteralien2.next();
+                alien.vmovement();
             }
+
             // logicRequiredThisLoop = false;
 
             Game.logfile.writeString("Aliens reached a border and moved down");
@@ -217,25 +224,33 @@ public class Game extends Canvas {
         } else {
             end();
         }
-        for (int i = 0; i < aliens.size(); i++) {
-            int hit = aliens.get(i).ifHit(shipBullets);
+        Iterator iteralien = ConcreteAggregate.createIterator(aliens);
+
+        while (iteralien.hasNext()) {
+            Alien alien = (Alien) iteralien.next();
+            int hit = alien.ifHit(shipBullets);
             if (hit != -1) {
-                if (aliens.get(i).defeated()) {
-                    score = aliens.get(i).addScore(score);
-                    aliens.removeElementAt(i);
+                if (alien.defeated()) {
+                    score = alien.addScore(score);
+                    aliens.removeElementAt(iteralien.position());
                 }
                 shipBullets.removeElementAt(hit);
             }
         }
-        for (int i = 0; i < barriers.size(); i++) {
-            int hit = barriers.get(i).ifHit(alienBullets);
+
+        Iterator iterbarrier = ConcreteAggregate.createIterator(barriers);
+
+        while (iterbarrier.hasNext()) {
+            Barrier barrier = (Barrier) iterbarrier.next();
+            int hit = barrier.ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
-                if (barriers.get(i).destroyed()) {
-                    barriers.removeElementAt(i);
+                if (barrier.destroyed()) {
+                    barriers.removeElementAt(iterbarrier.position());
                 }
             }
         }
+
     }
 
     /**
@@ -267,7 +282,7 @@ public class Game extends Canvas {
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
-        Iterator iteralien = BulletAggregate.createIterator(alienBullets);
+        Iterator iteralien = ConcreteAggregate.createIterator(alienBullets);
 
         while (iteralien.hasNext()) {
 
@@ -278,8 +293,8 @@ public class Game extends Canvas {
             }
 
         }
-        
-        Iterator itership = BulletAggregate.createIterator(shipBullets);
+
+        Iterator itership = ConcreteAggregate.createIterator(shipBullets);
 
         while (itership.hasNext()) {
 

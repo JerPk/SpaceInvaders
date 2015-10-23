@@ -1,13 +1,13 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import interfaces.Iterator;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 import bullet.Bullet;
-import bullet.BulletAggregate;
 import bullet.MegaBullet;
 
 public class Spaceship {
@@ -20,7 +20,7 @@ public class Spaceship {
     // the bufferedImage of the spaceship.
     private BufferedImage Spaceship;
 
-    protected BulletAggregate BulletAggregate = new BulletAggregate();
+    protected ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
 
     /**
      * the constructor of the Spaceship class.
@@ -77,7 +77,7 @@ public class Spaceship {
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
-        Iterator iteralien = BulletAggregate.createIterator(alienBullets);
+        Iterator iteralien = ConcreteAggregate.createIterator(alienBullets);
 
         while (iteralien.hasNext()) {
             Bullet bullet = (Bullet) iteralien.next();

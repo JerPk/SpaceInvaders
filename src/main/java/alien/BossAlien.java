@@ -1,6 +1,6 @@
 package alien;
 
-import interfaces.Iterator;
+import iterator.Iterator;
 
 import java.util.Random;
 import java.util.Vector;
@@ -185,7 +185,7 @@ public class BossAlien extends Alien {
 
     @Override
     public int ifHit(Vector<Bullet> shipBullets) {
-        Iterator iteralien = BulletAggregate.createIterator(shipBullets);
+        Iterator iteralien = ConcreteAggregate.createIterator(shipBullets);
 
         while (iteralien.hasNext()) {
             Bullet bullet = (Bullet) iteralien.next();

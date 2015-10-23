@@ -1,14 +1,14 @@
 package alien;
 
 import static org.junit.Assert.assertEquals;
-import interfaces.Iterator;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 import bullet.Bullet;
-import bullet.BulletAggregate;
 import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
 
 import org.junit.Test;
@@ -61,7 +61,7 @@ public abstract class Alien {
      */
     private static boolean logicRequiredThisLoop = false;
 
-    protected BulletAggregate BulletAggregate = new BulletAggregate();
+    protected ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
 
     protected BufferedImage BImg = null;
 
@@ -202,7 +202,7 @@ public abstract class Alien {
      * @return
      */
     public int ifHit(Vector<Bullet> shipBullets) {
-        Iterator iteralien = BulletAggregate.createIterator(shipBullets);
+        Iterator iteralien = ConcreteAggregate.createIterator(shipBullets);
 
         while (iteralien.hasNext()) {
 
