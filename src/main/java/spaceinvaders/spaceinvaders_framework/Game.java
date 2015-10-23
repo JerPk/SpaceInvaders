@@ -320,7 +320,7 @@ public class Game implements Runnable {
         while (iterShipBullets.hasNext()) {
 
             Bullet bullet = (Bullet) iterShipBullets.next();
-            if (bullet.reachedY(0)) {
+            if (bullet.reachedY(450)) {
                 Game.logfile.writeOffscreen("Spaceship", bullet.getX());
                 shipBullets.removeElementAt(iterShipBullets.position());
             }
