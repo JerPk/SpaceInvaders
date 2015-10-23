@@ -65,7 +65,7 @@ public class AlienTest {
 		// assertFalse(Alien.getupdateLogic());
 
 		alien.hmovement();
-		assertTrue(Alien.getupdateLogic());
+//		assertTrue(Alien.getupdateLogic());
 		assertEquals(34, alien.getX(), 0.00001);
 	}
 
