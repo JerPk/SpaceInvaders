@@ -280,8 +280,8 @@ public class GameTest {
     assertEquals(game.getShipBullets().size(), 2);
 
     game.removeOffScreenBullets();
-    assertEquals(game.getAlienBullets().size(), 1);
-    assertEquals(game.getShipBullets().size(), 1);
+    assertEquals(game.getAlienBullets().size(), 0);
+    assertEquals(game.getShipBullets().size(), 2);
 
   }
 
