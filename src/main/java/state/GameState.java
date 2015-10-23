@@ -16,7 +16,7 @@ public class GameState implements State {
 	}
 	
 	public void run() {
-		game = new Game();
+		game = new Game(exec);
 		game.start();
 	}
 	
@@ -25,7 +25,8 @@ public class GameState implements State {
 	}
 	
 	public void returning() {
-		//End game and return to menu
+		exec.setState(exec.getHighScoreState());
+		exec.run();
 	}
 	
 	public void quit() {

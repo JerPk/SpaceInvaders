@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
+import state.Executor;
+
 public class ScoreMenu implements Runnable{
 
 	private JFrame frame;
@@ -28,8 +30,10 @@ public class ScoreMenu implements Runnable{
     private JButton reset;
     private Boolean running;
     private Thread thread;
+    private Executor exec;
 	
-	public ScoreMenu() {
+	public ScoreMenu(Executor ex) {
+		exec = ex;
 		running = false;
 		
 		highscoremanager = new HighscoreManager();
@@ -114,6 +118,7 @@ public class ScoreMenu implements Runnable{
 			public void actionPerformed(ActionEvent e) {
                 running = false;
                 frame.setVisible(false);
+                exec.returning();
 			}
 		});
 
@@ -131,7 +136,7 @@ public class ScoreMenu implements Runnable{
             public void actionPerformed(ActionEvent e) {
                 running = false;
                 frame.setVisible(false);
-                System.exit(1);
+                exec.quit();
             }
         });
     }

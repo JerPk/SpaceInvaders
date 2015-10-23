@@ -9,7 +9,7 @@ public class HighScoreState implements State {
 	
 	public HighScoreState(Executor ex) {
 		this.exec = ex;
-		menu = new ScoreMenu();
+		menu = new ScoreMenu(exec);
 	}
 	
 	public void start() {
@@ -26,7 +26,8 @@ public class HighScoreState implements State {
 	}
 	
 	public void returning() {
-		//Return to menu
+		exec.setState(exec.getMenuState());
+		exec.run();
 	}
 	
 	public void quit() {

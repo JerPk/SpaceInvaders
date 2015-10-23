@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Vector;
 import java.util.Date;
 
+import state.Executor;
 import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
@@ -38,6 +39,8 @@ public class Game implements Runnable {
      * the main Thread we use for the game.
      */
     private Thread thread;
+    
+    private Executor exec;
 
     /**
      * Vector to store all alien, bullet and barrier objects
@@ -58,7 +61,8 @@ public class Game implements Runnable {
     private Level level;
     private int levelNumber = 1;
 
-    public Game() {
+    public Game(Executor ex) {
+    	exec = ex;
         counter = 0;
         screen = new Screen();
     }
@@ -441,6 +445,8 @@ public class Game implements Runnable {
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         screen.close();
+        System.out.println("Game ended");
+        exec.returning();
     }
     
     public int getLevelNumber() {

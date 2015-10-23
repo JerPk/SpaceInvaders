@@ -34,6 +34,7 @@ public class Menu implements Runnable {
     private boolean running;
     private Thread thread;
     private Executor exec;
+    private Boolean startedGame = false;
     
     public Menu(Executor ex){
     	running = false;
@@ -76,6 +77,7 @@ public class Menu implements Runnable {
 	public void runMenu() {
 		running = true;
         frame.setVisible(true);
+        startedGame = false;
         
         thread = new Thread(this);
         thread.start();
@@ -99,11 +101,14 @@ public class Menu implements Runnable {
         btnNewGame.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                running = false;
-                frame.setVisible(false);
-                System.out.println("start game");
-                exec.start();
-                exec.run();
+            	if (!startedGame) {
+            		startedGame = true;
+            		running = false;
+            		frame.setVisible(false);
+            		System.out.println("start game");
+            		exec.start();
+            		exec.run();
+            	}
             }
         });
         //Statistics
