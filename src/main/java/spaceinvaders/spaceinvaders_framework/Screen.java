@@ -45,7 +45,7 @@ public class Screen extends JPanel implements KeyListener {
     
     private Game game;
     
-    Graphics graphic;
+    private Graphics graphic;
 	
 	public Screen(Game ga) {
 		setFocusable(true);

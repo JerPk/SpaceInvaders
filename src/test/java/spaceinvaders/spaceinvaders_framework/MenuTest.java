@@ -15,6 +15,8 @@ import javax.swing.JFrame;
 
 import org.junit.Test;
 
+import state.Executor;
+
 /**
  * MenuTest tests all the methods in the Menu class.
  * 
@@ -31,8 +33,11 @@ public class MenuTest {
                 
         assertNull(menunull);
         
-        menunull = new Menu();
-        Menu menu2 = new Menu();
+        Executor exec = new Executor();
+		exec.run();
+        
+        menunull = new Menu(exec);
+        Menu menu2 = new Menu(exec);
 
         assertNotEquals(menunull, null);
         assertSame(menunull,menunull);
