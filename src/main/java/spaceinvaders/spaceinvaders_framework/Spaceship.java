@@ -77,14 +77,14 @@ public class Spaceship {
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
-        Iterator iteralien = ConcreteAggregate.createIterator(alienBullets);
+        Iterator iterAlienBullets = ConcreteAggregate.createIterator(alienBullets);
 
-        while (iteralien.hasNext()) {
-            Bullet bullet = (Bullet) iteralien.next();
+        while (iterAlienBullets.hasNext()) {
+            Bullet bullet = (Bullet) iterAlienBullets.next();
 
             if (bullet instanceof MegaBullet) {
-                if (ifHitMega(bullet, iteralien.position()) == true) {
-                    return iteralien.position();
+                if (ifHitMega(bullet, iterAlienBullets.position()) == true) {
+                    return iterAlienBullets.position();
                 }
             }
 
@@ -99,7 +99,7 @@ public class Spaceship {
                     } else {
                         Game.logfile.writeString("Spaceship has no lives left");
                     }
-                    return iteralien.position();
+                    return iterAlienBullets.position();
                 }
             }
         }
