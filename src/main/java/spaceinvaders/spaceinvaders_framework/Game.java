@@ -1,5 +1,7 @@
 package spaceinvaders.spaceinvaders_framework;
 
+import interfaces.Iterator;
+
 import java.awt.Canvas;
 import java.awt.image.BufferedImage;
 import java.util.Random;
@@ -9,13 +11,11 @@ import java.util.Date;
 import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
-
 import bullet.Bullet;
+import bullet.BulletAggregate;
 import alien.Alien;
 import level.Level;
 import level.LevelFactory;
-
-
 
 /**
  * The game class is the main class.
@@ -41,6 +41,7 @@ public class Game extends Canvas {
 
     private boolean bossLevel;
 
+    private BulletAggregate BulletAggregate = new BulletAggregate();
     /**
      * long that is used to set a limit between the spaceship
      *
@@ -63,7 +64,7 @@ public class Game extends Canvas {
     private Spaceship spaceship;
     public static LogFile logfile;
     private Screen screen;
-    
+
     private Level level;
     private int levelNumber = 1;
 
@@ -77,7 +78,8 @@ public class Game extends Canvas {
      * mainly used to start up the main thread of our game.
      */
     public synchronized void start() {
-        // an if statement that is to prevent that the start method creates two threads if it accidently called twice.
+        // an if statement that is to prevent that the start method creates two
+        // threads if it accidently called twice.
         if (running) {
             return;
         }
@@ -91,20 +93,17 @@ public class Game extends Canvas {
      * game loop. if the game has no errors this method will not be called.
      */
     private synchronized void stop() {
-        // returns if for some accident the stop method is called before the game has started.
+        // returns if for some accident the stop method is called before the
+        // game has started.
         if (!running) {
             return;
         }
         running = false;
-        
+
         /*
-        // tries to join all the threads together.
-        try {
-            thread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        */
+         * // tries to join all the threads together. try { thread.join(); }
+         * catch (InterruptedException e) { e.printStackTrace(); }
+         */
 
         logfile.writeString("Game ended because of an error at " + new Date());
         logfile.close();
@@ -130,61 +129,60 @@ public class Game extends Canvas {
         spaceship = new Spaceship();
 
         highscoremanager = new HighscoreManager();
-        
+
         level = LevelFactory.createLevel(levelNumber);
         aliens = level.createAliens();
-    	barriers = level.createBarriers();
+        barriers = level.createBarriers();
     }
-    
 
     /**
      * the run method is the method that has the main game loop that will be
      * called repeatedly when the game is ongoing.
      */
     public void runGame() {
-    	screen.render(this);
-    	counter++;
-    	if (counter >= 50) {
-    		alienShoot();
-    		counter = 0;
-    	}
-    	if (levelNumber > 15) {
-    		end();
-    	} else if (aliens.size() == 0) {
-        	clearVectors();
-        	level = LevelFactory.createLevel(++levelNumber);
-        	spaceship.resetPosition();
-        	aliens = level.createAliens();
-        	barriers = level.createBarriers();
-        	if (levelNumber % 5 == 0) {
-        		bossLevel = true;
-        	}
-        	else {
-        		bossLevel = false;
-        	}
-    	} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
-    		end();
-    	} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-    		barriers.clear();
-    	}
-    	removeOffScreenBullets();
-    	listenForKeys();
-    	checkIfHit();
-    	moveAliens();
+        screen.render(this);
+        counter++;
+        if (counter >= 50) {
+            alienShoot();
+            counter = 0;
+        }
+        if (levelNumber > 15) {
+            end();
+        } else if (aliens.size() == 0) {
+            clearVectors();
+            level = LevelFactory.createLevel(++levelNumber);
+            spaceship.resetPosition();
+            aliens = level.createAliens();
+            barriers = level.createBarriers();
+            if (levelNumber % 5 == 0) {
+                bossLevel = true;
+            } else {
+                bossLevel = false;
+            }
+        } else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+            end();
+        } else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+            barriers.clear();
+        }
+        removeOffScreenBullets();
+        listenForKeys();
+        checkIfHit();
+        moveAliens();
     }
 
     public void moveAliens() {
         for (int i = 0; i < aliens.size(); i++) {
             Alien alien_obj = (Alien) aliens.get(i);
             alien_obj.hmovement();
-        }	
-        // this if statement will only be used if all the aliens need to be updated simultaneously.
+        }
+        // this if statement will only be used if all the aliens need to be
+        // updated simultaneously.
         if (Alien.getupdateLogic()) {
             for (int i = 0; i < aliens.size(); i++) {
                 Alien alien_obj = (Alien) aliens.get(i);
                 alien_obj.vmovement();
             }
-            //logicRequiredThisLoop = false;
+            // logicRequiredThisLoop = false;
 
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
@@ -212,16 +210,16 @@ public class Game extends Canvas {
 
     public void checkIfHit() {
         if (!spaceship.defeated()) {
-        	int hit = spaceship.ifHit(alienBullets);
+            int hit = spaceship.ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
             }
         } else {
-        	end();
+            end();
         }
         for (int i = 0; i < aliens.size(); i++) {
             int hit = aliens.get(i).ifHit(shipBullets);
-            if (hit != -1) {               
+            if (hit != -1) {
                 if (aliens.get(i).defeated()) {
                     score = aliens.get(i).addScore(score);
                     aliens.removeElementAt(i);
@@ -230,7 +228,7 @@ public class Game extends Canvas {
             }
         }
         for (int i = 0; i < barriers.size(); i++) {
-        	int hit = barriers.get(i).ifHit(alienBullets);
+            int hit = barriers.get(i).ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
                 if (barriers.get(i).destroyed()) {
@@ -239,20 +237,21 @@ public class Game extends Canvas {
             }
         }
     }
-    
+
     /**
-     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets
-     * and barriers for the next level.
+     * this method clears the vectors of the aliens, alienbullets,
+     * spaceshipbullets and barriers for the next level.
      */
     private void clearVectors() {
-    	aliens.clear();
-		barriers.clear();
-		alienBullets.clear();
-		shipBullets.clear();
+        aliens.clear();
+        barriers.clear();
+        alienBullets.clear();
+        shipBullets.clear();
     }
 
     /**
-     * The method that that randomly selects an alien. and adds its bullet to the vector.
+     * The method that that randomly selects an alien. and adds its bullet to
+     * the vector.
      */
     public void alienShoot() {
         if (bossLevel != true) {
@@ -268,20 +267,30 @@ public class Game extends Canvas {
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
-        for (int i = 0; i < alienBullets.size(); i++) {
-            if (alienBullets.get(i).reachedY(450)) {
-                Game.logfile.writeOffscreen("Alien", alienBullets.get(i).getX());
-                alienBullets.removeElementAt(i);
-                i--;
+        Iterator iteralien = BulletAggregate.createIterator(alienBullets);
+
+        while (iteralien.hasNext()) {
+
+            Bullet bullet = (Bullet) iteralien.next();
+            if (bullet.reachedY(450)) {
+                Game.logfile.writeOffscreen("Alien", bullet.getX());
+                alienBullets.removeElementAt(iteralien.position());
             }
+
         }
-        for (int j = 0; j < shipBullets.size(); j++) {
-            if (shipBullets.get(j).getY() <= 0) {
-                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
-                shipBullets.removeElementAt(j);
-                j--;
+        
+        Iterator itership = BulletAggregate.createIterator(shipBullets);
+
+        while (itership.hasNext()) {
+
+            Bullet bullet = (Bullet) itership.next();
+            if (bullet.reachedY(450)) {
+                Game.logfile.writeOffscreen("Spaceship", bullet.getX());
+                alienBullets.removeElementAt(itership.position());
             }
+
         }
+
     }
 
     /**
@@ -423,9 +432,9 @@ public class Game extends Canvas {
     public void addAlien(Alien a) {
         aliens.add(a);
     }
-    
+
     public Vector<Barrier> getBarriers() {
-    	return barriers;
+        return barriers;
     }
 
     /**
@@ -438,17 +447,17 @@ public class Game extends Canvas {
         logfile.close();
         screen.close();
     }
-    
+
     public int getLevelNumber() {
-    	return levelNumber;
+        return levelNumber;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public HighscoreManager getHSManager() {
-    	return highscoremanager;
+        return highscoremanager;
     }
 
     /**
@@ -458,7 +467,6 @@ public class Game extends Canvas {
     public void setHighscoremanager(HighscoreManager manager) {
         highscoremanager = manager;
     }
-    
 
     /**
      * the set score method is able to manually set the score of the player.
