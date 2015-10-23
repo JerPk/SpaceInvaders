@@ -1,6 +1,8 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import java.awt.Canvas;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
+
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Vector;
@@ -8,14 +10,9 @@ import java.util.Date;
 
 import state.Executor;
 import alien.Alien;
-import alien.AlienFactory;
 import bullet.Bullet;
-import bullet.Bullet;
-import alien.Alien;
 import level.Level;
 import level.LevelFactory;
-
-
 
 /**
  * The game class is the main class.
@@ -33,8 +30,9 @@ public class Game implements Runnable {
     private ScoreMenu s_menu;
 
     private boolean bossLevel;
-    
-	
+
+    private ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
+
     /**
      * the main Thread we use for the game.
      */
@@ -57,14 +55,15 @@ public class Game implements Runnable {
     private Spaceship spaceship;
     public static LogFile logfile;
     private Screen screen;
-    
+
     private Level level;
     private int levelNumber = 1;
 
     public Game(Executor ex) {
     	exec = ex;
         counter = 0;
-        screen = new Screen();
+        screen = new Screen(this);
+        
     }
 
     /**
@@ -72,7 +71,8 @@ public class Game implements Runnable {
      * mainly used to start up the main thread of our game.
      */
     public synchronized void start() {
-        // an if statement that is to prevent that the start method creates two threads if it accidently called twice.
+        // an if statement that is to prevent that the start method creates two
+        // threads if it accidently called twice.
         if (running) {
             return;
         }
@@ -88,7 +88,8 @@ public class Game implements Runnable {
      * game loop. if the game has no errors this method will not be called.
      */
     private synchronized void stop() {
-        // returns if for some accident the stop method is called before the game has started.
+        // returns if for some accident the stop method is called before the
+        // game has started.
         if (!running) {
             return;
         }
@@ -125,12 +126,11 @@ public class Game implements Runnable {
         spaceship = new Spaceship();
 
         highscoremanager = new HighscoreManager();
-        
+
         level = LevelFactory.createLevel(levelNumber);
         aliens = level.createAliens();
-    	barriers = level.createBarriers();
+        barriers = level.createBarriers();
     }
-    
 
     /**
      * the run method is the method that has the main game loop that will be
@@ -141,7 +141,7 @@ public class Game implements Runnable {
         init();
     	
     	while (running) {
-    		screen.render(this);
+        	screen.repaint();
     		counter++;
     		if (counter >= 50) {
     			alienShoot();
@@ -181,18 +181,30 @@ public class Game implements Runnable {
     	stop();
     }
 
+    /**
+     * moveAliens method is responsible for moving the aliens both horizontally
+     * and vertically.
+     */
     public void moveAliens() {
-        for (int i = 0; i < aliens.size(); i++) {
-            Alien alien_obj = (Alien) aliens.get(i);
-            alien_obj.hmovement();
-        }	
-        // this if statement will only be used if all the aliens need to be updated simultaneously.
+        Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
+
+        // in this while loop all the aliens are moved vertically.
+        while (iterAliens.hasNext()) {
+            Alien alien = (Alien) iterAliens.next();
+            alien.hmovement();
+        }
+
+        // this if statement will only be used if all the aliens need to be
+        // updated simultaneously. this is the case when all the aliens need
+        // to be moved vertically.
         if (Alien.getupdateLogic()) {
-            for (int i = 0; i < aliens.size(); i++) {
-                Alien alien_obj = (Alien) aliens.get(i);
-                alien_obj.vmovement();
+
+            Iterator iterAliens2 = ConcreteAggregate.createIterator(aliens);
+
+            while (iterAliens2.hasNext()) {
+                Alien alien = (Alien) iterAliens2.next();
+                alien.vmovement();
             }
-            //logicRequiredThisLoop = false;
 
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
@@ -220,53 +232,66 @@ public class Game implements Runnable {
 
     public void checkIfHit() {
         if (!spaceship.defeated()) {
-        	int hit = spaceship.ifHit(alienBullets);
+            int hit = spaceship.ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
             }
         } else {
-        	end();
+            end();
         }
-        for (int i = 0; i < aliens.size(); i++) {
-            int hit = aliens.get(i).ifHit(shipBullets);
-            if (hit != -1) {               
-                if (aliens.get(i).defeated()) {
-                    score = aliens.get(i).addScore(score);
-                    aliens.removeElementAt(i);
+
+        Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
+
+        synchronized (aliens) {
+            while (iterAliens.hasNext()) {
+                Alien alien = (Alien) iterAliens.next();
+                int hit = alien.ifHit(shipBullets);
+                if (hit != -1) {
+                    if (alien.defeated()) {
+                        score = alien.addScore(score);
+                        aliens.removeElementAt(iterAliens.position());
+                    }
+                    shipBullets.removeElementAt(hit);
                 }
-                shipBullets.removeElementAt(hit);
             }
         }
-        for (int i = 0; i < barriers.size(); i++) {
-        	int hit = barriers.get(i).ifHit(alienBullets);
+        Iterator iterBarriers = ConcreteAggregate.createIterator(barriers);
+
+        while (iterBarriers.hasNext()) {
+            Barrier barrier = (Barrier) iterBarriers.next();
+            int hit = barrier.ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
-                if (barriers.get(i).destroyed()) {
-                    barriers.removeElementAt(i);
+                if (barrier.destroyed()) {
+                    barriers.removeElementAt(iterBarriers.position());
                 }
             }
         }
-    }
-    
-    /**
-     * this method clears the vectors of the aliens, alienbullets, spaceshipbullets
-     * and barriers for the next level.
-     */
-    private void clearVectors() {
-    	aliens.clear();
-		barriers.clear();
-		alienBullets.clear();
-		shipBullets.clear();
+
     }
 
     /**
-     * The method that that randomly selects an alien. and adds its bullet to the vector.
+     * this method clears the vectors of the aliens, alienbullets,
+     * spaceshipbullets and barriers for the next level.
+     */
+    private void clearVectors() {
+        aliens.clear();
+        barriers.clear();
+        alienBullets.clear();
+        shipBullets.clear();
+    }
+
+    /**
+     * The method that that randomly selects an alien. and adds its bullet to
+     * the vector.
      */
     public void alienShoot() {
         if (bossLevel != true) {
             Random rand = new Random();
-            int randNr = rand.nextInt(aliens.size());
-            alienBullets.addElement(aliens.get(randNr).shoot());
+            synchronized (aliens) {
+                int randNr = rand.nextInt(aliens.size());
+                alienBullets.addElement(aliens.get(randNr).shoot());
+            }
         } else {
             alienBullets.addAll(aliens.get(0).BossShoot());
         }
@@ -276,20 +301,32 @@ public class Game implements Runnable {
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
-        for (int i = 0; i < alienBullets.size(); i++) {
-            if (alienBullets.get(i).reachedY(450)) {
-                Game.logfile.writeOffscreen("Alien", alienBullets.get(i).getX());
-                alienBullets.removeElementAt(i);
-                i--;
+        Iterator iterAlienBullets = ConcreteAggregate
+                .createIterator(alienBullets);
+
+        while (iterAlienBullets.hasNext()) {
+
+            Bullet bullet = (Bullet) iterAlienBullets.next();
+            if (bullet.reachedY(450)) {
+                Game.logfile.writeOffscreen("Alien", bullet.getX());
+                alienBullets.removeElementAt(iterAlienBullets.position());
             }
+
         }
-        for (int j = 0; j < shipBullets.size(); j++) {
-            if (shipBullets.get(j).getY() <= 0) {
-                Game.logfile.writeOffscreen("Spaceship", shipBullets.get(j).getX());
-                shipBullets.removeElementAt(j);
-                j--;
+
+        Iterator iterShipBullets = ConcreteAggregate
+                .createIterator(shipBullets);
+
+        while (iterShipBullets.hasNext()) {
+
+            Bullet bullet = (Bullet) iterShipBullets.next();
+            if (bullet.reachedY(450)) {
+                Game.logfile.writeOffscreen("Spaceship", bullet.getX());
+                alienBullets.removeElementAt(iterShipBullets.position());
             }
+
         }
+
     }
 
     /**
@@ -431,9 +468,9 @@ public class Game implements Runnable {
     public void addAlien(Alien a) {
         aliens.add(a);
     }
-    
+
     public Vector<Barrier> getBarriers() {
-    	return barriers;
+        return barriers;
     }
 
     /**
@@ -447,17 +484,17 @@ public class Game implements Runnable {
         screen.close();
         exec.returning();
     }
-    
+
     public int getLevelNumber() {
-    	return levelNumber;
+        return levelNumber;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public HighscoreManager getHSManager() {
-    	return highscoremanager;
+        return highscoremanager;
     }
 
     /**
@@ -467,7 +504,6 @@ public class Game implements Runnable {
     public void setHighscoremanager(HighscoreManager manager) {
         highscoremanager = manager;
     }
-    
 
     /**
      * the set score method is able to manually set the score of the player.

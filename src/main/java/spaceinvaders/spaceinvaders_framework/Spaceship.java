@@ -1,5 +1,8 @@
 package spaceinvaders.spaceinvaders_framework;
 
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
@@ -17,6 +20,8 @@ public class Spaceship {
     // the bufferedImage of the spaceship.
     private BufferedImage Spaceship;
 
+    protected ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
+
     /**
      * the constructor of the Spaceship class.
      * 
@@ -25,13 +30,13 @@ public class Spaceship {
      * @param Game
      *            g
      */
-    public Spaceship(){
-        xpos = Screen.WIDTH/2-13;
+    public Spaceship() {
+        xpos = Screen.WIDTH / 2 - 13;
         lives = 3;
-        
+
         Game.logfile.writeCreate("Spaceship", xpos, ypos);
 
-        Spaceship = Screen.spritesheet.grabImage(277, 228, 26, 16);
+        Spaceship = SpriteSheet.getInstance().grabImage(277, 228, 26, 16);
 
     }
 
@@ -64,7 +69,7 @@ public class Spaceship {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        Bullet newBullet = new Bullet(xpos+10, ypos+2);
+        Bullet newBullet = new Bullet(xpos + 10, ypos + 2);
         Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
 
         newBullet.setSpritesheet(423, 277, 6, 12);
@@ -72,46 +77,50 @@ public class Spaceship {
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
-    	for (int i = 0; i < alienBullets.size(); i++) {
-    	    Bullet testBullet = alienBullets.get(i);
-            if (testBullet instanceof MegaBullet) {
-                if (ifHitMega(alienBullets,i) == true) {
-                    return i;
+        Iterator iterAlienBullets = ConcreteAggregate.createIterator(alienBullets);
+
+        while (iterAlienBullets.hasNext()) {
+            Bullet bullet = (Bullet) iterAlienBullets.next();
+
+            if (bullet instanceof MegaBullet) {
+                if (ifHitMega(bullet, iterAlienBullets.position()) == true) {
+                    return iterAlienBullets.position();
                 }
             }
-    	    if (alienBullets.get(i).getY() > ypos-10 && alienBullets.get(i).getY() < ypos+16) {
-    			if (alienBullets.get(i).getX() > xpos-6 && alienBullets.get(i).getX() < xpos+26) {
-    				lives -= 1;
-    				Game.logfile.writeHit("Spaceship", alienBullets.get(i).getX(), alienBullets.get(i).getY());
-    				if (lives > 0) {
-    					Game.logfile.writeString("Spaceship has " + String.valueOf(lives) + " lives left");
-    				}
-    				else {
-    					Game.logfile.writeString("Spaceship has no lives left");
-    				}
-    				return i;
-    			}
-    		}
-    	}
-    	return -1;
+
+            if (bullet.getY() > ypos - 10 && bullet.getY() < ypos + 16) {
+                if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 26) {
+                    lives -= 1;
+                    Game.logfile.writeHit("Spaceship", bullet.getX(),
+                            bullet.getY());
+                    if (lives > 0) {
+                        Game.logfile.writeString("Spaceship has "
+                                + String.valueOf(lives) + " lives left");
+                    } else {
+                        Game.logfile.writeString("Spaceship has no lives left");
+                    }
+                    return iterAlienBullets.position();
+                }
+            }
+        }
+        return -1;
 
     }
-    
+
     /**
      * method to reset the position of the spaceship.
      */
     public void resetPosition() {
-    	xpos = Screen.WIDTH/2-13;
+        xpos = Screen.WIDTH / 2 - 13;
     }
 
-    private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
-        if (alienBullets.get(i).getX() + 15 >= xpos
-                && alienBullets.get(i).getX() + 15 <= xpos + 26) {
-            if (alienBullets.get(i).getY() + 50 >= ypos
-                    && alienBullets.get(i).getY() + 50 <= ypos + 16) {
+    private boolean ifHitMega(Bullet bullet, int i) {
+
+        if (bullet.getX() + 15 >= xpos && bullet.getX() + 15 <= xpos + 26) {
+            if (bullet.getY() + 50 >= ypos && bullet.getY() + 50 <= ypos + 16) {
                 lives -= 1;
-                Game.logfile.writeHit("Spaceship", alienBullets.get(i).getX(),
-                        alienBullets.get(i).getY());
+                Game.logfile
+                        .writeHit("Spaceship", bullet.getX(), bullet.getY());
                 if (lives > 0) {
                     Game.logfile.writeString("Spaceship has "
                             + String.valueOf(lives) + " lives left");
@@ -124,18 +133,18 @@ public class Spaceship {
         return false;
 
     }
-    
+
     /**
      * the method that checks if the ship has any lives left
      *
      * @return true/false
      */
     public boolean defeated() {
-    	if (lives <= 0) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if (lives <= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -152,7 +161,7 @@ public class Spaceship {
      *
      * @return y position
      */
-    public double getPosY(){
+    public double getPosY() {
         return ypos;
 
     }
@@ -172,11 +181,11 @@ public class Spaceship {
      * @param Graphics
      *            g
      */
-    public void render(Graphics g){
-        g.drawImage(Spaceship,(int) xpos,(int) ypos, null);
-        
-        for (int i=1; i<=lives; i++){
-            g.drawImage(Spaceship, 10+30*(i-1), 452, null);
+    public void render(Graphics g) {
+        g.drawImage(Spaceship, (int) xpos, (int) ypos, null);
+
+        for (int i = 1; i <= lives; i++) {
+            g.drawImage(Spaceship, 10 + 30 * (i - 1), 452, null);
 
         }
 
@@ -198,12 +207,12 @@ public class Spaceship {
         if (other instanceof Spaceship) {
             Spaceship that = (Spaceship) other;
             if (this.getPosX() == that.getPosX()) {
-                //if (this.getGame().equals(that.getGame())) {
-                    //Game g = this.getGame();
-                    //if (g.compareImages(this.getImage(), that.getImage())) {
-                        result = true;
-                    //}
-                //}
+                // if (this.getGame().equals(that.getGame())) {
+                // Game g = this.getGame();
+                // if (g.compareImages(this.getImage(), that.getImage())) {
+                result = true;
+                // }
+                // }
             }
         }
         return result;
