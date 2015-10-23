@@ -14,7 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-public class ScoreMenu {
+public class ScoreMenu implements Runnable{
 
 	private JFrame frame;
     private HighscoreManager highscoremanager;
@@ -26,8 +26,11 @@ public class ScoreMenu {
     private JButton returns;
     private JButton quit;
     private JButton reset;
+    private Boolean running;
+    private Thread thread;
 	
 	public ScoreMenu() {
+		running = false;
 		
 		highscoremanager = new HighscoreManager();
 		allscores = highscoremanager.getScores();
@@ -86,16 +89,31 @@ public class ScoreMenu {
 	}
 	
 	public void show() {
-        listenForActions();
+		running = true;
+        thread = new Thread(this);
+        thread.start();
         frame.setVisible(true);
     }
+	
+	public void run() {
+		while (running) {
+			listenForActions();
+			
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                // Catch if needed
+            }
+		}
+	}
 
     
     public void listenForActions() {
         returns.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				frame.setVisible(false);
+                running = false;
+                frame.setVisible(false);
 			}
 		});
 
@@ -111,6 +129,8 @@ public class ScoreMenu {
         quit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                running = false;
+                frame.setVisible(false);
                 System.exit(1);
             }
         });

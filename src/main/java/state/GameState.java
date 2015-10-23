@@ -1,8 +1,11 @@
 package state;
 
+import spaceinvaders.spaceinvaders_framework.Game;
+
 public class GameState implements State {
 
 	Executor exec;
+	Game game;
 	
 	public GameState(Executor ex) {
 		this.exec = ex;
@@ -12,8 +15,13 @@ public class GameState implements State {
 		//Do nothing
 	}
 	
+	public void run() {
+		game = new Game();
+		game.start();
+	}
+	
 	public void scores() {
-		//End game and show highscores
+		//Do nothing
 	}
 	
 	public void returning() {

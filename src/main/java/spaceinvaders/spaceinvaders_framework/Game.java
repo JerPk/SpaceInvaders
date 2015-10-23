@@ -9,7 +9,6 @@ import java.util.Date;
 import alien.Alien;
 import alien.AlienFactory;
 import bullet.Bullet;
-
 import bullet.Bullet;
 import alien.Alien;
 import level.Level;
@@ -23,7 +22,7 @@ import level.LevelFactory;
  * @author Group 23
  *
  */
-public class Game extends Canvas {
+public class Game implements Runnable {
 
     /**
      * running == true when the game is running.
@@ -32,21 +31,13 @@ public class Game extends Canvas {
 
     private ScoreMenu s_menu;
 
-    /**
-     * booleans related to the spaceships action
-     */
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-    private boolean spacePressed = false;
-
     private boolean bossLevel;
-
+    
+	
     /**
-     * long that is used to set a limit between the spaceship
-     *
-     * being able to fire.
+     * the main Thread we use for the game.
      */
-    private long lastFire = 0;
+    private Thread thread;
 
     /**
      * Vector to store all alien, bullet and barrier objects
@@ -82,8 +73,10 @@ public class Game extends Canvas {
             return;
         }
         running = true;
-        // initialize all the entities
-        init();
+        
+        // create and start the main thread of our game.
+        thread = new Thread(this);
+        thread.start();
     }
 
     /**
@@ -97,14 +90,12 @@ public class Game extends Canvas {
         }
         running = false;
         
-        /*
         // tries to join all the threads together.
         try {
             thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        */
 
         logfile.writeString("Game ended because of an error at " + new Date());
         logfile.close();
@@ -141,36 +132,49 @@ public class Game extends Canvas {
      * the run method is the method that has the main game loop that will be
      * called repeatedly when the game is ongoing.
      */
-    public void runGame() {
-    	screen.render(this);
-    	counter++;
-    	if (counter >= 50) {
-    		alienShoot();
-    		counter = 0;
+    public void run() {
+        // initialize all the entities
+        init();
+    	
+    	while (running) {
+    		screen.render(this);
+    		counter++;
+    		if (counter >= 50) {
+    			alienShoot();
+    			counter = 0;
+    		}
+    		if (levelNumber > 15) {
+    			end();
+    		} else if (aliens.size() == 0) {
+    			clearVectors();
+    			level = LevelFactory.createLevel(++levelNumber);
+    			spaceship.resetPosition();
+    			aliens = level.createAliens();
+    			barriers = level.createBarriers();
+    			if (levelNumber % 5 == 0) {
+    				bossLevel = true;
+    			}
+    			else {
+    				bossLevel = false;
+    			}
+    		} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+    			end();
+    		} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+    			barriers.clear();
+    		}
+    		removeOffScreenBullets();
+    		listenForKeys();
+    		checkIfHit();
+    		moveAliens();
+    		
+            try {
+                Thread.sleep(15);
+            } catch (Exception e) {
+                // Catch if needed
+            }
     	}
-    	if (levelNumber > 15) {
-    		end();
-    	} else if (aliens.size() == 0) {
-        	clearVectors();
-        	level = LevelFactory.createLevel(++levelNumber);
-        	spaceship.resetPosition();
-        	aliens = level.createAliens();
-        	barriers = level.createBarriers();
-        	if (levelNumber % 5 == 0) {
-        		bossLevel = true;
-        	}
-        	else {
-        		bossLevel = false;
-        	}
-    	} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
-    		end();
-    	} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-    		barriers.clear();
-    	}
-    	removeOffScreenBullets();
-    	listenForKeys();
-    	checkIfHit();
-    	moveAliens();
+    	
+    	stop();
     }
 
     public void moveAliens() {

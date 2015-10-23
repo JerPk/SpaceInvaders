@@ -6,16 +6,22 @@ public class Executor {
 	private State gameState;
 	private State highScoreState;
 	
-	private State state = menuState;
+	private State state;
 	
 	public Executor() {
 		menuState = new MenuState(this);
 		gameState = new GameState(this);
 		highScoreState = new HighScoreState(this);
+		state = menuState;
 	}
 	
-	public void start () {
+	public void start() {
 		state.start();
+	}
+	
+	public void run() {
+		System.out.println("exec run");
+		state.run();
 	}
 	
 	public void scores() {
