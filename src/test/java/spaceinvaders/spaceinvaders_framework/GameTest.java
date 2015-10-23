@@ -46,7 +46,7 @@ public class GameTest {
   @Before
     public void setupGame() {
     game = new Game();
-    screen = new Screen();
+    screen = new Screen(game);
   }
 
     /**
