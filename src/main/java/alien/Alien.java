@@ -13,6 +13,7 @@ import org.junit.Test;
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.Game;
 import spaceinvaders.spaceinvaders_framework.Screen;
+import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * The Alien class is the abstract super class of all the alien types.
@@ -123,7 +124,7 @@ public abstract class Alien {
     }
 
     public void setSpritesheet(int row, int col, int x, int y) {
-        Alien = Screen.spritesheet.grabImage(row, col, x, y);
+        Alien = SpriteSheet.getInstance().grabImage(row, col, x, y);
     }
 
     /**

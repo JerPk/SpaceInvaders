@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -19,7 +18,7 @@ public class Screen extends JPanel implements KeyListener {
 	
     private static JFrame frame = null;
     /**
-     * The Widht of the screen.
+     * The Width of the screen.
      */
     public static final int WIDTH = 635;
     /**
@@ -46,19 +45,12 @@ public class Screen extends JPanel implements KeyListener {
     
     private Game game;
     
-    /**
-     * Spritesheet that contains all the sprites we use.
-     */
-    public static SpriteSheet spritesheet;
-    
     Graphics graphic;
 	
 	public Screen(Game ga) {
 		setFocusable(true);
 		addKeyListener(this);
 		game = ga;
-		
-//        BuffereImageLoader loader = new BuffereImageLoader();
 
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setMaximumSize(new Dimension(WIDTH, HEIGHT));
@@ -73,9 +65,6 @@ public class Screen extends JPanel implements KeyListener {
         frame.setLocationRelativeTo(null);
         
         setBackground(Color.black);
-        
-        spritesheet = SpriteSheet.getInstance();
-        spritesheet.init();
         
         frame.setVisible(true);
 	}

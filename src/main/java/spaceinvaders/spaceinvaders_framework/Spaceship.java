@@ -31,7 +31,7 @@ public class Spaceship {
         
         Game.logfile.writeCreate("Spaceship", xpos, ypos);
 
-        Spaceship = Screen.spritesheet.grabImage(277, 228, 26, 16);
+        Spaceship = SpriteSheet.getInstance().grabImage(277, 228, 26, 16);
 
     }
 

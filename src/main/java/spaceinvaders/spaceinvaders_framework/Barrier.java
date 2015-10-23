@@ -22,11 +22,11 @@ public class Barrier {
         
         Game.logfile.writeCreate("Barrier", xpos, ypos);
 
-        barrier[0] = Screen.spritesheet.grabImage(316, 213, 44, 32);
-        barrier[1] = Screen.spritesheet.grabImage(480, 210, 44, 32);
-        barrier[2] = Screen.spritesheet.grabImage(480, 265, 44, 32);
-        barrier[3] = Screen.spritesheet.grabImage(373, 211, 44, 32);
-        barrier[4] = Screen.spritesheet.grabImage(428, 210, 44, 32);
+        barrier[0] = SpriteSheet.getInstance().grabImage(316, 213, 44, 32);
+        barrier[1] = SpriteSheet.getInstance().grabImage(480, 210, 44, 32);
+        barrier[2] = SpriteSheet.getInstance().grabImage(480, 265, 44, 32);
+        barrier[3] = SpriteSheet.getInstance().grabImage(373, 211, 44, 32);
+        barrier[4] = SpriteSheet.getInstance().grabImage(428, 210, 44, 32);
     }
 
     public int ifHit(Vector<Bullet> alienBullets) {
