@@ -170,16 +170,22 @@ public class Game extends Canvas {
         moveAliens();
     }
 
+    /**
+     * moveAliens method is responsible for moving
+     * the aliens both horizontally and vertically.
+     */
     public void moveAliens() {
         Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
 
+        // in this while loop all the aliens are moved vertically.
         while (iterAliens.hasNext()) {
             Alien alien = (Alien) iterAliens.next();
             alien.hmovement();
         }
 
         // this if statement will only be used if all the aliens need to be
-        // updated simultaneously.
+        // updated simultaneously. this is the case when all the aliens need
+        // to be moved vertically.
         if (Alien.getupdateLogic()) {
 
             Iterator iterAliens2 = ConcreteAggregate.createIterator(aliens);
@@ -188,9 +194,7 @@ public class Game extends Canvas {
                 Alien alien = (Alien) iterAliens2.next();
                 alien.vmovement();
             }
-
-            // logicRequiredThisLoop = false;
-
+            
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
     }
