@@ -445,7 +445,6 @@ public class Game implements Runnable {
         logfile.writeString("Game ended at " + new Date());
         logfile.close();
         screen.close();
-        System.out.println("Game ended");
         exec.returning();
     }
     

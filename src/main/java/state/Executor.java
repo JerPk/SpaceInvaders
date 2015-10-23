@@ -20,7 +20,6 @@ public class Executor {
 	}
 	
 	public void run() {
-		System.out.println("exec run");
 		state.run();
 	}
 	

@@ -105,7 +105,6 @@ public class Menu implements Runnable {
             		startedGame = true;
             		running = false;
             		frame.setVisible(false);
-            		System.out.println("start game");
             		exec.start();
             		exec.run();
             	}
@@ -117,7 +116,6 @@ public class Menu implements Runnable {
             public void actionPerformed(ActionEvent e){
                 running = false;
                 frame.setVisible(false);
-                System.out.println("show scores");
                 exec.scores();
             }
         });
