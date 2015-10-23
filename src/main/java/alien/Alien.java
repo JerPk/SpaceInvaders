@@ -1,6 +1,8 @@
 package alien;
 
 import static org.junit.Assert.assertEquals;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -8,6 +10,7 @@ import java.util.Vector;
 
 import bullet.Bullet;
 import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
+
 import org.junit.Test;
 
 import bullet.Bullet;
@@ -50,15 +53,17 @@ public abstract class Alien {
      * the health of the alien. essentially how often the space ship has to hit
      * the alien before it dies.
      */
-    private int health = 1;
-    
+    protected int health = 1;
+
     /**
      * // a boolean that is only true if the aliens need to be updated. // here
      * it used for moving all the aliens down simultaneously.
      * 
      */
     private static boolean logicRequiredThisLoop = false;
-    
+
+    protected ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
+
     protected BufferedImage BImg = null;
 
     /**
@@ -85,7 +90,7 @@ public abstract class Alien {
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && xpos <= 2) {
-        	updateLogic();
+            updateLogic();
         }
 
         // moves the alien in the horizontal direction.
@@ -118,9 +123,9 @@ public abstract class Alien {
 
         return newBullet;
     }
-    
+
     public int addScore(int s) {
-    	return score + s;
+        return score + s;
     }
 
     public void setSpritesheet(int row, int col, int x, int y) {
@@ -136,7 +141,7 @@ public abstract class Alien {
     public void render(Graphics g) {
         g.drawImage(Alien, (int) xpos, (int) ypos, null);
     }
-    
+
     /**
      * the method used to put the logicRequiredThisLoop boolean to true.
      */
@@ -150,21 +155,20 @@ public abstract class Alien {
     public double getX() {
         return xpos;
     }
-    
+
     /**
      * the set method for the X coordinate.
      */
     public void setX(double newX) {
         xpos = newX;
     }
-    
+
     /**
      * the set method for the Y coordinate.
      */
     public void setY(double newY) {
         ypos = newY;
     }
-    
 
     /**
      * the get method for the Y coordinate
@@ -172,7 +176,7 @@ public abstract class Alien {
     public double getY() {
         return ypos;
     }
-    
+
     /**
      * getter method for the LogicrequiredThisLoop boolean
      * 
@@ -199,42 +203,48 @@ public abstract class Alien {
      * @return
      */
     public int ifHit(Vector<Bullet> shipBullets) {
-        for (int i = 0; i < shipBullets.size(); i++) {
-        	if (shipBullets.get(i).getY() > ypos-12 && shipBullets.get(i).getY() < ypos + 16) {
-        		if (shipBullets.get(i).getX() > xpos-6 && shipBullets.get(i).getX() < xpos + 16) {
+        Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
+
+        while (iterShipBullets.hasNext()) {
+
+            Bullet bullet = (Bullet) iterShipBullets.next();
+            if (bullet.getY() > ypos - 12 && bullet.getY() < ypos + 16) {
+                if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 16) {
                     Game.logfile.writeHit("Alien", xpos, ypos);
                     health--;
-                    return i;
+                    return iterShipBullets.position();
                 }
             }
+
         }
+
         return -1;
     }
-    
+
     /**
      * the method that checks if the alien has any health left
      *
      * @return true/false
      */
     public boolean defeated() {
-    	if (health <= 0) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if (health <= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
-    
+
     /**
      * This method checks if the alien has reached a certain height
      * 
      * @return true/false
      */
     public boolean reachedY(double i) {
-    	if (ypos >= i) {
-    		return true;
-    	} else {
-    		return false;
-    	}
+        if (ypos >= i) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -273,49 +283,52 @@ public abstract class Alien {
     public int getHealth() {
         return health;
     }
-    
+
     /**
      * the method that creates and returns an alien of type 1.
+     * 
      * @param x
      * @param y
      * @param g
      * @return
      */
-    public static Alien createAlienType1(double x, double y){
-        Alien alien = new AlienType1(x,y);
-        return alien;        
+    public static Alien createAlienType1(double x, double y) {
+        Alien alien = new AlienType1(x, y);
+        return alien;
     }
-    
+
     /**
      * the method that creates and returns an alien of type 2.
+     * 
      * @param x
      * @param y
      * @param g
      * @return
      */
-    public static Alien createAlienType2(double x, double y){
-        Alien alien = new AlienType2(x,y);
-        return alien;        
+    public static Alien createAlienType2(double x, double y) {
+        Alien alien = new AlienType2(x, y);
+        return alien;
     }
-    
+
     /**
      * the method that creates and returns an alien of type 3.
+     * 
      * @param x
      * @param y
      * @param g
      * @return
      */
-    public static Alien createAlienType3(double x, double y){
-        Alien alien = new AlienType3(x,y);
-        return alien;        
+    public static Alien createAlienType3(double x, double y) {
+        Alien alien = new AlienType3(x, y);
+        return alien;
     }
-    
+
     public Vector<Bullet> BossShoot() {
-        return null;   
+        return null;
     }
 
     public static Alien createBossAlien(int x2, int y2, Game g) {
-        Alien alien = new BossAlien(x2,y2,g);
-        return alien;        
+        Alien alien = new BossAlien(x2, y2, g);
+        return alien;
     }
 }
