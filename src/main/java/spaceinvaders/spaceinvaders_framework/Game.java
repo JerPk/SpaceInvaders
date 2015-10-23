@@ -70,7 +70,8 @@ public class Game extends Canvas {
 
     public Game() {
         counter = 0;
-        screen = new Screen();
+        screen = new Screen(this);
+        
     }
 
     /**
@@ -140,7 +141,7 @@ public class Game extends Canvas {
      * called repeatedly when the game is ongoing.
      */
     public void runGame() {
-        screen.render(this);
+    	screen.repaint();
         counter++;
         if (counter >= 50) {
             alienShoot();

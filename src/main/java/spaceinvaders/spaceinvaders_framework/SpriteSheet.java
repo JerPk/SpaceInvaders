@@ -11,7 +11,17 @@ public class SpriteSheet {
     
     private volatile static SpriteSheet uniqueInstance;
     
-    private SpriteSheet() {}
+    /**
+     * constructor which loads the spritesheet from the png file.
+     */
+    private SpriteSheet() {
+    	BuffereImageLoader loader = new BuffereImageLoader();
+        try {
+        	image = loader.LoadImage("res/sprite_sheet.png");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * method to get the instance of spritesheet
@@ -27,18 +37,6 @@ public class SpriteSheet {
     		}
     	}
     	return uniqueInstance;
-    }
-    
-    /**
-     * method to load the spritesheet from the png file.
-     */
-    public void init() {
-    	BuffereImageLoader loader = new BuffereImageLoader();
-        try {
-        	image = loader.LoadImage("res/sprite_sheet.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
     
     /**
