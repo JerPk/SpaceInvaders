@@ -1,46 +1,35 @@
 package spaceinvaders.spaceinvaders_framework;
 
-public class Main implements Runnable {
-	
-    /**
-     * the main Thread we use for the game.
-     */
-    private Thread thread;
+import state.Executor;
+
+public class Main {
 
     public static void main(String argv[]) {
-            Main main = new Main();
-    }
-    
-    public Main() {
+    	Executor ex = new Executor();
+    	ex.run();
+    	/*
     	Menu gameMenu = new Menu();
         while (gameMenu.isRunning()) {
         	gameMenu.runMenu();
         }
-        // create and start the main thread of our game.
-        thread = new Thread(this);
-        thread.start();
-        gameMenu.check();
-    }
-    
-    public void restart() {
 
-        // create and start the main thread of our game.
-        thread = new Thread(this);
-        thread.start();
+        Game game = new Game();
+        game.start();
+        */
     }
     
+    public Main() {
+
+    }
+
+/*    
     public void run() {
         Game game = new Game();
         game.start();
         
-        while (game.getRunning()) {
-        	game.runGame();
+
         	
-            try {
-                Thread.sleep(15);
-            } catch (Exception e) {
-                // Catch if needed
-            }
+
         }
         
     	Menu gameMenu = new Menu();

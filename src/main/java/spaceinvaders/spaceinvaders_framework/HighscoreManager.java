@@ -84,8 +84,14 @@ public class HighscoreManager {
      * If the player scores higher the object is added to the array.
      */
     public void addScore(int score) {
-    	Score ninthscore = scores.get(9);
-    	if (score >= ninthscore.getScore()) {
+    	Score lowest_top_ten_score;
+    	if (scores.size() < 10) {
+    		lowest_top_ten_score = scores.get(scores.size()-1);
+    	}
+    	else {
+    		lowest_top_ten_score = scores.get(9);
+    	}
+    	if (score >= lowest_top_ten_score.getScore()) {
     		String name = JOptionPane
     				.showInputDialog("Congratulations you are on the leaderboards what is your name?");
     		addScore(name, score);

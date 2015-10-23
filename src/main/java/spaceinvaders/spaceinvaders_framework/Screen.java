@@ -45,7 +45,7 @@ public class Screen extends JPanel implements KeyListener {
     
     private Game game;
     
-    Graphics graphic;
+    private Graphics graphic;
 	
 	public Screen(Game ga) {
 		setFocusable(true);
@@ -87,7 +87,7 @@ public class Screen extends JPanel implements KeyListener {
 		}
 
 		renderScore(game.getScore());
-		renderHighScore(game.getHSManager());
+//		renderHighScore(game.getHSManager());
 		renderLevelNumber(game.getLevelNumber());
 
 		// Draw the bullets and spaceship
