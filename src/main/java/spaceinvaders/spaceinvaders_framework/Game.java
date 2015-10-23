@@ -171,8 +171,8 @@ public class Game extends Canvas {
     }
 
     /**
-     * moveAliens method is responsible for moving
-     * the aliens both horizontally and vertically.
+     * moveAliens method is responsible for moving the aliens both horizontally
+     * and vertically.
      */
     public void moveAliens() {
         Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
@@ -194,7 +194,7 @@ public class Game extends Canvas {
                 Alien alien = (Alien) iterAliens2.next();
                 alien.vmovement();
             }
-            
+
             Game.logfile.writeString("Aliens reached a border and moved down");
         }
     }
@@ -228,20 +228,22 @@ public class Game extends Canvas {
         } else {
             end();
         }
+
         Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
 
-        while (iterAliens.hasNext()) {
-            Alien alien = (Alien) iterAliens.next();
-            int hit = alien.ifHit(shipBullets);
-            if (hit != -1) {
-                if (alien.defeated()) {
-                    score = alien.addScore(score);
-                    aliens.removeElementAt(iterAliens.position());
+        synchronized (aliens) {
+            while (iterAliens.hasNext()) {
+                Alien alien = (Alien) iterAliens.next();
+                int hit = alien.ifHit(shipBullets);
+                if (hit != -1) {
+                    if (alien.defeated()) {
+                        score = alien.addScore(score);
+                        aliens.removeElementAt(iterAliens.position());
+                    }
+                    shipBullets.removeElementAt(hit);
                 }
-                shipBullets.removeElementAt(hit);
             }
         }
-
         Iterator iterBarriers = ConcreteAggregate.createIterator(barriers);
 
         while (iterBarriers.hasNext()) {
@@ -275,8 +277,10 @@ public class Game extends Canvas {
     public void alienShoot() {
         if (bossLevel != true) {
             Random rand = new Random();
-            int randNr = rand.nextInt(aliens.size());
-            alienBullets.addElement(aliens.get(randNr).shoot());
+            synchronized (aliens) {
+                int randNr = rand.nextInt(aliens.size());
+                alienBullets.addElement(aliens.get(randNr).shoot());
+            }
         } else {
             alienBullets.addAll(aliens.get(0).BossShoot());
         }
@@ -286,7 +290,8 @@ public class Game extends Canvas {
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
-        Iterator iterAlienBullets = ConcreteAggregate.createIterator(alienBullets);
+        Iterator iterAlienBullets = ConcreteAggregate
+                .createIterator(alienBullets);
 
         while (iterAlienBullets.hasNext()) {
 
@@ -298,7 +303,8 @@ public class Game extends Canvas {
 
         }
 
-        Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
+        Iterator iterShipBullets = ConcreteAggregate
+                .createIterator(shipBullets);
 
         while (iterShipBullets.hasNext()) {
 
