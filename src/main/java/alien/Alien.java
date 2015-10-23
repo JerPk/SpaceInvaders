@@ -202,16 +202,16 @@ public abstract class Alien {
      * @return
      */
     public int ifHit(Vector<Bullet> shipBullets) {
-        Iterator iteralien = ConcreteAggregate.createIterator(shipBullets);
+        Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
 
-        while (iteralien.hasNext()) {
+        while (iterShipBullets.hasNext()) {
 
-            Bullet bullet = (Bullet) iteralien.next();
+            Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.getY() > ypos - 12 && bullet.getY() < ypos + 16) {
                 if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 16) {
                     Game.logfile.writeHit("Alien", xpos, ypos);
                     health--;
-                    return iteralien.position();
+                    return iterShipBullets.position();
                 }
             }
 

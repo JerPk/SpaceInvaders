@@ -171,10 +171,10 @@ public class Game extends Canvas {
     }
 
     public void moveAliens() {
-        Iterator iteralien = ConcreteAggregate.createIterator(aliens);
+        Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
 
-        while (iteralien.hasNext()) {
-            Alien alien = (Alien) iteralien.next();
+        while (iterAliens.hasNext()) {
+            Alien alien = (Alien) iterAliens.next();
             alien.hmovement();
         }
 
@@ -182,10 +182,10 @@ public class Game extends Canvas {
         // updated simultaneously.
         if (Alien.getupdateLogic()) {
 
-            Iterator iteralien2 = ConcreteAggregate.createIterator(aliens);
+            Iterator iterAliens2 = ConcreteAggregate.createIterator(aliens);
 
-            while (iteralien2.hasNext()) {
-                Alien alien = (Alien) iteralien2.next();
+            while (iterAliens2.hasNext()) {
+                Alien alien = (Alien) iterAliens2.next();
                 alien.vmovement();
             }
 
@@ -224,29 +224,29 @@ public class Game extends Canvas {
         } else {
             end();
         }
-        Iterator iteralien = ConcreteAggregate.createIterator(aliens);
+        Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
 
-        while (iteralien.hasNext()) {
-            Alien alien = (Alien) iteralien.next();
+        while (iterAliens.hasNext()) {
+            Alien alien = (Alien) iterAliens.next();
             int hit = alien.ifHit(shipBullets);
             if (hit != -1) {
                 if (alien.defeated()) {
                     score = alien.addScore(score);
-                    aliens.removeElementAt(iteralien.position());
+                    aliens.removeElementAt(iterAliens.position());
                 }
                 shipBullets.removeElementAt(hit);
             }
         }
 
-        Iterator iterbarrier = ConcreteAggregate.createIterator(barriers);
+        Iterator iterBarriers = ConcreteAggregate.createIterator(barriers);
 
-        while (iterbarrier.hasNext()) {
-            Barrier barrier = (Barrier) iterbarrier.next();
+        while (iterBarriers.hasNext()) {
+            Barrier barrier = (Barrier) iterBarriers.next();
             int hit = barrier.ifHit(alienBullets);
             if (hit != -1) {
                 alienBullets.removeElementAt(hit);
                 if (barrier.destroyed()) {
-                    barriers.removeElementAt(iterbarrier.position());
+                    barriers.removeElementAt(iterBarriers.position());
                 }
             }
         }
@@ -282,26 +282,26 @@ public class Game extends Canvas {
      * The method that removes all the bullets that are offscreen.
      */
     public void removeOffScreenBullets() {
-        Iterator iteralien = ConcreteAggregate.createIterator(alienBullets);
+        Iterator iterAlienBullets = ConcreteAggregate.createIterator(alienBullets);
 
-        while (iteralien.hasNext()) {
+        while (iterAlienBullets.hasNext()) {
 
-            Bullet bullet = (Bullet) iteralien.next();
+            Bullet bullet = (Bullet) iterAlienBullets.next();
             if (bullet.reachedY(450)) {
                 Game.logfile.writeOffscreen("Alien", bullet.getX());
-                alienBullets.removeElementAt(iteralien.position());
+                alienBullets.removeElementAt(iterAlienBullets.position());
             }
 
         }
 
-        Iterator itership = ConcreteAggregate.createIterator(shipBullets);
+        Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
 
-        while (itership.hasNext()) {
+        while (iterShipBullets.hasNext()) {
 
-            Bullet bullet = (Bullet) itership.next();
+            Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.reachedY(450)) {
                 Game.logfile.writeOffscreen("Spaceship", bullet.getX());
-                alienBullets.removeElementAt(itership.position());
+                alienBullets.removeElementAt(iterShipBullets.position());
             }
 
         }

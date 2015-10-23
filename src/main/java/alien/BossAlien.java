@@ -185,15 +185,15 @@ public class BossAlien extends Alien {
 
     @Override
     public int ifHit(Vector<Bullet> shipBullets) {
-        Iterator iteralien = ConcreteAggregate.createIterator(shipBullets);
+        Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
 
-        while (iteralien.hasNext()) {
-            Bullet bullet = (Bullet) iteralien.next();
+        while (iterShipBullets.hasNext()) {
+            Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.getY() > ypos - 12 && bullet.getY() < ypos + 20) {
                 if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 50) {
                     Game.logfile.writeHit("Alien", xpos, ypos);
                     health--;
-                    return iteralien.position();
+                    return iterShipBullets.position();
                 }
             }
         }
