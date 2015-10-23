@@ -15,9 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Menu {
+import state.Executor;
+import state.MenuState;
 
-    private BufferedImage menu;
+public class Menu implements Runnable {
     
     private int width = 603;
     private int height = 447;
@@ -31,9 +32,13 @@ public class Menu {
     private JButton btnQuit;
     
     private boolean running;
+    private Thread thread;
+    private Executor exec;
+    private Boolean startedGame = false;
     
-    public Menu(){
+    public Menu(Executor ex){
     	running = false;
+    	exec = ex;
 
         frame = new JFrame("Space Invaders - Menu");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,30 +72,26 @@ public class Menu {
         
         // add the panel to the frame.
         frame.add(panel);
-        
-        runMenu();
     }
 	
 	public void runMenu() {
 		running = true;
         frame.setVisible(true);
-        listenForActions();
-    }
-	
-	//Will be used later to show title
-	public void render() {
-		Game g = new Game();
-		BufferStrategy bs = g.getBufferStrategy();
-		
-        Graphics graphic = bs.getDrawGraphics();
-        graphic.drawImage(menu, 0, 0, width, height, null);
-		
+        startedGame = false;
+        
+        thread = new Thread(this);
+        thread.start();
 	}
 	
-	//This method checks if the frame really disappeared when the new game button is pressed. Sometimes this is not the case. 
-	public void check() {
-		if (!running) {
-			frame.setVisible(false);
+	public void run() {
+		while (running) {
+			listenForActions();
+			
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                // Catch if needed
+            }
 		}
 	}
 	
@@ -100,23 +101,31 @@ public class Menu {
         btnNewGame.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                running = false;
-                frame.setVisible(false);
+            	if (!startedGame) {
+            		startedGame = true;
+            		running = false;
+            		frame.setVisible(false);
+            		exec.start();
+            		exec.run();
+            	}
             }
         });
         //Statistics
         btnStatistics.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                //score_menu = new ScoreMenu();
-                //score_menu.show();
+                running = false;
+                frame.setVisible(false);
+                exec.scores();
             }
         });
         //Quit game
         btnQuit.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-            	System.exit(1);
+                running = false;
+                frame.setVisible(false);
+                exec.quit();
             }
         });
 	}
@@ -124,11 +133,6 @@ public class Menu {
 	public boolean isRunning() {
 		return running;
 	}
-    
-    private static void newGame(){
-      Game game = new Game();
-        game.start();
-    }
     
     /**
      * the getter method for the ScoreMenu of the menu class.
