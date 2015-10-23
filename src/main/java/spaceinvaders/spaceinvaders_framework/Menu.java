@@ -1,15 +1,16 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,10 +22,8 @@ public class Menu {
     
     private int width = 603;
     private int height = 447;
-
-    private static JFrame frame = null;  
+  
     private ScoreMenu score_menu; 
-    private JPanel panel;
     
     private JButton btnNewGame;
     private JButton btnStatistics;
@@ -35,45 +34,42 @@ public class Menu {
     public Menu(){
     	running = false;
 
-        frame = new JFrame("Space Invaders - Menu");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(new Dimension(width,height));
-        frame.setResizable(false);
+    	JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
 
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.black);  
-        
-        btnNewGame = new JButton("New Game");
-        btnStatistics = new JButton("Highscores");
-        btnQuit = new JButton("Quit Game");
-        
-        JLabel title = new JLabel(" \n \n \n \n  \n \n \n \n Space Invaders");
-        title.setForeground(Color.white);
-        title.setFont(new Font("Courier", Font.BOLD, 30));
-        
-        panel.add(title, BorderLayout.CENTER);
-        
-        btnNewGame.setVisible(true);
-        btnStatistics.setVisible(true);
-        btnQuit.setVisible(true);
-        btnNewGame.setBounds(205,274,217,30);
-        btnStatistics.setBounds(205,304,217,26);
-        btnQuit.setBounds(205,330,217,26);
-        
-        frame.add(btnNewGame);
-        frame.add(btnStatistics);
-        frame.add(btnQuit);
-        
-        // add the panel to the frame.
-        frame.add(panel);
+		panel.setBackground(Color.black);
+
+		BufferedImage Title = SpriteSheet.getInstance().grabImage(172, 8, 231, 157);
+
+		JLabel title = new JLabel(new ImageIcon(Title));
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 50, 0);
+		panel.add(title, c);
+
+		btnNewGame = new JButton("New Game");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridy = 1;
+		c.insets = new Insets(0, 50, 5, 50);
+		panel.add(btnNewGame, c);
+
+		btnStatistics = new JButton("Highscores");
+		c.gridy = 2;
+		panel.add(btnStatistics, c);
+
+		btnQuit = new JButton("Quit Game");
+		c.gridy = 3;
+		panel.add(btnQuit, c);
+		
+		CardWindow.getInstance().addCard(panel, "MENUCARD");
         
         runMenu();
     }
 	
 	public void runMenu() {
 		running = true;
-        frame.setVisible(true);
+//        frame.setVisible(true);
         listenForActions();
     }
 	
@@ -84,13 +80,12 @@ public class Menu {
 		
         Graphics graphic = bs.getDrawGraphics();
         graphic.drawImage(menu, 0, 0, width, height, null);
-		
 	}
 	
 	//This method checks if the frame really disappeared when the new game button is pressed. Sometimes this is not the case. 
 	public void check() {
 		if (!running) {
-			frame.setVisible(false);
+//			frame.setVisible(false);
 		}
 	}
 	
@@ -101,7 +96,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e){
                 running = false;
-                frame.setVisible(false);
+//                frame.setVisible(false);
             }
         });
         //Statistics
