@@ -19,7 +19,6 @@ public class StandardLevel extends Level {
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		Vector<Alien> tempAliens = new Vector<Alien>(0);
-//		String alienType = "";
 
 		if (levelNumber > 0 && levelNumber <= 5) {
 			alienType = "easy";
@@ -29,8 +28,8 @@ public class StandardLevel extends Level {
 			alienType = "hard";
 		}
 
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 18; j++) {
+		for (int i = 0; i < 1; i++) {
+			for (int j = 0; j < 2; j++) {
 				Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien + (25 * j) - 3, startYOffsetAlien);
 				tempAliens.addElement(alien);
 			}

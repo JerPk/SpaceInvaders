@@ -58,7 +58,7 @@ public class Game implements Runnable {
     private Screen screen;
 
     private Level level;
-    private int levelNumber = 1;
+    private int levelNumber = 0;
 
     public Game(Executor ex) {
     	exec = ex;
@@ -128,19 +128,7 @@ public class Game implements Runnable {
 
         highscoremanager = new HighscoreManager();
 
-        level = LevelFactory.createLevel(levelNumber);
-        CardWindow.getInstance().addCard(level.createTransitionPanel(), "TRANSITIONCARD");        
-        CardWindow.getInstance().showCard("TRANSITIONCARD");
-        try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        CardWindow.getInstance().showCard("GAMECARD");
-        screen.requestFocusInWindow();
-        aliens = level.createAliens();
-        barriers = level.createBarriers();
+        generateLevel();
     }
 
     /**
@@ -161,11 +149,7 @@ public class Game implements Runnable {
     		if (levelNumber > 15) {
     			end();
     		} else if (aliens.size() == 0) {
-    			clearVectors();
-    			level = LevelFactory.createLevel(++levelNumber);
-    			spaceship.resetPosition();
-    			aliens = level.createAliens();
-    			barriers = level.createBarriers();
+    			generateLevel();
     			if (levelNumber % 5 == 0) {
     				bossLevel = true;
     			}
@@ -190,6 +174,27 @@ public class Game implements Runnable {
     	}
     	
     	stop();
+    }
+    
+    public void generateLevel() {
+    	clearVectors();
+    	level = LevelFactory.createLevel(++levelNumber);
+    	spaceship.resetPosition();
+        aliens = level.createAliens();
+        barriers = level.createBarriers();
+        
+        CardWindow.getInstance().addCard(level.createTransitionPanel(), "TRANSITIONCARD");        
+        CardWindow.getInstance().showCard("TRANSITIONCARD");
+        
+        try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        CardWindow.getInstance().showCard("GAMECARD");
+        screen.requestFocusInWindow();
     }
 
     /**
