@@ -18,8 +18,9 @@ public class BossLevel extends Level {
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		Vector<Alien> tempAliens = new Vector<Alien>(0);
+		alienType = "boss";
 		
-		Alien alien = AlienFactory.getAlien("boss", startXOffsetAlien - 3, startYOffsetAlien);
+		Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien - 3, startYOffsetAlien);
 		alien.setHealth(levelNumber);
 		tempAliens.addElement(alien);
 		

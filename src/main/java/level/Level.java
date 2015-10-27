@@ -1,6 +1,16 @@
 package level;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.Vector;
+
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import alien.Alien;
 import alien.AlienFactory;
@@ -11,6 +21,8 @@ import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 public class Level {
 
 	int levelNumber;
+	
+	String alienType = "";
 
 	/**
 	 * constructor of Level class
@@ -72,5 +84,38 @@ public class Level {
 		}
 		
 		return tempBarriers;
+	}
+	
+	/**
+	 * 
+	 */
+	public JPanel createTransitionPanel() {
+		JPanel panel = new JPanel();
+		
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+        panel.setBackground(Color.black);
+        
+        
+        
+        JLabel title = new JLabel("Level " + levelNumber);
+        title.setForeground(Color.white);
+        title.setFont(new Font("Courier", Font.BOLD, 30));
+        c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(0, 0, 50, 0);
+		panel.add(title, c);
+		
+		JLabel alienTypeLabel = new JLabel("Type of aliens:");
+		alienTypeLabel.setForeground(Color.white);
+		alienTypeLabel.setFont(new Font("Courier", Font.BOLD, 20));
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 50, 0);
+		panel.add(alienTypeLabel, c);
+        
+        
+		
+		return panel;
 	}
 }

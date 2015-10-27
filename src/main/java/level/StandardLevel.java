@@ -19,7 +19,7 @@ public class StandardLevel extends Level {
 		int startYOffsetAlien = 0;
 		int startXOffsetAlien = 75;
 		Vector<Alien> tempAliens = new Vector<Alien>(0);
-		String alienType = "";
+//		String alienType = "";
 
 		if (levelNumber > 0 && levelNumber <= 5) {
 			alienType = "easy";

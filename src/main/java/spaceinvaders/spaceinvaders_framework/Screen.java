@@ -56,8 +56,8 @@ public class Screen extends JPanel implements KeyListener {
         setFocusable(true);
         
         CardWindow.getInstance().addCard(this, "GAMECARD");
-        CardWindow.getInstance().showCard("GAMECARD");
-        requestFocusInWindow();
+//        CardWindow.getInstance().showCard("GAMECARD");
+//        requestFocusInWindow();
 	}
 	
 	/**

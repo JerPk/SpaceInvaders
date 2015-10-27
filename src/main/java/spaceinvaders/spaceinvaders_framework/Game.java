@@ -3,6 +3,7 @@ package spaceinvaders.spaceinvaders_framework;
 import iterator.ConcreteAggregate;
 import iterator.Iterator;
 
+import java.awt.CardLayout;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Vector;
@@ -63,6 +64,7 @@ public class Game implements Runnable {
     	exec = ex;
         counter = 0;
         screen = new Screen(this);
+        
     }
 
     /**
@@ -127,6 +129,16 @@ public class Game implements Runnable {
         highscoremanager = new HighscoreManager();
 
         level = LevelFactory.createLevel(levelNumber);
+        CardWindow.getInstance().addCard(level.createTransitionPanel(), "TRANSITIONCARD");        
+        CardWindow.getInstance().showCard("TRANSITIONCARD");
+        try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        CardWindow.getInstance().showCard("GAMECARD");
+        screen.requestFocusInWindow();
         aliens = level.createAliens();
         barriers = level.createBarriers();
     }
