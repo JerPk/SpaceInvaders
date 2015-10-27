@@ -1,21 +1,16 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -24,7 +19,6 @@ import state.Executor;
 
 public class ScoreMenu implements Runnable{
 
-//	private JFrame frame;
     private HighscoreManager highscoremanager;
     private ArrayList<Score> allscores;
     private JTable table;
@@ -137,7 +131,6 @@ public class ScoreMenu implements Runnable{
             @Override
             public void actionPerformed(ActionEvent e) {
                 running = false;
-//                frame.setVisible(false);
                 exec.quit();
             }
         });

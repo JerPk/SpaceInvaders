@@ -3,7 +3,6 @@ package spaceinvaders.spaceinvaders_framework;
 import iterator.ConcreteAggregate;
 import iterator.Iterator;
 
-import java.awt.CardLayout;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Vector;
