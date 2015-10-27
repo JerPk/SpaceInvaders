@@ -73,13 +73,6 @@ public class BossAlien extends Alien {
         movementSpeed = -movementSpeed;
         updateLogic(false);
     }
-    public Game getGame() {
-        return game;
-    }
-    
-    public void setGame(Game newgame) {
-        game = newgame;
-    }
 
     /**
      * the method creates a new vector of bullets and returns it. the type of
