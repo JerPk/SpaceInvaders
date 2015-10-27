@@ -63,7 +63,6 @@ public class Game implements Runnable {
     	exec = ex;
         counter = 0;
         screen = new Screen(this);
-        
     }
 
     /**

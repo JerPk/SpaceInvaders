@@ -22,7 +22,7 @@ public class CardWindow {
 	private CardWindow() {
 		frame = new JFrame("Space Invaders");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(new Dimension(width, height));
+		frame.setSize(new Dimension(width, height+50));
 		frame.setResizable(false);
 
 		layout = new CardLayout();

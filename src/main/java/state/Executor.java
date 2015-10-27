@@ -11,7 +11,7 @@ public class Executor {
 	public Executor() {
 		menuState = new MenuState(this);
 		gameState = new GameState(this);
-//		highScoreState = new HighScoreState(this);
+		highScoreState = new HighScoreState(this);
 		state = menuState;
 	}
 	

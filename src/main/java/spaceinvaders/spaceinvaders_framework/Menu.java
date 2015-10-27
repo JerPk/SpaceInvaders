@@ -101,6 +101,7 @@ public class Menu implements Runnable {
 //            		frame.setVisible(false);
             		exec.start();
             		exec.run();
+//            		CardWindow.getInstance().showCard("GAMECARD");
             	}
             }
         });
