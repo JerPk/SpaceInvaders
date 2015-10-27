@@ -120,10 +120,7 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
-        Game.logfile.writeShoot("Alien", getX(), getY());
-
-        return newBullet;
+        return null;
     }
 
     public int addScore(int s) {
