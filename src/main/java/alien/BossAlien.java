@@ -46,19 +46,33 @@ public class BossAlien extends Alien {
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && getX() >= 600) {
-             updateLogic();
+             updateLogic(true);
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && getX() <= 2) {
-             updateLogic();
-        }
+             updateLogic(true);
+         }
 
         // moves the alien in the horizontal direction.
         setX(getX() + movementSpeed);
     }
 
+    /**
+     * the method that moves the alien in the vertical direction.
+     */
+    @Override
+    public void vmovement() {
+        // move the alien in the vertical direction
+
+        ypos += 40;
+
+        // flip the movement speed so now the alien will move in
+        // the other direction.
+        movementSpeed = -movementSpeed;
+        updateLogic(false);
+    }
     public Game getGame() {
         return game;
     }
