@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import alien.Alien;
@@ -78,7 +77,7 @@ public class Screen extends JPanel implements KeyListener {
 		}
 
 		renderScore(game.getScore());
-//		renderHighScore(game.getHSManager());
+		renderHighScore(game.getHSManager());
 		renderLevelNumber(game.getLevelNumber());
 
 		// Draw the bullets and spaceship
