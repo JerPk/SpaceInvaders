@@ -75,6 +75,7 @@ public class Menu implements Runnable {
         
         thread = new Thread(this);
         thread.start();
+        CardWindow.getInstance().showCard("MENUCARD");
 	}
 	
 	public void run() {
@@ -112,6 +113,7 @@ public class Menu implements Runnable {
                 running = false;
 //                frame.setVisible(false);
                 exec.scores();
+                CardWindow.getInstance().showCard("SCORECARD");
             }
         });
         //Quit game
