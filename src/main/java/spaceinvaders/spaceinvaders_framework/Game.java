@@ -125,7 +125,7 @@ public class Game implements Runnable {
 
         spaceship = new Spaceship();
 
-        highscoremanager = new HighscoreManager();
+        highscoremanager = HighscoreManager.getInstance();
 
         level = LevelFactory.createLevel(levelNumber);
         aliens = level.createAliens();

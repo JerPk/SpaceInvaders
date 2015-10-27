@@ -19,7 +19,6 @@ import state.Executor;
 public class ScoreMenu implements Runnable{
 
 	private JFrame frame;
-    private HighscoreManager highscoremanager;
     private ArrayList<Score> allscores;
     private JPanel panel;
     private JTable table;
@@ -36,8 +35,7 @@ public class ScoreMenu implements Runnable{
 		exec = ex;
 		running = false;
 		
-		highscoremanager = new HighscoreManager();
-		allscores = highscoremanager.getScores();
+		allscores = HighscoreManager.getInstance().getScores();
 		
         // create the frame.
         frame = new JFrame("Highscores");
@@ -125,7 +123,7 @@ public class ScoreMenu implements Runnable{
         reset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				highscoremanager.clear();
+				HighscoreManager.getInstance().clear();
 			}
 		});
         

@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
  *
  */
 public class HighscoreManager {
+	
+	private static HighscoreManager uniqueInstance;
 
     /**
      * An arraylist of the type "score" that will be used to get all the scores
@@ -24,20 +26,28 @@ public class HighscoreManager {
     /**
      * Initialising an outputStream for working with the file
      */
-    ObjectOutputStream outputStream = null;
+    private ObjectOutputStream outputStream = null;
 
     /**
      * Initialising an inputStream for working with the file
      */
-    ObjectInputStream inputStream = null;
+    private ObjectInputStream inputStream = null;
 
     /**
      * the HighscoreManager is the main class in terms of the scores. it
      * contains the methods that are used to read and write to the
      * highscores.dat file which contain all the highscores.
      */
-    public HighscoreManager() {
+    private HighscoreManager() {
         scores = new ArrayList<Score>();
+        System.out.println("New HSManager");
+    }
+    
+    public static synchronized HighscoreManager getInstance() {
+    	if (uniqueInstance == null) {
+    		uniqueInstance = new HighscoreManager();
+    	}
+    	return uniqueInstance;
     }
 
     /**
@@ -85,7 +95,11 @@ public class HighscoreManager {
      */
     public void addScore(int score) {
     	Score lowest_top_ten_score;
-    	if (scores.size() < 10) {
+    	if (scores.size() == 0) {
+    		System.out.println("No scores");
+    		lowest_top_ten_score = new Score("New", 0);
+    	}
+    	else if (scores.size() < 10) {
     		lowest_top_ten_score = scores.get(scores.size()-1);
     	}
     	else {
@@ -93,7 +107,7 @@ public class HighscoreManager {
     	}
     	if (score >= lowest_top_ten_score.getScore()) {
     		String name = JOptionPane
-    				.showInputDialog("Congratulations you are on the leaderboards what is your name?");
+    				.showInputDialog("Congratulations, you are on the leaderboards! What is your name?");
     		addScore(name, score);
     	}
     }
