@@ -327,8 +327,8 @@ public abstract class Alien {
         return null;
     }
 
-    public static Alien createBossAlien(int x2, int y2, Game g) {
-        Alien alien = new BossAlien(x2, y2, g);
+    public static Alien createBossAlien(double x, double y) {
+        Alien alien = new BossAlien(x, y);
         return alien;
     }
 }

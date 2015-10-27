@@ -37,7 +37,7 @@ public class Game implements Runnable {
      * the main Thread we use for the game.
      */
     private Thread thread;
-    
+
     private Executor exec;
 
     /**
@@ -60,10 +60,10 @@ public class Game implements Runnable {
     private int levelNumber = 1;
 
     public Game(Executor ex) {
-    	exec = ex;
+        exec = ex;
         counter = 0;
         screen = new Screen(this);
-        
+
     }
 
     /**
@@ -77,7 +77,7 @@ public class Game implements Runnable {
             return;
         }
         running = true;
-        
+
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
@@ -94,7 +94,7 @@ public class Game implements Runnable {
             return;
         }
         running = false;
-        
+
         // tries to join all the threads together.
         try {
             thread.join();
@@ -139,46 +139,45 @@ public class Game implements Runnable {
     public void run() {
         // initialize all the entities
         init();
-    	
-    	while (running) {
-        	screen.repaint();
-    		counter++;
-    		if (counter >= 50) {
-    			alienShoot();
-    			counter = 0;
-    		}
-    		if (levelNumber > 15) {
-    			end();
-    		} else if (aliens.size() == 0) {
-    			clearVectors();
-    			level = LevelFactory.createLevel(++levelNumber);
-    			spaceship.resetPosition();
-    			aliens = level.createAliens();
-    			barriers = level.createBarriers();
-    			if (levelNumber % 5 == 0) {
-    				bossLevel = true;
-    			}
-    			else {
-    				bossLevel = false;
-    			}
-    		} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
-    			end();
-    		} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-    			barriers.clear();
-    		}
-    		removeOffScreenBullets();
-    		listenForKeys();
-    		checkIfHit();
-    		moveAliens();
-    		
+
+        while (running) {
+            screen.repaint();
+            counter++;
+            if (counter >= 50) {
+                alienShoot();
+                counter = 0;
+            }
+            if (levelNumber > 15) {
+                end();
+            } else if (aliens.size() == 0) {
+                clearVectors();
+                level = LevelFactory.createLevel(++levelNumber);
+                spaceship.resetPosition();
+                aliens = level.createAliens();
+                barriers = level.createBarriers();
+                if (levelNumber % 5 == 0) {
+                    bossLevel = true;
+                } else {
+                    bossLevel = false;
+                }
+            } else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+                end();
+            } else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+                barriers.clear();
+            }
+            removeOffScreenBullets();
+            listenForKeys();
+            checkIfHit();
+            moveAliens();
+
             try {
                 Thread.sleep(15);
             } catch (Exception e) {
                 // Catch if needed
             }
-    	}
-    	
-    	stop();
+        }
+
+        stop();
     }
 
     /**
@@ -289,8 +288,10 @@ public class Game implements Runnable {
         if (bossLevel != true) {
             Random rand = new Random();
             synchronized (aliens) {
-                int randNr = rand.nextInt(aliens.size());
-                alienBullets.addElement(aliens.get(randNr).shoot());
+                if (aliens.size() != 0) {
+                    int randNr = rand.nextInt(aliens.size());
+                    alienBullets.addElement(aliens.get(randNr).shoot());
+                }
             }
         } else {
             alienBullets.addAll(aliens.get(0).BossShoot());
