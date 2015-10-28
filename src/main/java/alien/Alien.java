@@ -66,8 +66,9 @@ public abstract class Alien {
 
     protected BufferedImage BImg = null;
 
+
     /**
-     * the constructor of the Alien class.
+     * the constructor of the Alien class. 
      * 
      * @param double x
      * @param double y
@@ -75,6 +76,7 @@ public abstract class Alien {
     public Alien(double x, double y) {
         this.xpos = x;
         this.ypos = y;
+        
     }
 
     /**
@@ -84,13 +86,13 @@ public abstract class Alien {
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && xpos >= 630) {
-            updateLogic();
+            updateLogic(true);
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && xpos <= 2) {
-            updateLogic();
+            updateLogic(true);
         }
 
         // moves the alien in the horizontal direction.
@@ -118,10 +120,7 @@ public abstract class Alien {
      * @return Bullet newBullet
      */
     public Bullet shoot() {
-        final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
-        Game.logfile.writeShoot("Alien", getX(), getY());
-
-        return newBullet;
+        return null;
     }
 
     public int addScore(int s) {
@@ -144,9 +143,10 @@ public abstract class Alien {
 
     /**
      * the method used to put the logicRequiredThisLoop boolean to true.
+     * @param b 
      */
-    public void updateLogic() {
-        logicRequiredThisLoop = true;
+    public void updateLogic(boolean b) {
+        logicRequiredThisLoop = b;
     }
 
     /**
@@ -327,8 +327,8 @@ public abstract class Alien {
         return null;
     }
 
-    public static Alien createBossAlien(int x2, int y2, Game g) {
-        Alien alien = new BossAlien(x2, y2, g);
+    public static Alien createBossAlien(double x, double y) {
+        Alien alien = new BossAlien(x, y);
         return alien;
     }
 }
