@@ -8,9 +8,7 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -20,47 +18,68 @@ import spaceinvaders.spaceinvaders_framework.Barrier;
 import spaceinvaders.spaceinvaders_framework.Screen;
 import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
+/**
+ * Class of the level.
+ * 
+ * @author Group 23 (TI2206)
+ */
 public class Level {
 
-    int levelNumber;
+	/**
+	 * Integer with the number of the level.
+	 */
+	protected transient int levelNumber;
 
-	String alienType = "";
-	
-	BufferedImage alienTypeImage = null;
-	int alienLives = 0;
+	/**
+	 * String with the type of alien in the level.
+	 */
+	protected String alienType = "";
 
-    /**
-     * constructor of Level class
-     * 
-     * @param number Levelnumber
-     */
-    public Level(int number) {
-        levelNumber = number;
-    }
+	/**
+	 * BufferedImage with the Image of the alien (for the transition screen).
+	 */
+	private transient BufferedImage alienTypeImage;
 
-    /**
-     * creates the aliens and returns them.
-     * 
-     * @return the created aliens
-     */
-    public Vector<Alien> createAliens() {
+	/**
+	 * Integer with the lives of the alien (for the transition screen).
+	 */
+	private transient int alienLives;
 
-        int startYOffsetAlien = 0;
-        int startXOffsetAlien = 75;
-        Vector<Alien> tempAliens = new Vector<Alien>(0);
+	/**
+	 * Constructor of Level class.
+	 * 
+	 * @param number
+	 *            Level number
+	 */
+	public Level(final int number) {
+		levelNumber = number;
+	}
 
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien);
-            tempAliens.addElement(alien);
-        }
+	/**
+	 * Creates the aliens and returns them.
+	 * 
+	 * @return the created aliens
+	 */
+	public Vector<Alien> createAliens() {
 
-        for (int x = 0; x < 18; x++) {
-            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25);
-            tempAliens.addElement(alien);
-        }
+		final int offsetY = 0;
+		final int offsetX = 75;
+		final int horizontalAliens = 18;
+		Vector<Alien> tempAliens = new Vector<Alien>(0);
 
-		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50);
+		for (int x = 0; x < horizontalAliens; x++) {
+			final Alien alien = AlienFactory.getAlien("hard",offsetX + (25 * x) - 3,
+					offsetY);
+			tempAliens.addElement(alien);
+		}
+
+		for (int x = 0; x < horizontalAliens; x++) {
+			final Alien alien = AlienFactory.getAlien("normal", offsetX + (25 * x) - 3, offsetY + 25);
+			tempAliens.addElement(alien);
+		}
+
+		for (int x = 0; x < horizontalAliens; x++) {
+			final Alien alien = AlienFactory.getAlien("easy", offsetX + (25 * x) - 3, offsetY + 50);
 			tempAliens.addElement(alien);
 		}
 
@@ -68,15 +87,17 @@ public class Level {
 	}
 
 	/**
-	 * creates the four barriers and returns them.
+	 * Creates the four barriers and returns them.
 	 * 
 	 * @return the created barriers
 	 */
 	public Vector<Barrier> createBarriers() {
-		Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
+		final Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
+		final int numberOfBarriers = 4;
 
-		for (int i = 1; i <= 4; i++) {
-			tempBarriers.addElement(new Barrier(Screen.WIDTH / 5 * i - 22, 370));
+		for (int i = 1; i <= numberOfBarriers; i++) {
+			final Barrier barrier = new Barrier(Screen.WIDTH / 5 * i - 22, 370);
+			tempBarriers.addElement(barrier);
 		}
 
 		return tempBarriers;
@@ -87,54 +108,59 @@ public class Level {
 	 * 
 	 * @return panel the transition panel
 	 */
-	public JPanel createTransitionPanel() {
-		JPanel panel = new JPanel();
+	public final JPanel createTransitionPanel() {
+		final JPanel panel = new JPanel();
+		final Font labelFont = new Font("Courier", Font.PLAIN, 15);
+		final Color labelColor = Color.white;
 
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		final GridBagConstraints constraints = new GridBagConstraints();
 		panel.setBackground(Color.black);
 
-		JLabel levelNumberLabel = new JLabel("Level " + levelNumber);
-		levelNumberLabel.setForeground(Color.white);
+		final JLabel levelNumberLabel = new JLabel("Level " + levelNumber);
+		levelNumberLabel.setForeground(labelColor);
 		levelNumberLabel.setFont(new Font("Courier", Font.BOLD, 30));
-		c.gridx = 0;
-		c.gridy = 0;
-		c.gridwidth = 2;
-		c.insets = new Insets(0, 0, 30, 0);
-		panel.add(levelNumberLabel, c);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		constraints.gridwidth = 2;
+		constraints.insets = new Insets(0, 0, 30, 0);
+		panel.add(levelNumberLabel, constraints);
 
-		JLabel alienTypeLabel = new JLabel("Type of aliens: ");
-		alienTypeLabel.setForeground(Color.white);
-		alienTypeLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.anchor = GridBagConstraints.LINE_START;
-		c.insets = new Insets(0, 0, 0, 0);
-		panel.add(alienTypeLabel, c);
+		final JLabel alienTypeLabel = new JLabel("Type of aliens: ");
+		alienTypeLabel.setForeground(labelColor);
+		alienTypeLabel.setFont(labelFont);
+		constraints.gridy = 1;
+		constraints.gridwidth = 1;
+		constraints.anchor = GridBagConstraints.LINE_START;
+		constraints.insets = new Insets(0, 0, 0, 0);
+		panel.add(alienTypeLabel, constraints);
 
 		determineAlienType();
 
-		JLabel alienTypeImageLabel = new JLabel(new ImageIcon(alienTypeImage));
-		c.gridx = 1;
-		panel.add(alienTypeImageLabel, c);
+		final JLabel alienImageLabel = new JLabel(new ImageIcon(alienTypeImage));
+		constraints.gridx = 1;
+		panel.add(alienImageLabel, constraints);
 
-		JLabel alienLivesLabel = new JLabel("Alien lives: " + alienLives);
-		alienLivesLabel.setForeground(Color.white);
-		alienLivesLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		panel.add(alienLivesLabel, c);
+		final JLabel alienLivesLabel = new JLabel("Alien lives: " + alienLives);
+		alienLivesLabel.setForeground(labelColor);
+		alienLivesLabel.setFont(labelFont);
+		constraints.gridx = 0;
+		constraints.gridy = 2;
+		constraints.gridwidth = 2;
+		panel.add(alienLivesLabel, constraints);
 
-		JLabel ScoreLabel = new JLabel("Score: ");
-		ScoreLabel.setForeground(Color.white);
-		ScoreLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridy = 3;
-		panel.add(ScoreLabel, c);
+		final JLabel ScoreLabel = new JLabel("Score: ");
+		ScoreLabel.setForeground(labelColor);
+		ScoreLabel.setFont(labelFont);
+		constraints.gridy = 3;
+		panel.add(ScoreLabel, constraints);
 
 		return panel;
 	}
-	
+
+	/**
+	 * Method to determine AlienType in the level.
+	 */
 	private void determineAlienType() {
 		if (levelNumber % 5 == 0) {
 			alienTypeImage = SpriteSheet.getInstance().grabImage(215, 225, 50, 20);

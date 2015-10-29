@@ -6,29 +6,50 @@ import alien.Alien;
 import alien.AlienFactory;
 import spaceinvaders.spaceinvaders_framework.Barrier;
 
+/**
+ * Class of the boss level.
+ * 
+ * @author Group 23 (TI2206)
+ */
 public class BossLevel extends Level {
 
-	public BossLevel(int number) {
+	/**
+	 * Constructor of boss level class.
+	 * 
+	 * @param number
+	 *            Level number
+	 */
+	public BossLevel(final int number) {
 		super(number);
 		levelNumber = number;
 	}
-	
+
+	/**
+	 * Creates the boss alien and returns it.
+	 * 
+	 * @return the created aliens
+	 */
 	@Override
-	public Vector<Alien> createAliens() {
-		int startYOffsetAlien = 0;
-		int startXOffsetAlien = 75;
-		Vector<Alien> tempAliens = new Vector<Alien>(0);
+	public final Vector<Alien> createAliens() {
+		final int offsetY = 0;
+		final int offsetX = 75;
+		final Vector<Alien> tempAliens = new Vector<Alien>(0);
 		alienType = "boss";
-		
-		Alien alien = AlienFactory.getAlien(alienType, startXOffsetAlien - 3, startYOffsetAlien);
+
+		final Alien alien = AlienFactory.getAlien(alienType, offsetX - 3, offsetY);
 		alien.setHealth(levelNumber);
 		tempAliens.addElement(alien);
-		
+
 		return tempAliens;
 	}
 
+	/**
+	 * Creates the empty barrier vector and returns it.
+	 * 
+	 * @return the created barriers
+	 */
 	@Override
-	public Vector<Barrier> createBarriers() {
+	public final Vector<Barrier> createBarriers() {
 		return new Vector<Barrier>(0);
 	}
 }
