@@ -37,7 +37,7 @@ public class Game implements Runnable {
      * the main Thread we use for the game.
      */
     private Thread thread;
-    
+
     private Executor exec;
 
     /**
@@ -60,10 +60,10 @@ public class Game implements Runnable {
     private int levelNumber = 0;
 
     public Game(Executor ex) {
-    	exec = ex;
+        exec = ex;
         counter = 0;
         screen = new Screen(this);
-        
+
     }
 
     /**
@@ -77,7 +77,7 @@ public class Game implements Runnable {
             return;
         }
         running = true;
-        
+
         // create and start the main thread of our game.
         thread = new Thread(this);
         thread.start();
@@ -94,7 +94,7 @@ public class Game implements Runnable {
             return;
         }
         running = false;
-        
+
         // tries to join all the threads together.
         try {
             thread.join();
@@ -170,9 +170,9 @@ public class Game implements Runnable {
             } catch (Exception e) {
                 // Catch if needed
             }
-    	}
-    	
-    	stop();
+        }
+
+        stop();
     }
     
     public void generateLevel() {
@@ -304,8 +304,10 @@ public class Game implements Runnable {
         if (bossLevel != true) {
             Random rand = new Random();
             synchronized (aliens) {
-                int randNr = rand.nextInt(aliens.size());
-                alienBullets.addElement(aliens.get(randNr).shoot());
+                if (aliens.size() != 0) {
+                    int randNr = rand.nextInt(aliens.size());
+                    alienBullets.addElement(aliens.get(randNr).shoot());
+                }
             }
         } else {
             alienBullets.addAll(aliens.get(0).BossShoot());

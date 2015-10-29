@@ -22,54 +22,47 @@ import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 public class Level {
 
-	int levelNumber;
+    int levelNumber;
 
 	String alienType = "";
+	
+	BufferedImage alienTypeImage = null;
+	int alienLives = 0;
 
-	/**
-	 * constructor of Level class
-	 * 
-	 * @param number
-	 *            Levelnumber
-	 * @param g
-	 *            The game
-	 */
-	public Level(int number) {
-		levelNumber = number;
-	}
+    /**
+     * constructor of Level class
+     * 
+     * @param number Levelnumber
+     */
+    public Level(int number) {
+        levelNumber = number;
+    }
 
-	/**
-	 * creates the aliens and returns them.
-	 * 
-	 * @return the created aliens
-	 */
-	public Vector<Alien> createAliens() {
+    /**
+     * creates the aliens and returns them.
+     * 
+     * @return the created aliens
+     */
+    public Vector<Alien> createAliens() {
 
-		int startYOffsetAlien = 0;
-		int startXOffsetAlien = 75;
-		Vector<Alien> tempAliens = new Vector<Alien>(0);
+        int startYOffsetAlien = 0;
+        int startXOffsetAlien = 75;
+        Vector<Alien> tempAliens = new Vector<Alien>(0);
 
-		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien);
-			tempAliens.addElement(alien);
-		}
+        for (int x = 0; x < 18; x++) {
+            Alien alien = AlienFactory.getAlien("hard", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien);
+            tempAliens.addElement(alien);
+        }
 
-		for (int x = 0; x < 18; x++) {
-			Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25);
-			tempAliens.addElement(alien);
-		}
+        for (int x = 0; x < 18; x++) {
+            Alien alien = AlienFactory.getAlien("normal", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 25);
+            tempAliens.addElement(alien);
+        }
 
 		for (int x = 0; x < 18; x++) {
 			Alien alien = AlienFactory.getAlien("easy", startXOffsetAlien + (25 * x) - 3, startYOffsetAlien + 50);
 			tempAliens.addElement(alien);
 		}
-		// this is how you add a boss alien.
-		/**
-		 * bossLevel = true; Alien alien = AlienFactory.getAlien("boss",
-		 * startXOffsetAlien, startYOffsetAlien, this);
-		 * 
-		 * aliens.addElement(alien);
-		 */
 
 		return tempAliens;
 	}
@@ -113,15 +106,36 @@ public class Level {
 		JLabel alienTypeLabel = new JLabel("Type of aliens: ");
 		alienTypeLabel.setForeground(Color.white);
 		alienTypeLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 1;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.insets = new Insets(0, 0, 0, 0);
 		panel.add(alienTypeLabel, c);
 
-		BufferedImage alienTypeImage = null;
-		int alienLives = 0;
+		determineAlienType();
+
+		JLabel alienTypeImageLabel = new JLabel(new ImageIcon(alienTypeImage));
+		c.gridx = 1;
+		panel.add(alienTypeImageLabel, c);
+
+		JLabel alienLivesLabel = new JLabel("Alien lives: " + alienLives);
+		alienLivesLabel.setForeground(Color.white);
+		alienLivesLabel.setFont(new Font("Courier", Font.PLAIN, 15));
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 2;
+		panel.add(alienLivesLabel, c);
+
+		JLabel ScoreLabel = new JLabel("Score: ");
+		ScoreLabel.setForeground(Color.white);
+		ScoreLabel.setFont(new Font("Courier", Font.PLAIN, 15));
+		c.gridy = 3;
+		panel.add(ScoreLabel, c);
+
+		return panel;
+	}
+	
+	private void determineAlienType() {
 		if (levelNumber % 5 == 0) {
 			alienTypeImage = SpriteSheet.getInstance().grabImage(215, 225, 50, 20);
 			alienLives = levelNumber;
@@ -135,31 +149,5 @@ public class Level {
 			alienTypeImage = SpriteSheet.getInstance().grabImage(74, 225, 22, 16);
 			alienLives = 3;
 		}
-
-		JLabel alienTypeImageLabel = new JLabel(new ImageIcon(alienTypeImage));
-		c.gridx = 1;
-		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
-		panel.add(alienTypeImageLabel, c);
-
-		JLabel alienLivesLabel = new JLabel("Lives: " + alienLives);
-		alienLivesLabel.setForeground(Color.white);
-		alienLivesLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridx = 0;
-		c.gridy = 2;
-		c.gridwidth = 2;
-		c.insets = new Insets(0, 0, 0, 0);
-		panel.add(alienLivesLabel, c);
-
-		JLabel ScoreLabel = new JLabel("Score: ");
-		ScoreLabel.setForeground(Color.white);
-		ScoreLabel.setFont(new Font("Courier", Font.PLAIN, 15));
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 2;
-		c.insets = new Insets(0, 0, 0, 0);
-		panel.add(ScoreLabel, c);
-
-		return panel;
 	}
 }
