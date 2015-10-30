@@ -53,7 +53,6 @@ public class Game implements Runnable {
     private int score = 0;
 
     private Spaceship spaceship;
-    public static LogFile logfile;
     private Screen screen;
 
     private Level level;
@@ -102,8 +101,8 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
 
-        logfile.writeString("Game ended because of an error at " + new Date());
-        logfile.close();
+        LogFile.getInstance().writeString("Game ended because of an error at " + new Date());
+        LogFile.getInstance().close();
 
         // exits the application.
         System.exit(1);
@@ -119,9 +118,8 @@ public class Game implements Runnable {
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
 
-        logfile = LogFile.getInstance();
-        logfile.open();
-        logfile.writeString("Game started at " + new Date());
+        LogFile.getInstance().open();
+        LogFile.getInstance().writeString("Game started at " + new Date());
 
         spaceship = new Spaceship();
 
@@ -221,7 +219,7 @@ public class Game implements Runnable {
                 alien.vmovement();
             }
 
-            Game.logfile.writeString("Aliens reached a border and moved down");
+            LogFile.getInstance().writeString("Aliens reached a border and moved down");
         }
     }
 
@@ -325,7 +323,7 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterAlienBullets.next();
             if (bullet.reachedY(450)) {
-                Game.logfile.writeOffscreen("Alien", bullet.getX());
+            	LogFile.getInstance().writeOffscreen("Alien", bullet.getX());
                 alienBullets.removeElementAt(iterAlienBullets.position());
             }
 
@@ -338,7 +336,7 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.reachedY(450)) {
-                Game.logfile.writeOffscreen("Spaceship", bullet.getX());
+            	LogFile.getInstance().writeOffscreen("Spaceship", bullet.getX());
                 shipBullets.removeElementAt(iterShipBullets.position());
             }
 
@@ -496,8 +494,8 @@ public class Game implements Runnable {
     public void end() {
         running = false;
         highscoremanager.addScore(score);
-        logfile.writeString("Game ended at " + new Date());
-        logfile.close();
+        LogFile.getInstance().writeString("Game ended at " + new Date());
+        LogFile.getInstance().close();
         screen.close();
         exec.returning();
     }
