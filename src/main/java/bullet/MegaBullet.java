@@ -5,18 +5,18 @@ package bullet;
  * normal bullet.
  * 
  * @author Group 23
- *
  */
 public class MegaBullet extends Bullet {
 
   /**
-   * the constructor method of Mega bullet.
+   * Constructor of the Mega bullet.
    * 
    * @param x
+   *          x coordinate
    * @param y
-   * @param ss
+   *          y coordinate
    */
-  public MegaBullet(double x, double y) {
+  public MegaBullet(final double x, final double y) {
     super(x, y);
     setSpritesheet(475, 890, 30, 60);
   }

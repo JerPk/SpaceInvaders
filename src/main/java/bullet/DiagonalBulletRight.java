@@ -5,24 +5,26 @@ package bullet;
  * vertically and horizontally at the same time.
  * 
  * @author Group 23
- *
  */
 public class DiagonalBulletRight extends Bullet {
 
   /**
-   * the constructor method of the Diagonal bullet.
+   * Constructor method of the Diagonal right bullet.
    * 
    * @param x
+   *          x coordinate
    * @param y
-   * @param ss
+   *          y coordinate
    */
-  public DiagonalBulletRight(double x, double y) {
+  public DiagonalBulletRight(final double x, final double y) {
     super(x, y);
   }
 
-  // Move the bullet down and sideways.
+  /**
+  * Method to move the bullet down and a bit to the right.
+  */
   @Override
-  public void moveDown() {
+  public final void moveDown() {
     setY(getY() + downspeed);
     setX(getX() + 0.7);
   }
