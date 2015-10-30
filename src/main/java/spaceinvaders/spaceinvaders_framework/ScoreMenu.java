@@ -35,8 +35,6 @@ public class ScoreMenu implements Runnable{
 		exec = ex;
 		running = false;
 		
-		allscores = HighscoreManager.getInstance().getScores();
-		
         // create the frame.
         frame = new JFrame("Highscores");
         frame.setSize(new Dimension(635, 470));
@@ -53,8 +51,6 @@ public class ScoreMenu implements Runnable{
         returns = new JButton("return");
         quit = new JButton("quit");
         reset = new JButton("reset");
-        
-        setup();
 	}
 	
 	private void setup() {
@@ -65,7 +61,7 @@ public class ScoreMenu implements Runnable{
         top.setForeground(Color.white);
         top.setFont(new Font("Calibri", Font.PLAIN, 30));
 
-        
+        allscores = HighscoreManager.getInstance().getScores();
         String[] columnNames = { "Number", "Name", "Score" };
         Object[][] data = createData();
 
@@ -79,8 +75,7 @@ public class ScoreMenu implements Runnable{
         southpanel.add(returns);
         southpanel.add(reset);
         southpanel.add(quit);
-        
-
+       
         // add all the elements to the panel
         panel.add(top, BorderLayout.NORTH);
         panel.add(table, BorderLayout.CENTER);
@@ -91,6 +86,7 @@ public class ScoreMenu implements Runnable{
 	}
 	
 	public void show() {
+		setup();
 		running = true;
         thread = new Thread(this);
         thread.start();
@@ -140,6 +136,10 @@ public class ScoreMenu implements Runnable{
     }
     
     public Object[][] createData() {
+    	allscores = HighscoreManager.getInstance().getScores();
+    	for (Score s : allscores) {
+    		System.out.println(s.getName());
+    	}
         Score Score1 = allscores.get(0);
         Score Score2 = allscores.get(1);
         Score Score3 = allscores.get(2);

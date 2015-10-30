@@ -40,7 +40,6 @@ public class HighscoreManager {
      */
     private HighscoreManager() {
         scores = new ArrayList<Score>();
-        System.out.println("New HSManager");
     }
     
     public static synchronized HighscoreManager getInstance() {
@@ -57,7 +56,7 @@ public class HighscoreManager {
      * @return ArrayList<Score>
      */
     public ArrayList<Score> getScores() {
-        loadScoreFile();
+        //loadScoreFile();
         sort();
         return scores;
     }
@@ -149,6 +148,7 @@ public class HighscoreManager {
             outputStream = new ObjectOutputStream(new FileOutputStream(
                     "res/scores.dat"));
             outputStream.writeObject(scores);
+            System.out.println("Updated");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
