@@ -1,7 +1,6 @@
 package spaceinvaders.spaceinvaders_framework;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedWriter;
 import java.io.IOException;
 
 public class SpriteSheet {

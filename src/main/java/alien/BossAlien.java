@@ -20,6 +20,7 @@ public class BossAlien extends Alien {
     private int movementSpeed = 1;
     private int randomNum;
     private boolean overwrite;
+    private Game game;
 
     /**
      * the constructor of alien type 3.
@@ -28,12 +29,13 @@ public class BossAlien extends Alien {
      * @param y
      * @param g
      */
-    public BossAlien(double x, double y, Game g) {
+    public BossAlien(double x, double y) {
         super(x, y);
         Game.logfile.writeCreate("BossAlien", x, y);
         setSpritesheet(215, 225, 50, 20);
         setScore(100);
         setHealth(20);
+        
     }
 
     /**
@@ -44,14 +46,14 @@ public class BossAlien extends Alien {
         // check if the alien has reached if the alien has reached the right
         // hand border.
         if (movementSpeed > 0 && getX() >= 600) {
-            updateLogic();
+             updateLogic(true);
         }
 
         // check if the alien has reached if the alien has reached the left hand
         // border.
         if (movementSpeed < 0 && getX() <= 2) {
-            updateLogic();
-        }
+             updateLogic(true);
+         }
 
         // moves the alien in the horizontal direction.
         setX(getX() + movementSpeed);
@@ -64,11 +66,12 @@ public class BossAlien extends Alien {
     public void vmovement() {
         // move the alien in the vertical direction
 
-        setY(getY() + 20);
+        ypos += 40;
 
         // flip the movement speed so now the alien will move in
         // the other direction.
         movementSpeed = -movementSpeed;
+        updateLogic(false);
     }
 
     /**

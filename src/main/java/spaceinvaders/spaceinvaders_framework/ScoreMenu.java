@@ -1,15 +1,16 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -18,71 +19,88 @@ import state.Executor;
 
 public class ScoreMenu implements Runnable{
 
-	private JFrame frame;
+	//private JFrame frame;
+
     private ArrayList<Score> allscores;
-    private JPanel panel;
     private JTable table;
     
     // the returns and quit button of the highscores page.
-    private JButton returns;
-    private JButton quit;
-    private JButton reset;
+    private JButton btnReturn;
+    private JButton btnReset;
+    private JButton btnQuit;
+    
     private Boolean running;
     private Thread thread;
     private Executor exec;
+    private GridBagConstraints c;
+    private JPanel panel;
 	
 	public ScoreMenu(Executor ex) {
 		exec = ex;
 		running = false;
 		
-        // create the frame.
-        frame = new JFrame("Highscores");
-        frame.setSize(new Dimension(635, 470));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        // create the main panel
-        panel = new JPanel();
-        // set layout manager
-        panel.setLayout(new BorderLayout());
-        // set background colour.
-        panel.setBackground(Color.black);
-        
-        // the returns and quit button of the highscores page.
-        returns = new JButton("return");
-        quit = new JButton("quit");
-        reset = new JButton("reset");
+		setup();
 	}
 	
 	private void setup() {
+		panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		c = new GridBagConstraints();
+		panel.setBackground(Color.black);
 
-        // the large text saying highscores add the top.
-        JLabel top = new JLabel("                                    Highscores");
-
-        top.setForeground(Color.white);
-        top.setFont(new Font("Calibri", Font.PLAIN, 30));
-
-        allscores = HighscoreManager.getInstance().getScores();
-        String[] columnNames = { "Number", "Name", "Score" };
+		JLabel title = createTitle();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		c.insets = new Insets(0, 0, 20, 0);
+		panel.add(title, c);
+		
+		String[] columnNames = { "Number", "Name", "Score" };
         Object[][] data = createData();
-
+        
         // a table containing the top 10 scores of the game space invaders.
         table = new JTable(data, columnNames);
         table.setBackground(Color.black);
         table.setForeground(Color.white);
-        table.setEnabled(false);
+        table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+        table.setGridColor(Color.gray);
+        
+        c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 20, 0);
+        panel.add(table, c);
+		
+        addButtons();
+        
+		CardWindow.getInstance().addCard(panel, "SCORECARD");
+	}
+	
+	private JLabel createTitle() {
+		JLabel title = new JLabel("Highscores");
+		title.setForeground(Color.white);
+		title.setFont(new Font("Calibri", Font.PLAIN, 30));
+		
+		return title;
+	}
+	
+	private void addButtons() {
+		btnReturn = new JButton("Return");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 5, 0, 5);
+		panel.add(btnReturn, c);
 
-        JPanel southpanel = new JPanel();
-        southpanel.add(returns);
-        southpanel.add(reset);
-        southpanel.add(quit);
-       
-        // add all the elements to the panel
-        panel.add(top, BorderLayout.NORTH);
-        panel.add(table, BorderLayout.CENTER);
-        panel.add(southpanel, BorderLayout.SOUTH);
+		btnReset = new JButton("Reset");
+		c.gridx = 1;
+		c.gridy = 2;
+		panel.add(btnReset, c);
 
-        // add the panel to the frame.
-        frame.add(panel);
+		btnQuit = new JButton("Quit");
+		c.gridx = 2;
+		c.gridy = 2;
+		panel.add(btnQuit, c);
 	}
 	
 	public void show() {
@@ -90,13 +108,12 @@ public class ScoreMenu implements Runnable{
 		running = true;
         thread = new Thread(this);
         thread.start();
-        frame.setVisible(true);
+        CardWindow.getInstance().showCard("SCORECARD");
     }
 	
 	public void run() {
 		while (running) {
 			listenForActions();
-			
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -107,16 +124,15 @@ public class ScoreMenu implements Runnable{
 
     
     public void listenForActions() {
-        returns.addActionListener(new ActionListener() {
+    	btnReturn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 running = false;
-                frame.setVisible(false);
                 exec.returning();
 			}
 		});
 
-        reset.addActionListener(new ActionListener() {
+    	btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				HighscoreManager.getInstance().clear();
@@ -125,11 +141,10 @@ public class ScoreMenu implements Runnable{
         
         // method that makes sure that when we press quit the application will
         // end.
-        quit.addActionListener(new ActionListener() {
+    	btnQuit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 running = false;
-                frame.setVisible(false);
                 exec.quit();
             }
         });
@@ -137,9 +152,7 @@ public class ScoreMenu implements Runnable{
     
     public Object[][] createData() {
     	allscores = HighscoreManager.getInstance().getScores();
-    	for (Score s : allscores) {
-    		System.out.println(s.getName());
-    	}
+
         Score Score1 = allscores.get(0);
         Score Score2 = allscores.get(1);
         Score Score3 = allscores.get(2);

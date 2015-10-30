@@ -21,12 +21,14 @@ public class AlienFactory {
     public static Alien getAlien(String criteria, double x, double y){
         
 		if (criteria.equals("easy"))
-			return new AlienType1(x, y);
+			return Alien.createAlienType1(x, y);
 		else if (criteria.equals("normal"))
-			return new AlienType2(x, y);
+			return Alien.createAlienType2(x, y);
 		else if (criteria.equals("hard"))
-			return new AlienType3(x, y);
-
+			return Alien.createAlienType3(x, y);
+		else if (criteria.equals("boss"))
+		    return Alien.createBossAlien(x, y);
+		
 		return null;
     }
 }

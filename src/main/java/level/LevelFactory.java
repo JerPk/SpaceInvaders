@@ -2,13 +2,26 @@ package level;
 
 import spaceinvaders.spaceinvaders_framework.Game;
 
+/**
+ * Class of the level factory.
+ * 
+ * @author Group 23 (TI2206)
+ */
 public class LevelFactory {
-	public static Level createLevel(int number) {
+
+	/**
+	 * Method to create a level.
+	 * 
+	 * @param number
+	 *            Level number
+	 * @return the created level
+	 */
+	public static Level createLevel(final int number) {
 		Level level;
 
 		if (number % 5 == 0) {
 			level = new BossLevel(number);
-		}else if (number <= 15) {
+		} else if (number <= 15) {
 			level = new StandardLevel(number);
 		} else {
 			level = new Level(number);
