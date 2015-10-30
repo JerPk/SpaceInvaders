@@ -25,18 +25,19 @@ public class SpaceshipTest {
 	/**
 	 * The game object that is used in all of the test cases.
 	 */
-	private Game game;
-	private Executor exec;
+//	private Game game;
+//	private Executor exec;
 
 	/**
 	 * Launch the user interface.
 	 */
 	@Before
 	public void setUpGame() {
-		exec = new Executor();
-		exec.run();
-		game = new Game(exec);
-		game.init();
+//		exec = new Executor();
+//		exec.run();
+//		game = new Game(exec);
+//		game.init();
+		LogFile.getInstance().open();
 	}
 
 	/**
@@ -55,11 +56,11 @@ public class SpaceshipTest {
 	@Test
 	public void testMoveLeft() {
 		final Spaceship ship = new Spaceship();
-		game.setRunning(true);
+//		game.setRunning(true);
 
 		ship.moveLeft();
 		assertEquals((double) 302, ship.getPosX(), 0.00001);
-		assertTrue(game.getRunning());
+//		assertTrue(game.getRunning());
 	}
 
 	/**
@@ -68,11 +69,11 @@ public class SpaceshipTest {
 	@Test
 	public void testMoveRight() {
 		final Spaceship ship = new Spaceship();
-		game.setRunning(true);
+//		game.setRunning(true);
 
 		ship.moveRight();
 		assertEquals((double) 306, ship.getPosX(), 0.00001);
-		assertTrue(game.getRunning());
+//		assertTrue(game.getRunning());
 	}
 
 	/**
@@ -81,12 +82,12 @@ public class SpaceshipTest {
 	@Test
 	public void testShoot() {
 		final Spaceship ship = new Spaceship();
-		game.setRunning(true);
+//		game.setRunning(true);
 
 		final Bullet bullet = ship.shoot();
 		assertEquals((double) ship.getPosX() + 10, bullet.getX(), 0.00001);
 		assertEquals((double) ship.getPosY() + 2, bullet.getY(), 0.00001);
-		assertTrue(game.getRunning());
+//		assertTrue(game.getRunning());
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class SpaceshipTest {
 	@Test
 	public void testIfHit() {
 		final Spaceship ship = new Spaceship();
-		game.setRunning(true);
+//		game.setRunning(true);
 		final Vector<Bullet> alienBullets = new Vector<Bullet>(0);
 
 		alienBullets.add(new Bullet(5, 5));

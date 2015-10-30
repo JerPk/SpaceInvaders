@@ -37,8 +37,8 @@ public class GameTest {
     @Before
     public void setupGame() {
         exec = new Executor();
-        exec.run();
-        game = new Game(exec);
+//        exec.run();
+//        game = new Game(exec);
     }
 
     /**
@@ -82,23 +82,24 @@ public class GameTest {
      */
     @Test
     public void testRemoveBullets() {
-        game.init();
+    	final Game ngame = new Game(exec);
+    	ngame.init();
 
         final Bullet newBullet = new Bullet(10, 500);
         final Bullet newBullet2 = new Bullet(10, -2);
 
-        game.addAlienBullets(newBullet);
-        game.addAlienBullets(newBullet2);
+        ngame.addAlienBullets(newBullet);
+        ngame.addAlienBullets(newBullet2);
 
-        game.addShipBullets(newBullet);
-        game.addShipBullets(newBullet2);
+        ngame.addShipBullets(newBullet);
+        ngame.addShipBullets(newBullet2);
 
-        assertEquals(2, game.getAlienBullets().size());
-        assertEquals(2, game.getShipBullets().size());
+        assertEquals(2, ngame.getAlienBullets().size());
+        assertEquals(2, ngame.getShipBullets().size());
 
-        game.removeOffScreenBullets();
-        assertEquals(1, game.getAlienBullets().size());
-        assertEquals(1, game.getShipBullets().size());
+        ngame.removeOffScreenBullets();
+        assertEquals(1, ngame.getAlienBullets().size());
+        assertEquals(1, ngame.getShipBullets().size());
 
     }
 
@@ -107,22 +108,23 @@ public class GameTest {
      */
     @Test
     public void testCheckIfHit() {
-        game.init();
+    	final Game ngame = new Game(exec);
+    	ngame.init();
 
         final Bullet newBullet = new Bullet(72, 0);
         final Bullet newBullet2 = new Bullet(304, 425);
 
-        game.addAlienBullets(newBullet);
-        game.addAlienBullets(newBullet2);
+        ngame.addAlienBullets(newBullet);
+        ngame.addAlienBullets(newBullet2);
 
-        game.addShipBullets(newBullet);
-        game.addShipBullets(newBullet2);
+        ngame.addShipBullets(newBullet);
+        ngame.addShipBullets(newBullet2);
 
-        assertEquals(2, game.getShipBullets().size());
-        assertEquals(2, game.getAlienBullets().size());
-        game.checkIfHit();
-        assertEquals(1, game.getShipBullets().size());
-        assertEquals(1, game.getAlienBullets().size());
+        assertEquals(2, ngame.getShipBullets().size());
+        assertEquals(2, ngame.getAlienBullets().size());
+        ngame.checkIfHit();
+        assertEquals(1, ngame.getShipBullets().size());
+        assertEquals(1, ngame.getAlienBullets().size());
     }
 
 }

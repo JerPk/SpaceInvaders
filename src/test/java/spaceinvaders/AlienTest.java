@@ -29,8 +29,8 @@ public class AlienTest {
     /**
      * The game object that is used in all of the test cases.
      */
-    private Game game;
-    private Executor exec;
+//    private Game game;
+//    private Executor exec;
 
     /**
      * This method is executed before every test. It creates the game class and
@@ -38,10 +38,11 @@ public class AlienTest {
      */
     @Before
     public void setUpGame() {
-        exec = new Executor();
-        exec.run();
-        game = new Game(exec);
-        game.init();
+//        exec = new Executor();
+//        exec.run();
+//        game = new Game(exec);
+//        game.init();
+    	LogFile.getInstance().open();
     }
 
     /**
@@ -124,11 +125,11 @@ public class AlienTest {
     @Test
     public void testVMovement() {
         final Alien alien = AlienFactory.getAlien("easy", 7, 30);
-        game.setRunning(true);
+//        game.setRunning(true);
 
         alien.vmovement();
         assertEquals((double) 50, alien.getY(), 0.0001);
-        assertTrue(game.getRunning());
+//        assertTrue(game.getRunning());
 
     }
 
@@ -257,11 +258,11 @@ public class AlienTest {
     @Test
     public void testVMovementBossAlien() {
         final Alien alien = AlienFactory.getAlien("boss", 7, 30);
-        game.setRunning(true);
+//        game.setRunning(true);
 
         alien.vmovement();
         assertEquals((double) 70, alien.getY(), 0.0001);
-        assertTrue(game.getRunning());
+//        assertTrue(game.getRunning());
 
     }
 

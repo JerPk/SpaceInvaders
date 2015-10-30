@@ -29,8 +29,8 @@ public class LevelTest {
 	/**
 	 * The game object that is used in all of the test cases.
 	 */
-	private Game game;
-	private Executor exec;
+//	private Game game;
+//	private Executor exec;
 
 	/**
 	 * This method is executed before every test. It creates the game class and
@@ -38,10 +38,12 @@ public class LevelTest {
 	 */
 	@Before
 	public void setUpGame() {
-		exec = new Executor();
-		exec.run();
-		game = new Game(exec);
-		game.init();
+//		exec = new Executor();
+//		exec.run();
+//		game = new Game(exec);
+//		game.init();
+		LogFile.getInstance().open();
+		HighscoreManager.getInstance();
 	}
 
 	/**

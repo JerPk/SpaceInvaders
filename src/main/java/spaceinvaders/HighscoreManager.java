@@ -2,6 +2,7 @@ package spaceinvaders;
 
 import java.util.*;
 import java.io.*;
+import spaceinvaders.Score;
 
 import javax.swing.JOptionPane;
 
@@ -121,7 +122,7 @@ public class HighscoreManager {
             // Tries to read the file into the scores arraylist.
             inputStream = new ObjectInputStream(new FileInputStream(
                     "res/scores.dat"));
-            scores = (ArrayList<Score>) inputStream.readObject();
+//            scores = (ArrayList<Score>) inputStream.readObject();
         } catch (Exception e) {
             System.out.println("something went wrong while loading");
             e.printStackTrace();
