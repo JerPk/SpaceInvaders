@@ -179,6 +179,7 @@ public class Game implements Runnable {
    * spaceship position.
    */
   public void generateLevel() {
+    clearVectors();
 
     level = LevelFactory.createLevel(++levelNumber);
     spaceship.resetPosition();
