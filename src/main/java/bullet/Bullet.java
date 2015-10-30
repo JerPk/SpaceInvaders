@@ -3,9 +3,9 @@ package bullet;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.Screen;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.Game;
+import spaceinvaders.Screen;
+import spaceinvaders.SpriteSheet;
 
 public class Bullet {
 

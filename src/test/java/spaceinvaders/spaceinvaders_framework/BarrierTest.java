@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bullet.Bullet;
+import spaceinvaders.Barrier;
+import spaceinvaders.Game;
 import state.Executor;
 
 import java.awt.image.BufferedImage;

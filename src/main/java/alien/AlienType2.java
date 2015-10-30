@@ -1,8 +1,8 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.Game;
+import spaceinvaders.SpriteSheet;
 
 /**
  * the second alien type is considered normal.

@@ -1,6 +1,6 @@
 package level;
 
-import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.Game;
 
 /**
  * Class of the level factory.

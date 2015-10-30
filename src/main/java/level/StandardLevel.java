@@ -4,8 +4,8 @@ import java.util.Vector;
 
 import alien.Alien;
 import alien.AlienFactory;
-import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Screen;
+import spaceinvaders.Barrier;
+import spaceinvaders.Screen;
 
 /**
  * Class of the standard level.
