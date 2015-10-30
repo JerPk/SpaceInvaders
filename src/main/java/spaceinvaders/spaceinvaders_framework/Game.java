@@ -49,7 +49,7 @@ public class Game implements Runnable {
     private Vector<Barrier> barriers;
 
     private int counter;
-    private int score = 0;
+    private static int score = 0;
 
     private Spaceship spaceship;
     public static LogFile logfile;
@@ -503,7 +503,7 @@ public class Game implements Runnable {
         return levelNumber;
     }
 
-    public int getScore() {
+    public static int getScore() {
         return score;
     }
 
