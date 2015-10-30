@@ -8,7 +8,7 @@ public class SpriteSheet {
   // the bufferedImage used by the SpriteSheet class.
   private BufferedImage image;
 
-  private volatile static SpriteSheet uniqueInstance;
+  private static volatile SpriteSheet uniqueInstance;
 
   /**
    * constructor which loads the spritesheet from the png file.
@@ -16,24 +16,20 @@ public class SpriteSheet {
   private SpriteSheet() {
     BuffereImageLoader loader = new BuffereImageLoader();
     try {
-      image = loader.LoadImage("res/sprite_sheet.png");
+      image = loader.loadImage("res/sprite_sheet.png");
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   /**
-   * method to get the instance of spritesheet
+   * method to get the instance of spritesheet.
    * 
    * @return unique SpriteSheet
    */
-  public static SpriteSheet getInstance() {
+  public static synchronized SpriteSheet getInstance() {
     if (uniqueInstance == null) {
-      synchronized (SpriteSheet.class) {
-        if (uniqueInstance == null) {
-          uniqueInstance = new SpriteSheet();
-        }
-      }
+      uniqueInstance = new SpriteSheet();
     }
     return uniqueInstance;
   }
@@ -41,11 +37,15 @@ public class SpriteSheet {
   /**
    * uses the coordinates specified to grab the part of the sprite sheet. that
    * will be used by the object.
-   * 
-   * @param int col
-   * @param int row
-   * @param int width
-   * @param int height
+   *
+   * @param col
+   *          of the piece of image we need
+   * @param row
+   *          of the piece of image we need
+   * @param width
+   *          of the piece of image we need
+   * @param height
+   *          of the piece of image we need
    * @return BufferedImage
    */
   public BufferedImage grabImage(int col, int row, int width, int height) {

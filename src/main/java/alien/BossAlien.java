@@ -9,9 +9,7 @@ import bullet.Bullet;
 import bullet.DiagonalBulletLeft;
 import bullet.DiagonalBulletRight;
 import bullet.MegaBullet;
-import spaceinvaders.Game;
 import spaceinvaders.LogFile;
-import spaceinvaders.SpriteSheet;
 
 public class BossAlien extends Alien {
 
@@ -21,7 +19,6 @@ public class BossAlien extends Alien {
   private int movementSpeed = 1;
   private int randomNum;
   private boolean overwrite;
-  private Game game;
 
   /**
    * the constructor of alien type 3.
@@ -91,7 +88,7 @@ public class BossAlien extends Alien {
     if (overwrite == false) {
       randomNum = rand.nextInt(3) + 1;
     }
-
+    
     LogFile.getInstance().writeShoot("BossAlien", getX(), getY());
 
     if (randomNum == 1) {

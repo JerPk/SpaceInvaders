@@ -1,17 +1,17 @@
 package spaceinvaders;
 
-import iterator.ConcreteAggregate;
-import iterator.Iterator;
-
-import java.util.Random;
-import java.util.Vector;
-import java.util.Date;
-
-import state.Executor;
 import alien.Alien;
 import bullet.Bullet;
+import iterator.ConcreteAggregate;
+import iterator.Iterator;
 import level.Level;
 import level.LevelFactory;
+import state.Executor;
+
+import java.awt.image.BufferedImage;
+import java.util.Date;
+import java.util.Random;
+import java.util.Vector;
 
 /**
  * The game class is the main class.
@@ -26,11 +26,9 @@ public class Game implements Runnable {
    */
   private boolean running = false;
 
-  private ScoreMenu s_menu;
-
   private boolean bossLevel;
 
-  private ConcreteAggregate ConcreteAggregate = new ConcreteAggregate();
+  private ConcreteAggregate concreteAggregate = new ConcreteAggregate();
 
   /**
    * the main Thread we use for the game.
@@ -40,7 +38,7 @@ public class Game implements Runnable {
   private Executor exec;
 
   /**
-   * Vector to store all alien, bullet and barrier objects
+   * Vector to store all alien, bullet and barrier objects.
    */
   private Vector<Alien> aliens;
   private Vector<Bullet> alienBullets;
@@ -56,11 +54,13 @@ public class Game implements Runnable {
   private Level level;
   private int levelNumber = 0;
 
+  /**
+   * The constructor for the Game class.
+   */
   public Game(Executor ex) {
     exec = ex;
     counter = 0;
     screen = new Screen(this);
-
   }
 
   /**
@@ -174,6 +174,10 @@ public class Game implements Runnable {
     stop();
   }
 
+  /**
+   * Generate level by adding aliens and barries, resetting the score and the
+   * spaceship position.
+   */
   public void generateLevel() {
     clearVectors();
 
@@ -192,6 +196,7 @@ public class Game implements Runnable {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+
     screen.setPressedLeft(false);
     screen.setPressedRight(false);
     CardWindow.getInstance().showCard("GAMECARD");
@@ -203,7 +208,8 @@ public class Game implements Runnable {
    * and vertically.
    */
   public void moveAliens() {
-    Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
+
+    Iterator iterAliens = concreteAggregate.createIterator(aliens);
 
     // in this while loop all the aliens are moved vertically.
     while (iterAliens.hasNext()) {
@@ -215,19 +221,20 @@ public class Game implements Runnable {
     // updated simultaneously. this is the case when all the aliens need
     // to be moved vertically.
     if (Alien.getupdateLogic()) {
-
-      Iterator iterAliens2 = ConcreteAggregate.createIterator(aliens);
+      Iterator iterAliens2 = concreteAggregate.createIterator(aliens);
 
       while (iterAliens2.hasNext()) {
         Alien alien = (Alien) iterAliens2.next();
         alien.vmovement();
       }
-
       LogFile.getInstance().writeString(
           "Aliens reached a border and moved down");
     }
   }
 
+  /**
+   * Listen to what keys are pressed to make the spaceship move.
+   */
   public void listenForKeys() {
     // resolve the movement of the ship.
     if ((screen.getLeftPressed()) && (!screen.getRightPressed())) {
@@ -248,6 +255,9 @@ public class Game implements Runnable {
     }
   }
 
+  /**
+   * Makes spaceship, aliens and barriers check if they are hit by any bullets.
+   */
   public void checkIfHit() {
     if (!spaceship.defeated()) {
       int hit = spaceship.ifHit(alienBullets);
@@ -258,7 +268,7 @@ public class Game implements Runnable {
       end();
     }
 
-    Iterator iterAliens = ConcreteAggregate.createIterator(aliens);
+    Iterator iterAliens = concreteAggregate.createIterator(aliens);
 
     synchronized (aliens) {
       while (iterAliens.hasNext()) {
@@ -273,7 +283,8 @@ public class Game implements Runnable {
         }
       }
     }
-    Iterator iterBarriers = ConcreteAggregate.createIterator(barriers);
+
+    Iterator iterBarriers = concreteAggregate.createIterator(barriers);
 
     while (iterBarriers.hasNext()) {
       Barrier barrier = (Barrier) iterBarriers.next();
@@ -323,7 +334,8 @@ public class Game implements Runnable {
    * The method that removes all the bullets that are offscreen.
    */
   public void removeOffScreenBullets() {
-    Iterator iterAlienBullets = ConcreteAggregate.createIterator(alienBullets);
+
+    Iterator iterAlienBullets = concreteAggregate.createIterator(alienBullets);
 
     while (iterAlienBullets.hasNext()) {
 
@@ -335,7 +347,7 @@ public class Game implements Runnable {
 
     }
 
-    Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
+    Iterator iterShipBullets = concreteAggregate.createIterator(shipBullets);
 
     while (iterShipBullets.hasNext()) {
 
@@ -350,7 +362,7 @@ public class Game implements Runnable {
   }
 
   /**
-   * getter method for the LogicrequiredThisLoop boolean
+   * getter method for the LogicrequiredThisLoop boolean.
    * 
    * @return boolean
    */
@@ -363,19 +375,19 @@ public class Game implements Runnable {
    * 
    * @param boolean b
    */
-  public void setRunning(boolean b) {
-    running = b;
+  public void setRunning(boolean bool) {
+    running = bool;
   }
 
   /**
-   * getter method for the counter integer
+   * getter method for the counter integer.
    */
   public int getcounter() {
     return counter;
   }
 
   /**
-   * getter method for the spaceship object
+   * getter method for the spaceship object.
    */
   public Spaceship getSpaceship() {
     return spaceship;
@@ -384,7 +396,7 @@ public class Game implements Runnable {
   /**
    * the getter metod that returns the alienvector.
    * 
-   * @return
+   * @return vector containing all aliens currently active in the game
    */
   public Vector<Alien> getAlienVector() {
     return aliens;
@@ -393,8 +405,8 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the shipbullets vector.
    * 
-   * @param bill
-   */
+   * @param bill bullets to add to the vector
+  */
   public void addShipBullets(Bullet bill) {
     shipBullets.add(bill);
   }
@@ -402,7 +414,7 @@ public class Game implements Runnable {
   /**
    * the getter methdo that returns the shipbullets vector.
    * 
-   * @return
+   * @return vector containing ship's bullets
    */
   public Vector<Bullet> getShipBullets() {
     return shipBullets;
@@ -411,7 +423,7 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the alienbullets vector.
    * 
-   * @param bill
+   * @param bill bullets to add to the vector
    */
   public void addAlienBullets(Bullet bill) {
     alienBullets.add(bill);
@@ -419,8 +431,8 @@ public class Game implements Runnable {
 
   /**
    * the getter method that returns the alienbullets vector.
-   * 
-   * @return
+   *
+   * @return vector containing aliens' bullets
    */
   public Vector<Bullet> getAlienBullets() {
     return alienBullets;
@@ -429,10 +441,11 @@ public class Game implements Runnable {
   /**
    * the method that adds an alien to the alien vector.
    * 
-   * @param a
+   * @param alien
+   *          to add to the vector
    */
-  public void addAlien(Alien a) {
-    aliens.add(a);
+  public void addAlien(Alien alien) {
+    aliens.add(alien);
   }
 
   public Vector<Barrier> getBarriers() {
@@ -447,7 +460,6 @@ public class Game implements Runnable {
     HighscoreManager.getInstance().addScore(score);
     LogFile.getInstance().writeString("Game ended at " + new Date());
     LogFile.getInstance().close();
-    screen.close();
     exec.returning();
   }
 
@@ -463,18 +475,10 @@ public class Game implements Runnable {
    * the set score method is able to manually set the score of the player. this
    * method is only used for testing purposes.
    * 
-   * @param score1
+   * @param score1 set attribute score
    */
   public void setscore(int score1) {
     score = score1;
   }
 
-  /**
-   * the getter method for the scoremenu of the game. mainly used for testing.
-   * 
-   * @return s_menu
-   */
-  public ScoreMenu getScoreMenu() {
-    return s_menu;
-  }
 }

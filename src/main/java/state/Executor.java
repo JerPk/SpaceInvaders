@@ -8,6 +8,9 @@ public class Executor {
 
   private State state;
 
+  /**
+   * constructor of the Executor class.
+   */
   public Executor() {
     menuState = new MenuState(this);
     gameState = new GameState(this);
