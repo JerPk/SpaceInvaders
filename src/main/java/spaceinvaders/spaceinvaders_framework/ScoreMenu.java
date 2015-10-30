@@ -19,7 +19,8 @@ import state.Executor;
 
 public class ScoreMenu implements Runnable{
 
-    private HighscoreManager highscoremanager;
+	//private JFrame frame;
+
     private ArrayList<Score> allscores;
     private JTable table;
     
@@ -31,23 +32,23 @@ public class ScoreMenu implements Runnable{
     private Boolean running;
     private Thread thread;
     private Executor exec;
+    private GridBagConstraints c;
+    private JPanel panel;
 	
 	public ScoreMenu(Executor ex) {
 		exec = ex;
 		running = false;
 		
-		highscoremanager = new HighscoreManager();
-		allscores = highscoremanager.getScores();
-		
-		
-		JPanel panel = new JPanel();
+		setup();
+	}
+	
+	private void setup() {
+		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
+		c = new GridBagConstraints();
 		panel.setBackground(Color.black);
 
-		JLabel title = new JLabel("Highscores");
-		title.setForeground(Color.white);
-		title.setFont(new Font("Calibri", Font.PLAIN, 30));
+		JLabel title = createTitle();
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 3;
@@ -56,18 +57,33 @@ public class ScoreMenu implements Runnable{
 		
 		String[] columnNames = { "Number", "Name", "Score" };
         Object[][] data = createData();
-
+        
         // a table containing the top 10 scores of the game space invaders.
         table = new JTable(data, columnNames);
         table.setBackground(Color.black);
         table.setForeground(Color.white);
         table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
         table.setGridColor(Color.gray);
+        
         c.gridx = 0;
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 20, 0);
         panel.add(table, c);
-
+		
+        addButtons();
+        
+		CardWindow.getInstance().addCard(panel, "SCORECARD");
+	}
+	
+	private JLabel createTitle() {
+		JLabel title = new JLabel("Highscores");
+		title.setForeground(Color.white);
+		title.setFont(new Font("Calibri", Font.PLAIN, 30));
+		
+		return title;
+	}
+	
+	private void addButtons() {
 		btnReturn = new JButton("Return");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -81,15 +97,14 @@ public class ScoreMenu implements Runnable{
 		c.gridy = 2;
 		panel.add(btnReset, c);
 
-		btnQuit = new JButton("Quit Game");
+		btnQuit = new JButton("Quit");
 		c.gridx = 2;
 		c.gridy = 2;
 		panel.add(btnQuit, c);
-		
-		CardWindow.getInstance().addCard(panel, "SCORECARD");
 	}
 	
 	public void show() {
+		setup();
 		running = true;
         thread = new Thread(this);
         thread.start();
@@ -99,7 +114,6 @@ public class ScoreMenu implements Runnable{
 	public void run() {
 		while (running) {
 			listenForActions();
-			
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
@@ -121,7 +135,7 @@ public class ScoreMenu implements Runnable{
     	btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				highscoremanager.clear();
+				HighscoreManager.getInstance().clear();
 			}
 		});
         
@@ -137,6 +151,8 @@ public class ScoreMenu implements Runnable{
     }
     
     public Object[][] createData() {
+    	allscores = HighscoreManager.getInstance().getScores();
+
         Score Score1 = allscores.get(0);
         Score Score2 = allscores.get(1);
         Score Score3 = allscores.get(2);
