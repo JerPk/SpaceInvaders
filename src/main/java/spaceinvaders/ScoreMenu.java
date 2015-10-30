@@ -32,7 +32,7 @@ public class ScoreMenu implements Runnable {
   private Thread thread;
   private Executor exec;
   
-  private GridBagConstraints gbc;
+  private GridBagConstraints constraints;
   private JPanel panel;
 
   /**
@@ -51,15 +51,15 @@ public class ScoreMenu implements Runnable {
   private void setup() {
     panel = new JPanel();
     panel.setLayout(new GridBagLayout());
-    gbc = new GridBagConstraints();
+    constraints = new GridBagConstraints();
     panel.setBackground(Color.black);
 
     JLabel title = createTitle();
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    gbc.gridwidth = 3;
-    gbc.insets = new Insets(0, 0, 20, 0);
-    panel.add(title, gbc);
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.gridwidth = 3;
+    constraints.insets = new Insets(0, 0, 20, 0);
+    panel.add(title, constraints);
 
     String[] columnNames = { "Number", "Name", "Score" };
     Object[][] data = createData();
@@ -71,10 +71,10 @@ public class ScoreMenu implements Runnable {
     table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
     table.setGridColor(Color.gray);
 
-    gbc.gridx = 0;
-    gbc.gridy = 1;
-    gbc.insets = new Insets(0, 0, 20, 0);
-    panel.add(table, gbc);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    constraints.insets = new Insets(0, 0, 20, 0);
+    panel.add(table, constraints);
 
     addButtons();
 
@@ -91,22 +91,22 @@ public class ScoreMenu implements Runnable {
 
   private void addButtons() {
     btnReturn = new JButton("Return");
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.gridx = 0;
-    gbc.gridy = 2;
-    gbc.gridwidth = 1;
-    gbc.insets = new Insets(0, 5, 0, 5);
-    panel.add(btnReturn, gbc);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    constraints.gridwidth = 1;
+    constraints.insets = new Insets(0, 5, 0, 5);
+    panel.add(btnReturn, constraints);
 
     btnReset = new JButton("Reset");
-    gbc.gridx = 1;
-    gbc.gridy = 2;
-    panel.add(btnReset, gbc);
+    constraints.gridx = 1;
+    constraints.gridy = 2;
+    panel.add(btnReset, constraints);
 
     btnQuit = new JButton("Quit");
-    gbc.gridx = 2;
-    gbc.gridy = 2;
-    panel.add(btnQuit, gbc);
+    constraints.gridx = 2;
+    constraints.gridy = 2;
+    panel.add(btnQuit, constraints);
   }
 
   public void show() {

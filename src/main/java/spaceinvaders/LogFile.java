@@ -97,7 +97,6 @@ public class LogFile {
   }
 
   /**
-<<<<<<< HEAD
    * method to write object which shot to logfile.
    * 
    * @param object

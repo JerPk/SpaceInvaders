@@ -38,11 +38,7 @@ public class Game implements Runnable {
   private Executor exec;
 
   /**
-<<<<<<< HEAD
    * Vector to store all alien, bullet and barrier objects.
-=======
-   * Vector to store all alien, bullet and barrier objects
->>>>>>> 968cb4c8bff05ae694ae2cef969c237e51fb250c
    */
   private Vector<Alien> aliens;
   private Vector<Bullet> alienBullets;

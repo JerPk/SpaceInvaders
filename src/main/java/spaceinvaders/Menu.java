@@ -38,31 +38,31 @@ public class Menu implements Runnable {
 
     JPanel panel = new JPanel();
     panel.setLayout(new GridBagLayout());
-    GridBagConstraints gbc = new GridBagConstraints();
+    GridBagConstraints constraints = new GridBagConstraints();
     panel.setBackground(Color.black);
 
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    gbc.insets = new Insets(0, 0, 50, 0);
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.insets = new Insets(0, 0, 50, 0);
 
     BufferedImage biTitle = SpriteSheet.getInstance().grabImage(172, 8, 231,
         157);
     JLabel title = new JLabel(new ImageIcon(biTitle));
-    panel.add(title, gbc);
+    panel.add(title, constraints);
 
     btnNewGame = new JButton("New Game");
-    gbc.fill = GridBagConstraints.HORIZONTAL;
-    gbc.gridy = 1;
-    gbc.insets = new Insets(0, 50, 5, 50);
-    panel.add(btnNewGame, gbc);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridy = 1;
+    constraints.insets = new Insets(0, 50, 5, 50);
+    panel.add(btnNewGame, constraints);
 
     btnStatistics = new JButton("Highscores");
-    gbc.gridy = 2;
-    panel.add(btnStatistics, gbc);
+    constraints.gridy = 2;
+    panel.add(btnStatistics, constraints);
 
     btnQuit = new JButton("Quit Game");
-    gbc.gridy = 3;
-    panel.add(btnQuit, gbc);
+    constraints.gridy = 3;
+    panel.add(btnQuit, constraints);
 
     CardWindow.getInstance().addCard(panel, "MENUCARD");
   }
