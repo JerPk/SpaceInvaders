@@ -376,60 +376,6 @@ public class Game implements Runnable {
     }
 
     /**
-     * equals method that compares if two game objects are equal.
-     */
-    public boolean equals(Object other) {
-        boolean result = false;
-        if (other instanceof Game) {
-            Game that = (Game) other;
-            if (this.getcounter() == that.getcounter()) {
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Compares two images pixel by pixel.
-     *
-     * @param imgA
-     *            - the first image.
-     * @param imgB
-     *            - the second image.
-     * @return whether the images are both the same.
-     */
-    public boolean compareImages(Object a, Object b) {
-
-        if (a instanceof BufferedImage && b instanceof BufferedImage) {
-            BufferedImage imgA = (BufferedImage) a;
-            BufferedImage imgB = (BufferedImage) b;
-
-            // The images mush be the same size.
-            if (imgA.getWidth() == imgB.getWidth()
-                    && imgA.getHeight() == imgB.getHeight()) {
-                int width = imgA.getWidth();
-                int height = imgA.getHeight();
-
-                // Loop over every pixel.
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        // Compare the pixels for equality.
-                        if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-                            return false;
-                        }
-                    }
-                }
-            } else {
-                return false;
-            }
-
-            return true;
-        }
-        return false;
-
-    }
-
-    /**
      * the getter metod that returns the alienvector.
      * 
      * @return
