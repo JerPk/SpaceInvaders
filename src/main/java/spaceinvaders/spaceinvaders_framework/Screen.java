@@ -8,7 +8,6 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import alien.Alien;
@@ -16,7 +15,6 @@ import bullet.Bullet;
 
 public class Screen extends JPanel implements KeyListener {
 	
-    private static JFrame frame = null;
     /**
      * The Width of the screen.
      */
@@ -51,22 +49,14 @@ public class Screen extends JPanel implements KeyListener {
 		setFocusable(true);
 		addKeyListener(this);
 		game = ga;
+		setSize(new Dimension(WIDTH, HEIGHT));
 
-        setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setMaximumSize(new Dimension(WIDTH, HEIGHT));
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-
-        // creates the JFrame that will be used.
-        frame = new JFrame(TITLE);
-        frame.add(this);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        
         setBackground(Color.black);
+        setFocusable(true);
         
-        frame.setVisible(true);
+        CardWindow.getInstance().addCard(this, "GAMECARD");
+//        CardWindow.getInstance().showCard("GAMECARD");
+//        requestFocusInWindow();
 	}
 	
 	/**
@@ -87,7 +77,7 @@ public class Screen extends JPanel implements KeyListener {
 		}
 
 		renderScore(game.getScore());
-//		renderHighScore(game.getHSManager());
+		renderHighScore(game.getHSManager());
 		renderLevelNumber(game.getLevelNumber());
 
 		// Draw the bullets and spaceship
@@ -250,6 +240,6 @@ public class Screen extends JPanel implements KeyListener {
     }
     
     public void close() {
-        frame.setVisible(false);
+//        frame.setVisible(false);
     }
 }

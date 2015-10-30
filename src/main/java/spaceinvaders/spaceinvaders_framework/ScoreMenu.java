@@ -1,15 +1,16 @@
 package spaceinvaders.spaceinvaders_framework;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -18,16 +19,15 @@ import state.Executor;
 
 public class ScoreMenu implements Runnable{
 
-	private JFrame frame;
     private HighscoreManager highscoremanager;
     private ArrayList<Score> allscores;
-    private JPanel panel;
     private JTable table;
     
     // the returns and quit button of the highscores page.
-    private JButton returns;
-    private JButton quit;
-    private JButton reset;
+    private JButton btnReturn;
+    private JButton btnReset;
+    private JButton btnQuit;
+    
     private Boolean running;
     private Thread thread;
     private Executor exec;
@@ -39,64 +39,61 @@ public class ScoreMenu implements Runnable{
 		highscoremanager = new HighscoreManager();
 		allscores = highscoremanager.getScores();
 		
-        // create the frame.
-        frame = new JFrame("Highscores");
-        frame.setSize(new Dimension(635, 470));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        // create the main panel
-        panel = new JPanel();
-        // set layout manager
-        panel.setLayout(new BorderLayout());
-        // set background colour.
-        panel.setBackground(Color.black);
-        
-        // the returns and quit button of the highscores page.
-        returns = new JButton("return");
-        quit = new JButton("quit");
-        reset = new JButton("reset");
-        
-        setup();
-	}
-	
-	private void setup() {
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		panel.setBackground(Color.black);
 
-        // the large text saying highscores add the top.
-        JLabel top = new JLabel("                                    Highscores");
-
-        top.setForeground(Color.white);
-        top.setFont(new Font("Calibri", Font.PLAIN, 30));
-
-        
-        String[] columnNames = { "Number", "Name", "Score" };
+		JLabel title = new JLabel("Highscores");
+		title.setForeground(Color.white);
+		title.setFont(new Font("Calibri", Font.PLAIN, 30));
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 3;
+		c.insets = new Insets(0, 0, 20, 0);
+		panel.add(title, c);
+		
+		String[] columnNames = { "Number", "Name", "Score" };
         Object[][] data = createData();
 
         // a table containing the top 10 scores of the game space invaders.
         table = new JTable(data, columnNames);
         table.setBackground(Color.black);
         table.setForeground(Color.white);
-        table.setEnabled(false);
+        table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
+        table.setGridColor(Color.gray);
+        c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 20, 0);
+        panel.add(table, c);
 
-        JPanel southpanel = new JPanel();
-        southpanel.add(returns);
-        southpanel.add(reset);
-        southpanel.add(quit);
-        
+		btnReturn = new JButton("Return");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 1;
+		c.insets = new Insets(0, 5, 0, 5);
+		panel.add(btnReturn, c);
 
-        // add all the elements to the panel
-        panel.add(top, BorderLayout.NORTH);
-        panel.add(table, BorderLayout.CENTER);
-        panel.add(southpanel, BorderLayout.SOUTH);
+		btnReset = new JButton("Reset");
+		c.gridx = 1;
+		c.gridy = 2;
+		panel.add(btnReset, c);
 
-        // add the panel to the frame.
-        frame.add(panel);
+		btnQuit = new JButton("Quit Game");
+		c.gridx = 2;
+		c.gridy = 2;
+		panel.add(btnQuit, c);
+		
+		CardWindow.getInstance().addCard(panel, "SCORECARD");
 	}
 	
 	public void show() {
 		running = true;
         thread = new Thread(this);
         thread.start();
-        frame.setVisible(true);
+        CardWindow.getInstance().showCard("SCORECARD");
     }
 	
 	public void run() {
@@ -113,16 +110,15 @@ public class ScoreMenu implements Runnable{
 
     
     public void listenForActions() {
-        returns.addActionListener(new ActionListener() {
+    	btnReturn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
                 running = false;
-                frame.setVisible(false);
                 exec.returning();
 			}
 		});
 
-        reset.addActionListener(new ActionListener() {
+    	btnReset.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				highscoremanager.clear();
@@ -131,11 +127,10 @@ public class ScoreMenu implements Runnable{
         
         // method that makes sure that when we press quit the application will
         // end.
-        quit.addActionListener(new ActionListener() {
+    	btnQuit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 running = false;
-                frame.setVisible(false);
                 exec.quit();
             }
         });

@@ -57,7 +57,7 @@ public class Game implements Runnable {
     private Screen screen;
 
     private Level level;
-    private int levelNumber = 1;
+    private int levelNumber = 0;
 
     public Game(Executor ex) {
         exec = ex;
@@ -127,9 +127,7 @@ public class Game implements Runnable {
 
         highscoremanager = new HighscoreManager();
 
-        level = LevelFactory.createLevel(levelNumber);
-        aliens = level.createAliens();
-        barriers = level.createBarriers();
+        generateLevel();
     }
 
     /**
@@ -139,37 +137,34 @@ public class Game implements Runnable {
     public void run() {
         // initialize all the entities
         init();
-
-        while (running) {
-            screen.repaint();
-            counter++;
-            if (counter >= 50) {
-                alienShoot();
-                counter = 0;
-            }
-            if (levelNumber > 15) {
-                end();
-            } else if (aliens.size() == 0) {
-                clearVectors();
-                level = LevelFactory.createLevel(++levelNumber);
-                spaceship.resetPosition();
-                aliens = level.createAliens();
-                barriers = level.createBarriers();
-                if (levelNumber % 5 == 0) {
-                    bossLevel = true;
-                } else {
-                    bossLevel = false;
-                }
-            } else if (aliens.get(aliens.size() - 1).reachedY(400)) {
-                end();
-            } else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-                barriers.clear();
-            }
-            removeOffScreenBullets();
-            listenForKeys();
-            checkIfHit();
-            moveAliens();
-
+    	
+    	while (running) {
+        	screen.repaint();
+    		counter++;
+    		if (counter >= 50) {
+    			alienShoot();
+    			counter = 0;
+    		}
+    		if (levelNumber > 15) {
+    			end();
+    		} else if (aliens.size() == 0) {
+    			generateLevel();
+    			if (levelNumber % 5 == 0) {
+    				bossLevel = true;
+    			}
+    			else {
+    				bossLevel = false;
+    			}
+    		} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+    			end();
+    		} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+    			barriers.clear();
+    		}
+    		removeOffScreenBullets();
+    		listenForKeys();
+    		checkIfHit();
+    		moveAliens();
+    		
             try {
                 Thread.sleep(15);
             } catch (Exception e) {
@@ -178,6 +173,27 @@ public class Game implements Runnable {
         }
 
         stop();
+    }
+    
+    public void generateLevel() {
+    	clearVectors();
+    	level = LevelFactory.createLevel(++levelNumber);
+    	spaceship.resetPosition();
+        aliens = level.createAliens();
+        barriers = level.createBarriers();
+        
+        CardWindow.getInstance().addCard(level.createTransitionPanel(), "TRANSITIONCARD");        
+        CardWindow.getInstance().showCard("TRANSITIONCARD");
+        
+        try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        CardWindow.getInstance().showCard("GAMECARD");
+        screen.requestFocusInWindow();
     }
 
     /**
