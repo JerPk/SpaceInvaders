@@ -1,11 +1,11 @@
 package spaceinvaders;
 
+import bullet.Bullet;
+import bullet.MegaBullet;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
-
-import bullet.Bullet;
-import bullet.MegaBullet;
 
 public class Barrier {
 
@@ -15,9 +15,13 @@ public class Barrier {
 
   private BufferedImage[] barrier = new BufferedImage[5];
 
-  public Barrier(double x, double y) {
-    this.xpos = x;
-    this.ypos = y;
+  /**
+   * Constructor of the barrier class.
+   * 
+   */
+  public Barrier(double xco, double yco) {
+    this.xpos = xco;
+    this.ypos = yco;
     this.state = 0;
 
     LogFile.getInstance().writeCreate("Barrier", xpos, ypos);
@@ -29,6 +33,12 @@ public class Barrier {
     barrier[4] = SpriteSheet.getInstance().grabImage(428, 210, 44, 32);
   }
 
+  /**
+   * Checks if barrier is hit by alien bullets.
+   * 
+   * @param alienBullets
+   * @return i
+   */
   public int ifHit(Vector<Bullet> alienBullets) {
     for (int i = 0; i < alienBullets.size(); i++) {
       Bullet testBullet = alienBullets.get(i);
@@ -50,6 +60,11 @@ public class Barrier {
     return -1;
   }
 
+  /**
+   * Check if barrier is hit 5 times and therefore destroyed.
+   * 
+   * @return true/false
+   */
   public boolean destroyed() {
     if (state >= 4) {
       return true;
@@ -58,11 +73,11 @@ public class Barrier {
     }
   }
 
-  private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
-    if (alienBullets.get(i).getX() + 15 >= xpos
-        && alienBullets.get(i).getX() <= xpos + 44) {
-      if (alienBullets.get(i).getY() + 50 >= ypos
-          && alienBullets.get(i).getY() <= ypos + 32) {
+  private boolean ifHitMega(Vector<Bullet> alienBullets, int index) {
+    if (alienBullets.get(index).getX() + 15 >= xpos
+        && alienBullets.get(index).getX() <= xpos + 44) {
+      if (alienBullets.get(index).getY() + 50 >= ypos
+          && alienBullets.get(index).getY() <= ypos + 32) {
         return true;
       }
     }
@@ -70,14 +85,14 @@ public class Barrier {
   }
 
   /**
-   * the method that returns the state
+   * the method that returns the state.
    */
   public int getState() {
     return state;
   }
 
   /**
-   * the method that returns the x position
+   * the method that returns the x position.
    *
    * @return x position
    */
@@ -86,7 +101,7 @@ public class Barrier {
   }
 
   /**
-   * the method that returns the y position
+   * the method that returns the y position.
    *
    * @return y position
    */
@@ -94,7 +109,8 @@ public class Barrier {
     return ypos;
   }
 
-  public void render(Graphics g) {
-    g.drawImage(barrier[state], (int) xpos, (int) ypos, null);
+  public void render(Graphics graphic) {
+    graphic.drawImage(barrier[state], (int) xpos, (int) ypos, null);
+
   }
 }

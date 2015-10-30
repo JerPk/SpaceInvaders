@@ -1,9 +1,10 @@
 package spaceinvaders;
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 import javax.swing.JOptionPane;
+
 
 /**
  * The HihgscoreManager is the main class in terms of reading and writing the
@@ -54,7 +55,7 @@ public class HighscoreManager {
    * returns an arraylist of scores this arraylist contains the score objects
    * that are associated with the games highscores.
    * 
-   * @return ArrayList<Score>
+   * @return ArrayList return the array containing all the scores
    */
   public ArrayList<Score> getScores() {
     loadScoreFile();
@@ -78,10 +79,6 @@ public class HighscoreManager {
    * adds a new score to it and calls updatescorefile to store the new
    * scoreslist.
    * 
-   * @param String
-   *          name
-   * @param Int
-   *          score
    */
   public void addScore(String name, int score) {
     loadScoreFile();
@@ -94,16 +91,15 @@ public class HighscoreManager {
    * scores array. If the player scores higher the object is added to the array.
    */
   public void addScore(int score) {
-    Score lowest_top_ten_score;
+    Score lowestTop10score;
     if (scores.size() == 0) {
-      System.out.println("No scores");
-      lowest_top_ten_score = new Score("New", 0);
+      lowestTop10score = new Score("New", 0);
     } else if (scores.size() < 10) {
-      lowest_top_ten_score = scores.get(scores.size() - 1);
+      lowestTop10score = scores.get(scores.size() - 1);
     } else {
-      lowest_top_ten_score = scores.get(9);
+      lowestTop10score = scores.get(9);
     }
-    if (score >= lowest_top_ten_score.getScore()) {
+    if (score >= lowestTop10score.getScore()) {
       String name = JOptionPane
           .showInputDialog("Congratulations, you are on the leaderboards! What is your name?");
       addScore(name, score);
@@ -163,7 +159,7 @@ public class HighscoreManager {
   }
 
   /**
-   * method that clears the highscores
+   * method that clears the highscores.
    */
   public void clear() {
     scores.clear();
@@ -177,9 +173,6 @@ public class HighscoreManager {
   /**
    * method that sets the outputstream. this method is only used for Testing
    * purposes.
-   * 
-   * @throws FileNotFoundException
-   * @throws IOException
    */
   public void setOutputstream() throws FileNotFoundException, IOException {
     outputStream = new ObjectOutputStream(

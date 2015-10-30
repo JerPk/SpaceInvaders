@@ -1,5 +1,8 @@
 package spaceinvaders;
 
+import alien.Alien;
+import bullet.Bullet;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,9 +12,6 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JPanel;
-
-import alien.Alien;
-import bullet.Bullet;
 
 public class Screen extends JPanel implements KeyListener {
 
@@ -26,10 +26,10 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * The title of the application.
    */
-  public final String TITLE = "Space Invaders";
+  public final String title = "Space Invaders";
 
   /**
-   * booleans related to the spaceships action
+   * booleans related to the spaceships action.
    */
   private boolean leftPressed = false;
   private boolean rightPressed = false;
@@ -44,6 +44,12 @@ public class Screen extends JPanel implements KeyListener {
 
   private Graphics graphic;
 
+  /**
+   * Constructor of the Screen class.
+   * 
+   * @param ga
+   *          game containing the entities that need to be displayed
+   */
   public Screen(Game ga) {
     setFocusable(true);
     addKeyListener(this);
@@ -59,16 +65,16 @@ public class Screen extends JPanel implements KeyListener {
   }
 
   /**
-   * the paintComponent method is used do draw all the object on the screen
+   * the paintComponent method is used do draw all the object on the screen.
    */
-  public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    graphic = g;
+  public void paintComponent(Graphics graphics) {
+    super.paintComponent(graphics);
+    graphic = graphics;
 
     // here we draw all the aliens.
     for (int i = 0; i < game.getAlienVector().size(); i++) {
-      Alien alien_obj = (Alien) game.getAlienVector().get(i);
-      alien_obj.render(graphic);
+      Alien alienObj = (Alien) game.getAlienVector().get(i);
+      alienObj.render(graphic);
     }
 
     for (int i = 0; i < game.getBarriers().size(); i++) {
@@ -87,22 +93,31 @@ public class Screen extends JPanel implements KeyListener {
     }
   }
 
+  /**
+   * Method to render the ship's bullets.
+   * 
+   * @param shipBullets
+   *          vector containing ship's bullets
+   */
   public void renderBulletShip(Vector<Bullet> shipBullets) {
     for (int i = 0; i < shipBullets.size(); i++) {
-      Bullet c = (Bullet) shipBullets.get(i);
-      c.render(graphic);
-      c.moveUp();
+      Bullet bul = (Bullet) shipBullets.get(i);
+      bul.render(graphic);
+      bul.moveUp();
     }
   }
 
   /**
-   * Temporal: Method to render the bullet for the alien
+   * Method to render the bullets for the aliens.
+   * 
+   * @param alienBullets
+   *          vector containing aliens' bullets
    */
   public void renderBulletAlien(Vector<Bullet> alienBullets) {
     for (int i = 0; i < alienBullets.size(); i++) {
-      Bullet b = (Bullet) alienBullets.get(i);
-      b.render(graphic);
-      b.moveDown();
+      Bullet bul = (Bullet) alienBullets.get(i);
+      bul.render(graphic);
+      bul.moveDown();
     }
   }
 
@@ -157,19 +172,21 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the keyReleased method is called when a key has been released.
    */
-  public void keyReleased(KeyEvent e) {
+  public void keyReleased(KeyEvent ke) {
 
-    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+    if (ke.getKeyCode() == KeyEvent.VK_LEFT) {
       leftPressed = false;
       // logfile.writeMove("Spaceship", spaceship.getPosX(),
       // spaceship.getPosY());
     }
-    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+    if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
       rightPressed = false;
       // logfile.writeMove("Spaceship", spaceship.getPosX(),
       // spaceship.getPosY());
     }
-    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+    if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
       spacePressed = false;
     }
   }
@@ -177,21 +194,21 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * The keytyped method isnt used in game class.
    */
-  public void keyTyped(KeyEvent e) {
+  public void keyTyped(KeyEvent ke) {
 
   }
 
   /**
    * The method that returns the right pressed boolean.
    * 
-   * @return
+   * @return rightPressed to check if the right arrow key is pressed
    */
   public boolean getRightPressed() {
     return rightPressed;
   }
 
   /**
-   * getter method for the leftpressed boolean
+   * getter method for the leftpressed boolean.
    */
   public boolean getLeftPressed() {
     return leftPressed;
@@ -200,28 +217,30 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the method that returns the space pressed boolean.
    * 
-   * @return
+   * @return to check if the space bar is pressed
    */
   public boolean getSpacePressed() {
     return spacePressed;
   }
 
   /**
-   * the method that sets the left pressed boolean.
+   * the method that sets the left pressed boolean for testing purposes.
    * 
-   * @param b
+   * @param bool
+   *          to set the left arrow key
    */
-  public void setPressedLeft(boolean b) {
-    leftPressed = b;
+  public void setPressedLeft(boolean bool) {
+    leftPressed = bool;
   }
 
   /**
-   * the method that sets the right pressed boolean.
+   * the method that sets the right pressed boolean for testing purposes.
    * 
-   * @param b
+   * @param bool
+   *          to set the right arrow key
    */
-  public void setPressedRight(boolean b) {
-    rightPressed = b;
+  public void setPressedRight(boolean bool) {
+    rightPressed = bool;
 
   }
 
@@ -232,13 +251,10 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the method that sets the space pressed boolean.
    * 
-   * @param b
+   * @param bool
+   *          to set the space bar
    */
-  public void setPressedSpace(boolean b) {
-    spacePressed = b;
-  }
-
-  public void close() {
-    // frame.setVisible(false);
+  public void setPressedSpace(boolean bool) {
+    spacePressed = bool;
   }
 }

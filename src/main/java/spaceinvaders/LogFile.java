@@ -4,7 +4,7 @@ import java.io.*;
 
 public class LogFile {
 
-  private volatile static LogFile uniqueInstance;
+  private static volatile LogFile uniqueInstance;
 
   private BufferedWriter outbuf;
 
@@ -12,7 +12,7 @@ public class LogFile {
   }
 
   /**
-   * method to get the instance of logfile
+   * method to get the instance of logfile.
    * 
    * @return unique LogFile
    */
@@ -24,7 +24,7 @@ public class LogFile {
   }
 
   /**
-   * method to open logfile
+   * method to open logfile.
    * 
    * @return success of opening logfile
    */
@@ -46,7 +46,7 @@ public class LogFile {
   }
 
   /**
-   * method to close logfile
+   * method to close logfile.
    * 
    * @return success of closing logfile
    */
@@ -60,7 +60,7 @@ public class LogFile {
   }
 
   /**
-   * method to write string to logfile
+   * method to write string to logfile.
    * 
    * @param message
    *          string to write
@@ -76,19 +76,19 @@ public class LogFile {
   }
 
   /**
-   * method to write created object to logfile
+   * method to write created object to logfile.
    * 
    * @param object
    *          which is created
-   * @param x
+   * @param xco
    *          position of the object
-   * @param y
+   * @param yco
    *          position of the object
    * @return success of writing to logfile
    */
-  public boolean writeCreate(String object, double x, double y) {
-    String out = object + " created at x=" + String.valueOf(x) + ", y="
-        + String.valueOf(y);
+  public boolean writeCreate(String object, double xco, double yco) {
+    String out = object + " created at x=" + String.valueOf(xco) + ", y="
+        + String.valueOf(yco);
     if (writeString(out) == true) {
       return true;
     } else {
@@ -97,19 +97,19 @@ public class LogFile {
   }
 
   /**
-   * method to write object which shot to logfile
+   * method to write object which shot to logfile.
    * 
    * @param object
    *          which shot
-   * @param x
+   * @param xco
    *          position of the object
-   * @param y
+   * @param yco
    *          position of the object
    * @return success of writing to logfile
    */
-  public boolean writeShoot(String object, double x, double y) {
-    String out = object + " shot a bullet from x=" + String.valueOf(x) + ", y="
-        + String.valueOf(y);
+  public boolean writeShoot(String object, double xco, double yco) {
+    String out = object + " shot a bullet from x=" + String.valueOf(xco)
+        + ", y=" + String.valueOf(yco);
     if (writeString(out) == true) {
       return true;
     } else {
@@ -118,19 +118,19 @@ public class LogFile {
   }
 
   /**
-   * method to write moved object to logfile
+   * method to write moved object to logfile.
    * 
    * @param object
    *          which has moved
-   * @param x
+   * @param xco
    *          position of the object
-   * @param y
+   * @param yco
    *          position of the object
    * @return success of writing to logfile
    */
-  public boolean writeMove(String object, double x, double y) {
-    String out = object + " moved to x=" + String.valueOf(x) + ", y="
-        + String.valueOf(y);
+  public boolean writeMove(String object, double xco, double yco) {
+    String out = object + " moved to x=" + String.valueOf(xco) + ", y="
+        + String.valueOf(yco);
     if (writeString(out) == true) {
       return true;
     } else {
@@ -139,19 +139,19 @@ public class LogFile {
   }
 
   /**
-   * method to write hit object to logfile
+   * method to write hit object to logfile.
    * 
    * @param object
    *          which is hit
-   * @param x
+   * @param xco
    *          position of the object
-   * @param y
+   * @param yco
    *          position of the object
    * @return success of writing to logfile
    */
-  public boolean writeHit(String object, double x, double y) {
-    String out = object + " at position x=" + String.valueOf(x) + ", y="
-        + String.valueOf(y) + " is hit";
+  public boolean writeHit(String object, double xco, double yco) {
+    String out = object + " at position x=" + String.valueOf(xco) + ", y="
+        + String.valueOf(yco) + " is hit";
     if (writeString(out) == true) {
       return true;
     } else {
@@ -160,16 +160,16 @@ public class LogFile {
   }
 
   /**
-   * method to write object which went offscreen to logfile
+   * method to write object which went offscreen to logfile.
    * 
    * @param object
    *          which went off the screen
-   * @param x
+   * @param xco
    *          position of the object
    * @return success of writing to logfile
    */
-  public boolean writeOffscreen(String object, double x) {
-    String out = object + " bullet went offscreen at x=" + String.valueOf(x);
+  public boolean writeOffscreen(String object, double xco) {
+    String out = object + " bullet went offscreen at x=" + String.valueOf(xco);
     if (writeString(out) == true) {
       return true;
     } else {

@@ -14,14 +14,13 @@ public class BuffereImageLoader {
   /**
    * the method used to create an bufferedImage from the file.
    * 
-   * @param String
-   *          Path
-   * @return BufferedImage
+   * @return BufferedImage that can be used to draw the graphics
    * @throws IOException
+   *           throws exception if it fails to load
    */
-  public BufferedImage LoadImage(String Path) throws IOException {
+  public BufferedImage loadImage(String path) throws IOException {
 
-    image = ImageIO.read(new FileInputStream(Path));
+    image = ImageIO.read(new FileInputStream(path));
     return image;
   }
 
