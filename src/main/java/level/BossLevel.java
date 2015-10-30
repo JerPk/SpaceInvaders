@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import alien.Alien;
 import alien.AlienFactory;
-import spaceinvaders.spaceinvaders_framework.Barrier;
+import spaceinvaders.Barrier;
 
 /**
  * Class of the boss level.

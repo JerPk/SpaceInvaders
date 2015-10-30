@@ -1,6 +1,6 @@
 package state;
 
-import spaceinvaders.spaceinvaders_framework.Game;
+import spaceinvaders.Game;
 
 public class GameState implements State {
 

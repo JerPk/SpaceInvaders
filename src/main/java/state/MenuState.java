@@ -1,6 +1,6 @@
 package state;
 
-import spaceinvaders.spaceinvaders_framework.Menu;
+import spaceinvaders.Menu;
 
 public class MenuState implements State{
 	

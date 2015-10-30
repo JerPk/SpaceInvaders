@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework;
+package spaceinvaders;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bullet.Bullet;
+import spaceinvaders.Barrier;
+import spaceinvaders.Game;
 import state.Executor;
 
 import java.awt.image.BufferedImage;
@@ -23,8 +25,8 @@ public class BarrierTest {
 	/**
 	 * The game object that is used in all of the test cases.
 	 */
-	private Game game;
-	private Executor exec;
+//	private Game game;
+//	private Executor exec;
 
 	/**
 	 * This method is executed before every test. It creates the game class and
@@ -32,10 +34,11 @@ public class BarrierTest {
 	 */
 	@Before
 	public void setUpGame() {
-		exec = new Executor();
-		exec.run();
-		game = new Game(exec);
-		game.init();
+//		exec = new Executor();
+//		exec.run();
+//		game = new Game(exec);
+//		game.init();
+		LogFile.getInstance().open();
 	}
 
 	/**

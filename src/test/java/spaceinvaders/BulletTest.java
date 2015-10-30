@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework;
+package spaceinvaders;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bullet.*;
+import spaceinvaders.Game;
 import state.Executor;
 
 /**
@@ -24,8 +25,8 @@ public class BulletTest {
 	/**
 	 * The game object that is used in all of the test cases.
 	 */
-	private Game game;
-	private Executor exec;
+//	private Game game;
+//	private Executor exec;
 
 	/**
 	 * This method is executed before every test. It creates the game class and
@@ -33,10 +34,11 @@ public class BulletTest {
 	 */
 	@Before
 	public void setUpGame() {
-		exec = new Executor();
-		exec.run();
-		game = new Game(exec);
-		game.init();
+//		exec = new Executor();
+//		exec.run();
+//		game = new Game(exec);
+//		game.init();
+		LogFile.getInstance().open();
 	}
 
 	/**
@@ -59,11 +61,11 @@ public class BulletTest {
 	@Test
 	public void testMoveUp() {
 		final Bullet bullet = new Bullet(1, 20);
-		game.setRunning(true);
+//		game.setRunning(true);
 
 		bullet.moveUp();
 		assertEquals((double) 17.8, bullet.getY(), 0.00001);
-		assertTrue(game.getRunning());
+//		assertTrue(game.getRunning());
 	}
 
 	/**
@@ -72,11 +74,11 @@ public class BulletTest {
 	@Test
 	public void testMoveDown() {
 		Bullet bullet = new Bullet(1, 20);
-		game.setRunning(true);
+//		game.setRunning(true);
 
 		bullet.moveDown();
 		assertEquals((double) 22.2, bullet.getY(), 0.00001);
-		assertTrue(game.getRunning());
+//		assertTrue(game.getRunning());
 		
 //		game.se
 		

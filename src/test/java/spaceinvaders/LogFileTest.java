@@ -1,11 +1,12 @@
-package spaceinvaders.spaceinvaders_framework;
+package spaceinvaders;
 
 import static org.junit.Assert.*;
 
-import java.io.BufferedReader;
 import java.io.*;
 
 import org.junit.Test;
+
+import spaceinvaders.LogFile;
 public class LogFileTest {
     
     public static LogFile logfile;

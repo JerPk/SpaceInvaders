@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework;
+package spaceinvaders;
 
 import iterator.ConcreteAggregate;
 import iterator.Iterator;
@@ -49,10 +49,9 @@ public class Game implements Runnable {
     private Vector<Barrier> barriers;
 
     private int counter;
-    private int score = 0;
+    private static int score = 0;
 
     private Spaceship spaceship;
-    public static LogFile logfile;
     private Screen screen;
 
     private Level level;
@@ -101,8 +100,8 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
 
-        logfile.writeString("Game ended because of an error at " + new Date());
-        logfile.close();
+        LogFile.getInstance().writeString("Game ended because of an error at " + new Date());
+        LogFile.getInstance().close();
 
         // exits the application.
         System.exit(1);
@@ -118,9 +117,8 @@ public class Game implements Runnable {
         shipBullets = new Vector<Bullet>(0);
         barriers = new Vector<Barrier>(0);
 
-        logfile = LogFile.getInstance();
-        logfile.open();
-        logfile.writeString("Game started at " + new Date());
+        LogFile.getInstance().open();
+        LogFile.getInstance().writeString("Game started at " + new Date());
 
         spaceship = new Spaceship();
 
@@ -218,7 +216,7 @@ public class Game implements Runnable {
                 alien.vmovement();
             }
 
-            Game.logfile.writeString("Aliens reached a border and moved down");
+            LogFile.getInstance().writeString("Aliens reached a border and moved down");
         }
     }
 
@@ -322,7 +320,7 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterAlienBullets.next();
             if (bullet.reachedY(450)) {
-                Game.logfile.writeOffscreen("Alien", bullet.getX());
+            	LogFile.getInstance().writeOffscreen("Alien", bullet.getX());
                 alienBullets.removeElementAt(iterAlienBullets.position());
             }
 
@@ -335,7 +333,7 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.reachedY(450)) {
-                Game.logfile.writeOffscreen("Spaceship", bullet.getX());
+            	LogFile.getInstance().writeOffscreen("Spaceship", bullet.getX());
                 shipBullets.removeElementAt(iterShipBullets.position());
             }
 
@@ -373,60 +371,6 @@ public class Game implements Runnable {
      */
     public Spaceship getSpaceship() {
         return spaceship;
-    }
-
-    /**
-     * equals method that compares if two game objects are equal.
-     */
-    public boolean equals(Object other) {
-        boolean result = false;
-        if (other instanceof Game) {
-            Game that = (Game) other;
-            if (this.getcounter() == that.getcounter()) {
-                result = true;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Compares two images pixel by pixel.
-     *
-     * @param imgA
-     *            - the first image.
-     * @param imgB
-     *            - the second image.
-     * @return whether the images are both the same.
-     */
-    public boolean compareImages(Object a, Object b) {
-
-        if (a instanceof BufferedImage && b instanceof BufferedImage) {
-            BufferedImage imgA = (BufferedImage) a;
-            BufferedImage imgB = (BufferedImage) b;
-
-            // The images mush be the same size.
-            if (imgA.getWidth() == imgB.getWidth()
-                    && imgA.getHeight() == imgB.getHeight()) {
-                int width = imgA.getWidth();
-                int height = imgA.getHeight();
-
-                // Loop over every pixel.
-                for (int y = 0; y < height; y++) {
-                    for (int x = 0; x < width; x++) {
-                        // Compare the pixels for equality.
-                        if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-                            return false;
-                        }
-                    }
-                }
-            } else {
-                return false;
-            }
-
-            return true;
-        }
-        return false;
-
     }
 
     /**
@@ -490,20 +434,20 @@ public class Game implements Runnable {
     /**
      * the method we use to exit the application.
      */
-    public void end() {
-        running = false;
-        HighscoreManager.getInstance().addScore(score);
-        logfile.writeString("Game ended at " + new Date());
-        logfile.close();
-        screen.close();
-        exec.returning();
-    }
+	public void end() {
+		running = false;
+		HighscoreManager.getInstance().addScore(score);
+		LogFile.getInstance().writeString("Game ended at " + new Date());
+		LogFile.getInstance().close();
+		screen.close();
+		exec.returning();
+	}
 
     public int getLevelNumber() {
         return levelNumber;
     }
 
-    public int getScore() {
+    public static int getScore() {
         return score;
     }
 

@@ -1,4 +1,4 @@
-package spaceinvaders.spaceinvaders_framework;
+package spaceinvaders;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
