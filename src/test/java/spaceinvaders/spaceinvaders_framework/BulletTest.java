@@ -3,6 +3,7 @@ package spaceinvaders.spaceinvaders_framework;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import bullet.Bullet;
+import bullet.*;
 import state.Executor;
 
 /**
@@ -43,7 +44,11 @@ public class BulletTest {
 	 */
 	@Test
 	public void testBullet() {
-		final Bullet bullet = new Bullet(1, 1);
+		Bullet bullet = new Bullet(1, 1);
+		assertEquals((double) 1, bullet.getX(), 0.00001);
+		assertEquals((double) 1, bullet.getY(), 0.00001);
+		
+		bullet = new MegaBullet(1, 1);
 		assertEquals((double) 1, bullet.getX(), 0.00001);
 		assertEquals((double) 1, bullet.getY(), 0.00001);
 	}
@@ -66,12 +71,24 @@ public class BulletTest {
 	 */
 	@Test
 	public void testMoveDown() {
-		final Bullet bullet = new Bullet(1, 20);
+		Bullet bullet = new Bullet(1, 20);
 		game.setRunning(true);
 
 		bullet.moveDown();
 		assertEquals((double) 22.2, bullet.getY(), 0.00001);
 		assertTrue(game.getRunning());
+		
+//		game.se
+		
+		bullet = new DiagonalBulletLeft(20, 20);
+		bullet.moveDown();
+		assertEquals((double) 22.2, bullet.getY(), 0.00001);
+		assertEquals((double) 19.3, bullet.getX(), 0.00001);
+		
+		bullet = new DiagonalBulletRight(20, 20);
+		bullet.moveDown();
+		assertEquals((double) 22.2, bullet.getY(), 0.00001);
+		assertEquals((double) 20.7, bullet.getX(), 0.00001);
 	}
 
 	/**
@@ -86,5 +103,38 @@ public class BulletTest {
 		assertEquals(bullet1, bullet2);
 		assertNotSame(bullet1, bullet2);
 	}
-
+	
+	/**
+	 * The JUnit test that tests the setX method.
+	 */
+	@Test
+	public void testSetX() {
+		final Bullet bullet = new Bullet(1, 20);
+		
+		bullet.setX(50);
+		assertEquals((double) 50, bullet.getX(), 0.00001);
+	}
+	
+	/**
+	 * The JUnit test that tests the setX method.
+	 */
+	@Test
+	public void testSetY() {
+		final Bullet bullet = new Bullet(1, 20);
+		
+		bullet.setY(50);
+		assertEquals((double) 50, bullet.getY(), 0.00001);
+	}
+	
+	/**
+     * The JUnit test that tests the reachedY method.
+     */
+	@Test
+    public void testReachedY() {
+    	final Bullet bullet = new Bullet(1, 20);
+    	assertFalse(bullet.reachedY(50));
+    	
+    	bullet.setY(60);
+    	assertTrue(bullet.reachedY(50));
+    }
 }
