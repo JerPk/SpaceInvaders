@@ -152,9 +152,6 @@ public class ScoreMenu implements Runnable{
     
     public Object[][] createData() {
 		allscores = HighscoreManager.getInstance().getScores();
-		if (allscores.size() < 10) {
-			HighscoreManager.getInstance().clear();
-		}
 
 		Score Score1 = allscores.get(0);
 		Score Score2 = allscores.get(1);
