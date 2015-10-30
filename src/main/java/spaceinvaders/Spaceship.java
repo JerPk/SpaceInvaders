@@ -88,11 +88,9 @@ public class Spaceship {
       if (bullet.getY() > ypos - 10 && bullet.getY() < ypos + 16) {
         if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 26) {
           lives -= 1;
-          LogFile.getInstance().writeHit("Spaceship", bullet.getX(),
-              bullet.getY());
+          LogFile.getInstance().writeHit("Spaceship", bullet.getX(), bullet.getY());
           if (lives > 0) {
-            LogFile.getInstance().writeString(
-                "Spaceship has " + String.valueOf(lives) + " lives left");
+            LogFile.getInstance().writeString("Spaceship has " + String.valueOf(lives) + " lives left");
           } else {
             LogFile.getInstance().writeString("Spaceship has no lives left");
           }
@@ -110,14 +108,19 @@ public class Spaceship {
     xpos = Screen.WIDTH / 2 - 13;
   }
 
+  /**
+   * method to check if the spaceship is hit by a megabullet.
+   * 
+   * @param bullet
+   * @return boolean hit or not
+   */
   private boolean ifHitMega(Bullet bullet) {
-    if (bullet.getX() + 15 >= xpos && bullet.getX() + 15 <= xpos + 26) {
-      if (bullet.getY() + 50 >= ypos && bullet.getY() + 50 <= ypos + 16) {
+    if (bullet.getX() + 15 >= xpos && bullet.getX() <= xpos + 26) {
+      if (bullet.getY() + 50 >= ypos && bullet.getY() <= ypos + 16) {
         lives -= 1;
         LogFile.getInstance().writeHit("Spaceship", bullet.getX(), bullet.getY());
         if (lives > 0) {
-          LogFile.getInstance().writeString(
-              "Spaceship has " + String.valueOf(lives) + " lives left");
+          LogFile.getInstance().writeString("Spaceship has " + String.valueOf(lives) + " lives left");
         } else {
           LogFile.getInstance().writeString("Spaceship has no lives left");
         }
@@ -178,29 +181,5 @@ public class Spaceship {
     for (int i = 1; i <= lives; i++) {
       graphics.drawImage(spaceship, 10 + 30 * (i - 1), 452, null);
     }
-
   }
-
-  /**
-   * the method that returns the bufferedImage of the spaceship.
-   */
-  public BufferedImage getImage() {
-    return spaceship;
-  }
-
-  /**
-   * the equals method returns if two spaceships are equal.
-   */
-  @Override
-  public boolean equals(Object other) {
-    boolean result = false;
-    if (other instanceof Spaceship) {
-      Spaceship that = (Spaceship) other;
-      if (this.getPosX() == that.getPosX()) {
-        result = true;
-      }
-    }
-    return result;
-  }
-
 }

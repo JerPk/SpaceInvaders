@@ -27,13 +27,9 @@ public class SpriteSheet {
    * 
    * @return unique SpriteSheet
    */
-  public static SpriteSheet getInstance() {
+  public static synchronized SpriteSheet getInstance() {
     if (uniqueInstance == null) {
-      synchronized (SpriteSheet.class) {
-        if (uniqueInstance == null) {
-          uniqueInstance = new SpriteSheet();
-        }
-      }
+      uniqueInstance = new SpriteSheet();
     }
     return uniqueInstance;
   }
