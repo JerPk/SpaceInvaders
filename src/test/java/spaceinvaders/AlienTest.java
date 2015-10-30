@@ -79,11 +79,11 @@ public class AlienTest {
   public void testHMovementRightBorder() {
     final Alien alien = AlienFactory.getAlien("easy", 643, 33);
 
-    assertFalse(Alien.getupdateLogic());
+    assertFalse(Alien.getUpdateLogic());
 
     alien.hmovement();
     assertEquals((double) 644, alien.getX(), 0.0001);
-    assertTrue(Alien.getupdateLogic());
+    assertTrue(Alien.getUpdateLogic());
   }
 
   /**
@@ -229,10 +229,10 @@ public class AlienTest {
   public void testHmovementBossAlien() {
     final Alien alien = AlienFactory.getAlien("boss", 33, 33);
 
-    assertFalse(Alien.getupdateLogic());
+    assertFalse(Alien.getUpdateLogic());
 
     alien.hmovement();
-    assertFalse(Alien.getupdateLogic());
+    assertFalse(Alien.getUpdateLogic());
     assertEquals(34, alien.getX(), 0.00001);
   }
 
@@ -248,7 +248,7 @@ public class AlienTest {
 
     alien.hmovement();
     assertEquals((double) 644, alien.getX(), 0.0001);
-    assertTrue(Alien.getupdateLogic());
+    assertTrue(Alien.getUpdateLogic());
   }
 
   /**

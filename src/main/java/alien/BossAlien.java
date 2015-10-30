@@ -11,23 +11,37 @@ import bullet.DiagonalBulletRight;
 import bullet.MegaBullet;
 import spaceinvaders.LogFile;
 
+/**
+ * The Boss Alien class which extends Alien.
+ * 
+ * @author Group 23
+ */
 public class BossAlien extends Alien {
 
   /**
    * the horizontal movement speed of the aliens.
    */
   private int movementSpeed = 1;
+
+  /**
+   * the random number for creating new bullet.
+   */
   private int randomNum;
+
+  /**
+   * boolean is true when random new random number is needed.
+   */
   private boolean overwrite;
 
   /**
-   * the constructor of alien type 3.
+   * the constructor of boss alien.
    * 
-   * @param x
-   * @param y
-   * @param g
+   * @param double
+   *          x coordinate
+   * @param double
+   *          y coordinate
    */
-  public BossAlien(double x, double y) {
+  public BossAlien(final double x, final double y) {
     super(x, y);
     LogFile.getInstance().writeCreate("BossAlien", x, y);
     setSpritesheet(215, 225, 50, 20);
@@ -40,17 +54,17 @@ public class BossAlien extends Alien {
    * the method that moves the aliens in the horizontal direction.
    */
   @Override
-  public void hmovement() {
+  public final void hmovement() {
     // check if the alien has reached if the alien has reached the right
     // hand border.
     if (movementSpeed > 0 && getX() >= 600) {
-      updateLogic(true);
+      setUpdateLogic(true);
     }
 
     // check if the alien has reached if the alien has reached the left hand
     // border.
     if (movementSpeed < 0 && getX() <= 2) {
-      updateLogic(true);
+      setUpdateLogic(true);
     }
 
     // moves the alien in the horizontal direction.
@@ -61,7 +75,7 @@ public class BossAlien extends Alien {
    * the method that moves the alien in the vertical direction.
    */
   @Override
-  public void vmovement() {
+  public final void vmovement() {
     // move the alien in the vertical direction
 
     ypos += 40;
@@ -69,7 +83,7 @@ public class BossAlien extends Alien {
     // flip the movement speed so now the alien will move in
     // the other direction.
     movementSpeed = -movementSpeed;
-    updateLogic(false);
+    setUpdateLogic(false);
   }
 
   /**
@@ -79,16 +93,16 @@ public class BossAlien extends Alien {
    * @return Bullet newBullet
    */
   @Override
-  public Vector<Bullet> BossShoot() {
+  public final Vector<Bullet> BossShoot() {
     final Vector<Bullet> newBullets = new Vector<Bullet>();
 
     // Usually this can be a field rather than a method variable
     Random rand = new Random();
 
-    if (overwrite == false) {
+    if (!overwrite) {
       randomNum = rand.nextInt(3) + 1;
     }
-    
+
     LogFile.getInstance().writeShoot("BossAlien", getX(), getY());
 
     if (randomNum == 1) {
@@ -111,11 +125,11 @@ public class BossAlien extends Alien {
   }
 
   /**
-   * method that creates and returns a single mega bullet
+   * method that creates and returns a single mega bullet.
    * 
-   * @return
+   * @return bullet vector
    */
-  public Vector<Bullet> MegaBullet() {
+  public final Vector<Bullet> MegaBullet() {
     final Vector<Bullet> newBullets = new Vector<Bullet>();
 
     final Bullet MegaBullet0 = new MegaBullet(getX() + 20, getY() + 13);
@@ -127,9 +141,9 @@ public class BossAlien extends Alien {
   /**
    * a method that returns a multitude of fast bullets.
    * 
-   * @return
+   * @return bullet vector
    */
-  public Vector<Bullet> multipleSpeedBullets() {
+  public final Vector<Bullet> multipleSpeedBullets() {
     final Vector<Bullet> newBullets = new Vector<Bullet>();
 
     final Bullet newSpeedBullet0 = new Bullet(getX() + 0, getY() + 13);
@@ -163,7 +177,7 @@ public class BossAlien extends Alien {
    * 
    * @return
    */
-  public Vector<Bullet> tridentBullets() {
+  public final Vector<Bullet> tridentBullets() {
     final Vector<Bullet> newBullets = new Vector<Bullet>();
 
     final Bullet newBullet0 = new DiagonalBulletLeft(getX() + 20, getY() + 13);
@@ -177,14 +191,28 @@ public class BossAlien extends Alien {
 
   }
 
-  public void setRand(int random) {
+  /**
+   * method to set random number
+   * 
+   * @param random
+   *          number to set
+   */
+  public final void setRand(final int random) {
     randomNum = random;
     overwrite = true;
   }
 
+  /**
+   * ifHit method compares every bullet from shipBullets with the coordinates of
+   * the boss alien if the coordinates match the boss alien is considered hit
+   * and the integer of its place in the array is returned.
+   * 
+   * @param shipBullets
+   * @return position of iterator
+   */
   @Override
-  public int ifHit(Vector<Bullet> shipBullets) {
-    Iterator iterShipBullets = ConcreteAggregate.createIterator(shipBullets);
+  public final int ifHit(final Vector<Bullet> shipBullets) {
+    Iterator iterShipBullets = concreteAggregate.createIterator(shipBullets);
 
     while (iterShipBullets.hasNext()) {
       Bullet bullet = (Bullet) iterShipBullets.next();

@@ -19,7 +19,7 @@ public class AlienType2 extends Alien {
    * @param y
    * @param g
    */
-  public AlienType2(double x, double y) {
+  public AlienType2(final double x, final double y) {
     super(x, y);
     LogFile.getInstance().writeCreate("AlienType2", x, y);
     setSpritesheet(40, 225, 16, 16);
@@ -35,7 +35,7 @@ public class AlienType2 extends Alien {
    * @return Bullet newBullet
    */
   @Override
-  public Bullet shoot() {
+  public final Bullet shoot() {
     final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
     LogFile.getInstance().writeShoot("AlienType2", getX(), getY());
 

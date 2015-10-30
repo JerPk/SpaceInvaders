@@ -8,7 +8,6 @@ import level.Level;
 import level.LevelFactory;
 import state.Executor;
 
-import java.awt.image.BufferedImage;
 import java.util.Date;
 import java.util.Random;
 import java.util.Vector;
@@ -220,7 +219,7 @@ public class Game implements Runnable {
     // this if statement will only be used if all the aliens need to be
     // updated simultaneously. this is the case when all the aliens need
     // to be moved vertically.
-    if (Alien.getupdateLogic()) {
+    if (Alien.getUpdateLogic()) {
       Iterator iterAliens2 = concreteAggregate.createIterator(aliens);
 
       while (iterAliens2.hasNext()) {

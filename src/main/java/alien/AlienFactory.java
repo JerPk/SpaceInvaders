@@ -13,22 +13,25 @@ public class AlienFactory {
    * the main method of the alien factory class. it takes the criteria and
    * coordinates. and returns the alien type specified by the criteria.
    * 
-   * @param criteria
+   * @param name
+   *          alien type
    * @param x
+   *          x coordinate
    * @param y
-   * @param g
-   * @return
+   *          y coordinate
+   * @return the new alien
    */
-  public static Alien getAlien(String criteria, double x, double y) {
+  public static Alien getAlien(String name, final double x, final double y) {
 
-    if (criteria.equals("easy"))
+    if (name.equals("easy")) {
       return Alien.createAlienType1(x, y);
-    else if (criteria.equals("normal"))
+    } else if (name.equals("normal")) {
       return Alien.createAlienType2(x, y);
-    else if (criteria.equals("hard"))
+    } else if (name.equals("hard")) {
       return Alien.createAlienType3(x, y);
-    else if (criteria.equals("boss"))
+    } else if (name.equals("boss")) {
       return Alien.createBossAlien(x, y);
+    }
 
     return null;
   }
