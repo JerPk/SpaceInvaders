@@ -49,7 +49,7 @@ public class Game implements Runnable {
     private Vector<Barrier> barriers;
 
     private int counter;
-    private static int score = 0;
+    private static int score;
 
     private Spaceship spaceship;
     private Screen screen;
@@ -121,6 +121,8 @@ public class Game implements Runnable {
         LogFile.getInstance().writeString("Game started at " + new Date());
 
         spaceship = new Spaceship();
+        
+        score = 0;
 
         generateLevel();
     }
