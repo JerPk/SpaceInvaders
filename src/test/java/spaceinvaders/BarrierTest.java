@@ -22,79 +22,79 @@ import java.util.Vector;
  */
 public class BarrierTest {
 
-	/**
-	 * The game object that is used in all of the test cases.
-	 */
-//	private Game game;
-//	private Executor exec;
+  /**
+   * The game object that is used in all of the test cases.
+   */
+  // private Game game;
+  // private Executor exec;
 
-	/**
-	 * This method is executed before every test. It creates the game class and
-	 * sets up the required spritesheet.
-	 */
-	@Before
-	public void setUpGame() {
-//		exec = new Executor();
-//		exec.run();
-//		game = new Game(exec);
-//		game.init();
-		LogFile.getInstance().open();
-	}
+  /**
+   * This method is executed before every test. It creates the game class and
+   * sets up the required spritesheet.
+   */
+  @Before
+  public void setUpGame() {
+    // exec = new Executor();
+    // exec.run();
+    // game = new Game(exec);
+    // game.init();
+    LogFile.getInstance().open();
+  }
 
-	/**
-	 * the JUnit test of the Constuctor method of Barrier.
-	 */
-	@Test
-	public void testBarrier() {
-		final Barrier barrier = new Barrier(3.0, 3.0);
+  /**
+   * the JUnit test of the Constuctor method of Barrier.
+   */
+  @Test
+  public void testBarrier() {
+    final Barrier barrier = new Barrier(3.0, 3.0);
 
-		assertEquals(barrier.getPosX(), 3.0, 0.00001);
-		assertEquals(barrier.getPosY(), 3.0, 0.00001);
-		assertEquals(barrier.getState(), 0);
+    assertEquals(barrier.getPosX(), 3.0, 0.00001);
+    assertEquals(barrier.getPosY(), 3.0, 0.00001);
+    assertEquals(barrier.getState(), 0);
 
-	}
+  }
 
-	/**
-	 * The JUnit test of the IfHit method of Barrier.
-	 */
-	@Test
-	public void testIfHit() {
-		final Barrier barrier = new Barrier(3.0, 3.0);
-		final Vector<Bullet> alienBullets = new Vector<Bullet>(0);
+  /**
+   * The JUnit test of the IfHit method of Barrier.
+   */
+  @Test
+  public void testIfHit() {
+    final Barrier barrier = new Barrier(3.0, 3.0);
+    final Vector<Bullet> alienBullets = new Vector<Bullet>(0);
 
-		assertEquals(barrier.ifHit(alienBullets), -1);
+    assertEquals(barrier.ifHit(alienBullets), -1);
 
-		final Bullet testBullet = new Bullet(20, 15);
-		alienBullets.add(testBullet);
+    final Bullet testBullet = new Bullet(20, 15);
+    alienBullets.add(testBullet);
 
-		assertEquals(barrier.ifHit(alienBullets), 0);
+    assertEquals(barrier.ifHit(alienBullets), 0);
 
-	}
+  }
 
-	/**
-	 * The JUnit test of the getPosX method of Barrier.
-	 */
-	@Test
-	public void testGetPosX() {
-		final Barrier barrier = new Barrier(3.0, 5.0);
-		assertEquals(barrier.getPosX(), 3.0, 0.00001);
-	}
+  /**
+   * The JUnit test of the getPosX method of Barrier.
+   */
+  @Test
+  public void testGetPosX() {
+    final Barrier barrier = new Barrier(3.0, 5.0);
+    assertEquals(barrier.getPosX(), 3.0, 0.00001);
+  }
 
-	/**
-	 * The JUnit test of the getPosY method of Barrier.
-	 */
-	@Test
-	public void testGetPosY() {
-		final Barrier barrier = new Barrier(3.0, 5.0);
-		assertEquals(barrier.getPosY(), 5.0, 0.00001);
-	}
+  /**
+   * The JUnit test of the getPosY method of Barrier.
+   */
+  @Test
+  public void testGetPosY() {
+    final Barrier barrier = new Barrier(3.0, 5.0);
+    assertEquals(barrier.getPosY(), 5.0, 0.00001);
+  }
 
-	/**
-	 * The JUnit test of the getState method of Barrier.
-	 */
-	@Test
-	public void testGetState() {
-		final Barrier barrier = new Barrier(3.0, 5.0);
-		assertEquals(barrier.getState(), 0);
-	}
+  /**
+   * The JUnit test of the getState method of Barrier.
+   */
+  @Test
+  public void testGetState() {
+    final Barrier barrier = new Barrier(3.0, 5.0);
+    assertEquals(barrier.getState(), 0);
+  }
 }

@@ -4,6 +4,6 @@ import java.util.Vector;
 
 public interface Aggregate {
 
-    public Iterator createIterator(Vector<?> vector);
+  public Iterator createIterator(Vector<?> vector);
 
 }

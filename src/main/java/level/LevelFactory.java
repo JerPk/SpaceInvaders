@@ -10,26 +10,26 @@ import spaceinvaders.LogFile;
  */
 public class LevelFactory {
 
-	/**
-	 * Method to create a level.
-	 * 
-	 * @param number
-	 *            Level number
-	 * @return the created level
-	 */
-	public static Level createLevel(final int number) {
-		Level level;
+  /**
+   * Method to create a level.
+   * 
+   * @param number
+   *          Level number
+   * @return the created level
+   */
+  public static Level createLevel(final int number) {
+    Level level;
 
-		if (number % 5 == 0) {
-			level = new BossLevel(number);
-		} else if (number <= 15) {
-			level = new StandardLevel(number);
-		} else {
-			level = new Level(number);
-		}
+    if (number % 5 == 0) {
+      level = new BossLevel(number);
+    } else if (number <= 15) {
+      level = new StandardLevel(number);
+    } else {
+      level = new Level(number);
+    }
 
-		LogFile.getInstance().writeString("Level " + number + " created");
+    LogFile.getInstance().writeString("Level " + number + " created");
 
-		return level;
-	}
+    return level;
+  }
 }
