@@ -49,7 +49,6 @@ public class Game implements Runnable {
     private Vector<Barrier> barriers;
 
     private int counter;
-    private HighscoreManager highscoremanager;
     private int score = 0;
 
     private Spaceship spaceship;
@@ -122,8 +121,6 @@ public class Game implements Runnable {
         LogFile.getInstance().writeString("Game started at " + new Date());
 
         spaceship = new Spaceship();
-
-        highscoremanager = new HighscoreManager();
 
         generateLevel();
     }
@@ -491,14 +488,14 @@ public class Game implements Runnable {
     /**
      * the method we use to exit the application.
      */
-    public void end() {
-        running = false;
-        highscoremanager.addScore(score);
-        LogFile.getInstance().writeString("Game ended at " + new Date());
-        LogFile.getInstance().close();
-        screen.close();
-        exec.returning();
-    }
+	public void end() {
+		running = false;
+		HighscoreManager.getInstance().addScore(score);
+		LogFile.getInstance().writeString("Game ended at " + new Date());
+		LogFile.getInstance().close();
+		screen.close();
+		exec.returning();
+	}
 
     public int getLevelNumber() {
         return levelNumber;
@@ -506,18 +503,6 @@ public class Game implements Runnable {
 
     public int getScore() {
         return score;
-    }
-
-    public HighscoreManager getHSManager() {
-        return highscoremanager;
-    }
-
-    /**
-     * the set highscoremanager sets the new Highscoremanager. This method is
-     * used only for testing purposes.
-     */
-    public void setHighscoremanager(HighscoreManager manager) {
-        highscoremanager = manager;
     }
 
     /**

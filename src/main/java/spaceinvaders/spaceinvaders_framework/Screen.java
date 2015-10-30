@@ -77,7 +77,7 @@ public class Screen extends JPanel implements KeyListener {
 		}
 
 		renderScore(game.getScore());
-		renderHighScore(game.getHSManager());
+		renderHighScore(HighscoreManager.getInstance());
 		renderLevelNumber(game.getLevelNumber());
 
 		// Draw the bullets and spaceship

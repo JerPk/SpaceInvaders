@@ -58,7 +58,7 @@ public class Menu implements Runnable {
 		c.gridy = 2;
 		panel.add(btnStatistics, c);
 
-		btnQuit = new JButton("Quit Game");
+		btnQuit = new JButton("Quit");
 		c.gridy = 3;
 		panel.add(btnQuit, c);
 		
