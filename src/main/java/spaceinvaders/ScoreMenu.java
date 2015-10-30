@@ -147,7 +147,8 @@ public class ScoreMenu implements Runnable {
     btnReset.addActionListener(new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent ae) {
-        highscoremanager.clear();
+        HighscoreManager.getInstance().clear();
+        exec.run();
       }
     });
 
