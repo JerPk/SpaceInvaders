@@ -35,9 +35,11 @@ public class LogFileTest {
     File outfile = new File("logfile.txt");
     LogFile logfile = LogFile.getInstance();
     logfile.open();
-
+    
     assertEquals(outfile.exists(), true);
     assertEquals(logfile.writeString("Test"), true);
+    
+    logfile.close();
   }
 
   /**
