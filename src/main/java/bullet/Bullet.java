@@ -3,8 +3,6 @@ package bullet;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import org.junit.Test;
-
 import spaceinvaders.LogFile;
 import spaceinvaders.SpriteSheet;
 
