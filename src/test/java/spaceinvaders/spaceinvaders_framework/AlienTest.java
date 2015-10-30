@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bullet.Bullet;
+import spaceinvaders.Game;
 import state.Executor;
 import alien.Alien;
 import alien.AlienFactory;

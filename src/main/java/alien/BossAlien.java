@@ -9,9 +9,9 @@ import bullet.Bullet;
 import bullet.DiagonalBulletLeft;
 import bullet.DiagonalBulletRight;
 import bullet.MegaBullet;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.LogFile;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.Game;
+import spaceinvaders.LogFile;
+import spaceinvaders.SpriteSheet;
 
 public class BossAlien extends Alien {
 

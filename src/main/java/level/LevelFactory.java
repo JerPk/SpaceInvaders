@@ -1,7 +1,7 @@
 package level;
 
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.LogFile;
+import spaceinvaders.Game;
+import spaceinvaders.LogFile;
 
 /**
  * Class of the level factory.

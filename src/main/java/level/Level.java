@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 
 import alien.Alien;
 import alien.AlienFactory;
-import spaceinvaders.spaceinvaders_framework.Barrier;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.HighscoreManager;
-import spaceinvaders.spaceinvaders_framework.Screen;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.Barrier;
+import spaceinvaders.Game;
+import spaceinvaders.HighscoreManager;
+import spaceinvaders.Screen;
+import spaceinvaders.SpriteSheet;
 
 /**
  * Class of the level.

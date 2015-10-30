@@ -9,15 +9,15 @@ import java.awt.image.BufferedImage;
 import java.util.Vector;
 
 import bullet.Bullet;
-import spaceinvaders.spaceinvaders_framework.BuffereImageLoader;
+import spaceinvaders.BuffereImageLoader;
+import spaceinvaders.Game;
+import spaceinvaders.LogFile;
+import spaceinvaders.Screen;
+import spaceinvaders.SpriteSheet;
 
 import org.junit.Test;
 
 import bullet.Bullet;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.LogFile;
-import spaceinvaders.spaceinvaders_framework.Screen;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
 
 /**
  * The Alien class is the abstract super class of all the alien types.

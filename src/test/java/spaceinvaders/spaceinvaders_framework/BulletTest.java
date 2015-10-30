@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bullet.*;
+import spaceinvaders.Game;
 import state.Executor;
 
 /**

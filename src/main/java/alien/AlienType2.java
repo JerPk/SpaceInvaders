@@ -1,9 +1,9 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.spaceinvaders_framework.Game;
-import spaceinvaders.spaceinvaders_framework.LogFile;
-import spaceinvaders.spaceinvaders_framework.SpriteSheet;
+import spaceinvaders.Game;
+import spaceinvaders.LogFile;
+import spaceinvaders.SpriteSheet;
 
 /**
  * the second alien type is considered normal. it has both normal health and

@@ -15,6 +15,8 @@ import org.junit.Test;
 import alien.Alien;
 import level.Level;
 import level.LevelFactory;
+import spaceinvaders.Barrier;
+import spaceinvaders.Game;
 import state.Executor;
 
 /**

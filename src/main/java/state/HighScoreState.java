@@ -1,6 +1,6 @@
 package state;
 
-import spaceinvaders.spaceinvaders_framework.ScoreMenu;
+import spaceinvaders.ScoreMenu;
 
 public class HighScoreState implements State {
 	
