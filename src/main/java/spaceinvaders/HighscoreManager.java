@@ -2,6 +2,7 @@ package spaceinvaders;
 
 import java.util.*;
 import java.io.*;
+import spaceinvaders.Score;
 
 import javax.swing.JOptionPane;
 
@@ -112,32 +113,31 @@ public class HighscoreManager {
     	}
     }
 
-    /**
-     * This is the method that is used to load all the scores from the
-     * scores.dat file into a HighscoreManager Object.
-     */
-    public void loadScoreFile() {
-        try {
-            // Tries to read the file into the scores arraylist.
-            inputStream = new ObjectInputStream(new FileInputStream(
-                    "res/scores.dat"));
-            scores = (ArrayList<Score>) inputStream.readObject();
-        } catch (Exception e) {
-            System.out.println("something went wrong while loading");
-            e.printStackTrace();
-        } finally {
-            // After it has read the file the method tries to close the
-            // outputstream.
-            try {
-                if (outputStream != null) {
-                    outputStream.flush();
-                    outputStream.close();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+	/**
+	 * This is the method that is used to load all the scores from the
+	 * scores.dat file into a HighscoreManager Object.
+	 */
+	public void loadScoreFile() {
+		try {
+			// Tries to read the file into the scores arraylist.
+			inputStream = new ObjectInputStream(new FileInputStream("res/scores.dat"));
+//			scores = (ArrayList<Score>) inputStream.readObject();
+		} catch (Exception e) {
+			System.out.println("something went wrong while loading");
+			e.printStackTrace();
+		} finally {
+			// After it has read the file the method tries to close the
+			// outputstream.
+			try {
+				if (outputStream != null) {
+					outputStream.flush();
+					outputStream.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
     /**
      * This is the method that is used to write the highscores to the scores.dat

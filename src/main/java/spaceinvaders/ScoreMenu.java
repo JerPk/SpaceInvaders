@@ -151,31 +151,29 @@ public class ScoreMenu implements Runnable{
     }
     
     public Object[][] createData() {
-    	allscores = HighscoreManager.getInstance().getScores();
+		allscores = HighscoreManager.getInstance().getScores();
+		if (allscores.size() < 10) {
+			HighscoreManager.getInstance().clear();
+		}
 
-        Score Score1 = allscores.get(0);
-        Score Score2 = allscores.get(1);
-        Score Score3 = allscores.get(2);
-        Score Score4 = allscores.get(3);
-        Score Score5 = allscores.get(4);
-        Score Score6 = allscores.get(5);
-        Score Score7 = allscores.get(6);
-        Score Score8 = allscores.get(7);
-        Score Score9 = allscores.get(8);
-        Score Score10 = allscores.get(9);
-        
-        Object[][] data = { { "1. ", Score1.getName(), Score1.getScore() },
-                { "2. ", Score2.getName(), Score2.getScore() },
-                { "3. ", Score3.getName(), Score3.getScore() },
-                { "4. ", Score4.getName(), Score4.getScore() },
-                { "5. ", Score5.getName(), Score5.getScore() },
-                { "6. ", Score6.getName(), Score6.getScore() },
-                { "7. ", Score7.getName(), Score7.getScore() },
-                { "8. ", Score8.getName(), Score8.getScore() },
-                { "9. ", Score9.getName(), Score9.getScore() },
-                { "10. ", Score10.getName(), Score10.getScore() },
-        };
-        
+		Score Score1 = allscores.get(0);
+		Score Score2 = allscores.get(1);
+		Score Score3 = allscores.get(2);
+		Score Score4 = allscores.get(3);
+		Score Score5 = allscores.get(4);
+		Score Score6 = allscores.get(5);
+		Score Score7 = allscores.get(6);
+		Score Score8 = allscores.get(7);
+		Score Score9 = allscores.get(8);
+		Score Score10 = allscores.get(9);
+
+		Object[][] data = { { "1. ", Score1.getName(), Score1.getScore() },
+				{ "2. ", Score2.getName(), Score2.getScore() }, { "3. ", Score3.getName(), Score3.getScore() },
+				{ "4. ", Score4.getName(), Score4.getScore() }, { "5. ", Score5.getName(), Score5.getScore() },
+				{ "6. ", Score6.getName(), Score6.getScore() }, { "7. ", Score7.getName(), Score7.getScore() },
+				{ "8. ", Score8.getName(), Score8.getScore() }, { "9. ", Score9.getName(), Score9.getScore() },
+				{ "10. ", Score10.getName(), Score10.getScore() }, };
+
         return data;
     }
     

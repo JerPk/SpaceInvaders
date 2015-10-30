@@ -193,7 +193,8 @@ public class Level {
 	 * Method to retrieve highscore.
 	 */
 	private int getHighscore() {
-		int score = HighscoreManager.getInstance().getScores().get(0).getScore();
+//		int score = HighscoreManager.getInstance().getScores().get(0).getScore();
+		int score = 0;
 
 		return score;
 	}
