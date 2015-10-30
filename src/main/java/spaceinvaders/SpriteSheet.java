@@ -27,13 +27,9 @@ public class SpriteSheet {
    * 
    * @return unique SpriteSheet
    */
-  public static SpriteSheet getInstance() {
+  public static synchronized SpriteSheet getInstance() {
     if (uniqueInstance == null) {
-      synchronized (SpriteSheet.class) {
-        if (uniqueInstance == null) {
-          uniqueInstance = new SpriteSheet();
-        }
-      }
+      uniqueInstance = new SpriteSheet();
     }
     return uniqueInstance;
   }
@@ -42,10 +38,14 @@ public class SpriteSheet {
    * uses the coordinates specified to grab the part of the sprite sheet. that
    * will be used by the object.
    * 
-   * @param int col
-   * @param int row
-   * @param int width
-   * @param int height
+   * @param int
+   *          col
+   * @param int
+   *          row
+   * @param int
+   *          width
+   * @param int
+   *          height
    * @return BufferedImage
    */
   public BufferedImage grabImage(int col, int row, int width, int height) {
