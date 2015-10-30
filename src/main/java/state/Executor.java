@@ -7,7 +7,7 @@ public class Executor {
   private State highScoreState;
 
   private State state;
-  
+
   /**
    * constructor of the Executor class.
    */

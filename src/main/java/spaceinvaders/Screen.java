@@ -43,10 +43,12 @@ public class Screen extends JPanel implements KeyListener {
   private Game game;
 
   private Graphics graphic;
-  
+
   /**
    * Constructor of the Screen class.
-   * @param ga game containing the entities that need to be displayed
+   * 
+   * @param ga
+   *          game containing the entities that need to be displayed
    */
   public Screen(Game ga) {
     setFocusable(true);
@@ -90,10 +92,12 @@ public class Screen extends JPanel implements KeyListener {
       game.getSpaceship().render(graphic);
     }
   }
-  
+
   /**
    * Method to render the ship's bullets.
-   * @param shipBullets vector containing ship's bullets
+   * 
+   * @param shipBullets
+   *          vector containing ship's bullets
    */
   public void renderBulletShip(Vector<Bullet> shipBullets) {
     for (int i = 0; i < shipBullets.size(); i++) {
@@ -105,7 +109,9 @@ public class Screen extends JPanel implements KeyListener {
 
   /**
    * Method to render the bullets for the aliens.
-   * @param alienBullets vector containing aliens' bullets
+   * 
+   * @param alienBullets
+   *          vector containing aliens' bullets
    */
   public void renderBulletAlien(Vector<Bullet> alienBullets) {
     for (int i = 0; i < alienBullets.size(); i++) {
@@ -218,7 +224,8 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the method that sets the left pressed boolean for testing purposes.
    * 
-   * @param bool to set the left arrow key
+   * @param bool
+   *          to set the left arrow key
    */
   public void setPressedLeft(boolean bool) {
     leftPressed = bool;
@@ -227,7 +234,8 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the method that sets the right pressed boolean for testing purposes.
    * 
-   * @param bool to set the right arrow key
+   * @param bool
+   *          to set the right arrow key
    */
   public void setPressedRight(boolean bool) {
     rightPressed = bool;
@@ -241,7 +249,8 @@ public class Screen extends JPanel implements KeyListener {
   /**
    * the method that sets the space pressed boolean.
    * 
-   * @param bool to set the space bar
+   * @param bool
+   *          to set the space bar
    */
   public void setPressedSpace(boolean bool) {
     spacePressed = bool;

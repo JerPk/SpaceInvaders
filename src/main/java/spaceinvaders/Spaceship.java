@@ -36,7 +36,8 @@ public class Spaceship {
   }
 
   /**
-   * this method makes the ship move left by 1 as long as it hasn't reached the border.
+   * this method makes the ship move left by 1 as long as it hasn't reached the
+   * border.
    *
    */
   public void moveLeft() {
@@ -46,7 +47,8 @@ public class Spaceship {
   }
 
   /**
-   * this method makes the ship move right by 1 as long as it hasn't reached the border.
+   * this method makes the ship move right by 1 as long as it hasn't reached the
+   * border.
    *
    */
   public void moveRight() {
@@ -67,7 +69,7 @@ public class Spaceship {
     newBullet.setSpritesheet(423, 277, 6, 12);
     return newBullet;
   }
-  
+
   /**
    * Check if spaceship is hit by any bullets.
    * 

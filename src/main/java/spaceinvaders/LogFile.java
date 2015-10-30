@@ -84,8 +84,10 @@ public class LogFile {
    * 
    * @param object
    *          which is created
-   * @param xco position of the object
-   * @param yco position of the object
+   * @param xco
+   *          position of the object
+   * @param yco
+   *          position of the object
    * @return success of writing to logfile
    */
   public boolean writeCreate(String object, double xco, double yco) {
@@ -103,13 +105,15 @@ public class LogFile {
    * 
    * @param object
    *          which shot
-   * @param xco position of the object
-   * @param yco position of the object
+   * @param xco
+   *          position of the object
+   * @param yco
+   *          position of the object
    * @return success of writing to logfile
    */
   public boolean writeShoot(String object, double xco, double yco) {
-    String out = object + " shot a bullet from x=" + String.valueOf(xco) + ", y="
-        + String.valueOf(yco);
+    String out = object + " shot a bullet from x=" + String.valueOf(xco)
+        + ", y=" + String.valueOf(yco);
     if (writeString(out) == true) {
       return true;
     } else {
@@ -122,8 +126,10 @@ public class LogFile {
    * 
    * @param object
    *          which has moved
-   * @param xco position of the object
-   * @param yco position of the object
+   * @param xco
+   *          position of the object
+   * @param yco
+   *          position of the object
    * @return success of writing to logfile
    */
   public boolean writeMove(String object, double xco, double yco) {
@@ -141,8 +147,10 @@ public class LogFile {
    * 
    * @param object
    *          which is hit
-   * @param xco position of the object
-   * @param yco position of the object
+   * @param xco
+   *          position of the object
+   * @param yco
+   *          position of the object
    * @return success of writing to logfile
    */
   public boolean writeHit(String object, double xco, double yco) {
@@ -158,8 +166,10 @@ public class LogFile {
   /**
    * method to write object which went offscreen to logfile.
    * 
-   * @param object which went off the screen
-   * @param xco position of the object
+   * @param object
+   *          which went off the screen
+   * @param xco
+   *          position of the object
    * @return success of writing to logfile
    */
   public boolean writeOffscreen(String object, double xco) {

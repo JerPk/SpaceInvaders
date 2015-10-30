@@ -14,7 +14,7 @@ public class Barrier {
   private int state;
 
   private BufferedImage[] barrier = new BufferedImage[5];
-  
+
   /**
    * Constructor of the barrier class.
    * 
@@ -32,7 +32,7 @@ public class Barrier {
     barrier[3] = SpriteSheet.getInstance().grabImage(373, 211, 44, 32);
     barrier[4] = SpriteSheet.getInstance().grabImage(428, 210, 44, 32);
   }
-  
+
   /**
    * Checks if barrier is hit by alien bullets.
    * 

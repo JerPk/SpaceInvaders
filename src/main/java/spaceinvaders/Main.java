@@ -3,7 +3,7 @@ package spaceinvaders;
 import state.Executor;
 
 public class Main {
-  
+
   /**
    * main function.
    * 

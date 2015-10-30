@@ -3,7 +3,6 @@ package spaceinvaders;
 import java.io.*;
 import java.util.*;
 
-
 import javax.swing.JOptionPane;
 
 /**
@@ -45,7 +44,7 @@ public class HighscoreManager {
    * returns an arraylist of scores this arraylist contains the score objects
    * that are associated with the games highscores.
    * 
-   * @return ArrayList  return the array containing all the scores
+   * @return ArrayList return the array containing all the scores
    */
   public ArrayList<Score> getScores() {
     loadScoreFile();

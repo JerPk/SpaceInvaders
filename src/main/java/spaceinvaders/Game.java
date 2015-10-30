@@ -57,7 +57,7 @@ public class Game implements Runnable {
 
   private Level level;
   private int levelNumber = 0;
-  
+
   /**
    * The constructor for the Game class.
    */
@@ -65,7 +65,7 @@ public class Game implements Runnable {
     exec = ex;
     counter = 0;
     screen = new Screen(this);
-    
+
     highscoremanager = new HighscoreManager();
 
   }
@@ -174,9 +174,10 @@ public class Game implements Runnable {
 
     stop();
   }
-  
+
   /**
-   * Generate level by adding aliens and barries, resetting the score and the spaceship position.
+   * Generate level by adding aliens and barries, resetting the score and the
+   * spaceship position.
    */
   public void generateLevel() {
     clearVectors();
@@ -228,7 +229,7 @@ public class Game implements Runnable {
       Game.logfile.writeString("Aliens reached a border and moved down");
     }
   }
-  
+
   /**
    * Listen to what keys are pressed to make the spaceship move.
    */
@@ -251,7 +252,7 @@ public class Game implements Runnable {
       screen.blockSpace();
     }
   }
-  
+
   /**
    * Makes spaceship, aliens and barriers check if they are hit by any bullets.
    */
@@ -448,7 +449,8 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the shipbullets vector.
    * 
-   * @param bill bullets to add to the vector
+   * @param bill
+   *          bullets to add to the vector
    */
   public void addShipBullets(Bullet bill) {
     shipBullets.add(bill);
@@ -466,7 +468,8 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the alienbullets vector.
    * 
-   * @param bill bullets to add to the vector
+   * @param bill
+   *          bullets to add to the vector
    */
   public void addAlienBullets(Bullet bill) {
     alienBullets.add(bill);
@@ -484,7 +487,8 @@ public class Game implements Runnable {
   /**
    * the method that adds an alien to the alien vector.
    * 
-   * @param alien to add to the vector
+   * @param alien
+   *          to add to the vector
    */
   public void addAlien(Alien alien) {
     aliens.add(alien);
@@ -529,7 +533,8 @@ public class Game implements Runnable {
    * the set score method is able to manually set the score of the player. this
    * method is only used for testing purposes.
    * 
-   * @param score1 set attribute score
+   * @param score1
+   *          set attribute score
    */
   public void setscore(int score1) {
     score = score1;

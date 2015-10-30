@@ -31,11 +31,12 @@ public class ScoreMenu implements Runnable {
   private Boolean running;
   private Thread thread;
   private Executor exec;
-  
+
   /**
    * The constructor of the game class.
    * 
-   * @param ex executor for the state pattern
+   * @param ex
+   *          executor for the state pattern
    */
   public ScoreMenu(Executor ex) {
     exec = ex;
@@ -47,7 +48,7 @@ public class ScoreMenu implements Runnable {
     JPanel panel = new JPanel();
     panel.setLayout(new GridBagLayout());
     panel.setBackground(Color.black);
-    
+
     GridBagConstraints gbc = new GridBagConstraints();
     JLabel title = new JLabel("Highscores");
     title.setForeground(Color.white);
@@ -92,7 +93,7 @@ public class ScoreMenu implements Runnable {
 
     CardWindow.getInstance().addCard(panel, "SCORECARD");
   }
-    
+
   /**
    * Method to make the menu ready to display and make a thread to run it.
    */
@@ -102,7 +103,7 @@ public class ScoreMenu implements Runnable {
     thread.start();
     CardWindow.getInstance().showCard("SCORECARD");
   }
-  
+
   /**
    * Standard method to run the menu.
    */
@@ -117,7 +118,7 @@ public class ScoreMenu implements Runnable {
       }
     }
   }
-  
+
   /**
    * Method to handle when a button is pressed.
    */
@@ -147,9 +148,10 @@ public class ScoreMenu implements Runnable {
       }
     });
   }
-  
+
   /**
    * Method to create data for the table.
+   * 
    * @return data to fill the table with scores
    */
   public Object[][] createData() {

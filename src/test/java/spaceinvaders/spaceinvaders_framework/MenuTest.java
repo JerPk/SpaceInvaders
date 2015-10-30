@@ -65,4 +65,4 @@
 //	 *       bot.mouseRelease(InputEvent.BUTTON1_MASK);
 //	 *       assertNotNull(menu2.getScoreMenu()); }
 //	 */
-//}
+// }

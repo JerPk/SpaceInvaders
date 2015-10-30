@@ -15,7 +15,8 @@ public class BuffereImageLoader {
    * the method used to create an bufferedImage from the file.
    * 
    * @return BufferedImage that can be used to draw the graphics
-   * @throws IOException    throws exception if it fails to load
+   * @throws IOException
+   *           throws exception if it fails to load
    */
   public BufferedImage loadImage(String path) throws IOException {
 

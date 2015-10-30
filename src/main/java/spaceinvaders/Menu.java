@@ -25,11 +25,12 @@ public class Menu implements Runnable {
   private Thread thread;
   private Executor exec;
   private Boolean startedGame = false;
-  
+
   /**
    * the constructor for the Menu class.
    * 
-   * @param ex executor for the state pattern
+   * @param ex
+   *          executor for the state pattern
    */
   public Menu(Executor ex) {
     running = false;
@@ -43,8 +44,9 @@ public class Menu implements Runnable {
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.insets = new Insets(0, 0, 50, 0);
-    
-    BufferedImage biTitle = SpriteSheet.getInstance().grabImage(172, 8, 231, 157);
+
+    BufferedImage biTitle = SpriteSheet.getInstance().grabImage(172, 8, 231,
+        157);
     JLabel title = new JLabel(new ImageIcon(biTitle));
     panel.add(title, gbc);
 
@@ -64,7 +66,7 @@ public class Menu implements Runnable {
 
     CardWindow.getInstance().addCard(panel, "MENUCARD");
   }
-  
+
   /**
    * method that makes the menu ready & starts a thread to run it.
    */
@@ -76,7 +78,7 @@ public class Menu implements Runnable {
     thread.start();
     CardWindow.getInstance().showCard("MENUCARD");
   }
-  
+
   /**
    * standard run method to run the menu.
    */
@@ -91,7 +93,7 @@ public class Menu implements Runnable {
       }
     }
   }
-  
+
   /**
    * Method to handle the actions when a button is pressed.
    */
