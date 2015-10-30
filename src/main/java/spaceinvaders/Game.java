@@ -3,7 +3,6 @@ package spaceinvaders;
 import iterator.ConcreteAggregate;
 import iterator.Iterator;
 
-import java.awt.image.BufferedImage;
 import java.util.Random;
 import java.util.Vector;
 import java.util.Date;
@@ -100,7 +99,8 @@ public class Game implements Runnable {
             e.printStackTrace();
         }
 
-        LogFile.getInstance().writeString("Game ended because of an error at " + new Date());
+        LogFile.getInstance().writeString(
+                "Game ended because of an error at " + new Date());
         LogFile.getInstance().close();
 
         // exits the application.
@@ -132,34 +132,37 @@ public class Game implements Runnable {
     public void run() {
         // initialize all the entities
         init();
-    	
-    	while (running) {
-        	screen.repaint();
-    		counter++;
-    		if (counter >= 50) {
-    			alienShoot();
-    			counter = 0;
-    		}
-    		if (levelNumber > 15) {
-    			end();
-    		} else if (aliens.size() == 0) {
-    			generateLevel();
-    			if (levelNumber % 5 == 0) {
-    				bossLevel = true;
-    			}
-    			else {
-    				bossLevel = false;
-    			}
-    		} else if (aliens.get(aliens.size() - 1).reachedY(400)) {
-    			end();
-    		} else if (aliens.get(aliens.size() - 1).reachedY(360)) {
-    			barriers.clear();
-    		}
-    		removeOffScreenBullets();
-    		listenForKeys();
-    		checkIfHit();
-    		moveAliens();
-    		
+
+        while (running) {
+            screen.repaint();
+            counter++;
+
+            if (counter >= 50) {
+                alienShoot();
+                counter = 0;
+            }
+            if (aliens.size() == 0) {
+                if (levelNumber >= 15) {
+                    end();
+                } else {
+                    generateLevel();
+
+                    if (levelNumber % 5 == 0) {
+                        bossLevel = true;
+                    } else {
+                        bossLevel = false;
+                    }
+                }
+            } else if (aliens.get(aliens.size() - 1).reachedY(400)) {
+                end();
+            } else if (aliens.get(aliens.size() - 1).reachedY(360)) {
+                barriers.clear();
+            }
+            removeOffScreenBullets();
+            listenForKeys();
+            checkIfHit();
+            moveAliens();
+
             try {
                 Thread.sleep(15);
             } catch (Exception e) {
@@ -169,24 +172,27 @@ public class Game implements Runnable {
 
         stop();
     }
-    
+
     public void generateLevel() {
-    	clearVectors();
-    	level = LevelFactory.createLevel(++levelNumber);
-    	spaceship.resetPosition();
+        clearVectors();
+
+        level = LevelFactory.createLevel(++levelNumber);
+        spaceship.resetPosition();
         aliens = level.createAliens();
         barriers = level.createBarriers();
-        
-        CardWindow.getInstance().addCard(level.createTransitionPanel(), "TRANSITIONCARD");        
+
+        CardWindow.getInstance().addCard(level.createTransitionPanel(),
+                "TRANSITIONCARD");
         CardWindow.getInstance().showCard("TRANSITIONCARD");
-        
+
         try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        screen.setPressedLeft(false);
+        screen.setPressedRight(false);
         CardWindow.getInstance().showCard("GAMECARD");
         screen.requestFocusInWindow();
     }
@@ -216,7 +222,8 @@ public class Game implements Runnable {
                 alien.vmovement();
             }
 
-            LogFile.getInstance().writeString("Aliens reached a border and moved down");
+            LogFile.getInstance().writeString(
+                    "Aliens reached a border and moved down");
         }
     }
 
@@ -305,7 +312,9 @@ public class Game implements Runnable {
                 }
             }
         } else {
-            alienBullets.addAll(aliens.get(0).BossShoot());
+            if (aliens.size() != 0) {
+                alienBullets.addAll(aliens.get(0).BossShoot());
+            }
         }
     }
 
@@ -320,7 +329,7 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterAlienBullets.next();
             if (bullet.reachedY(450)) {
-            	LogFile.getInstance().writeOffscreen("Alien", bullet.getX());
+                LogFile.getInstance().writeOffscreen("Alien", bullet.getX());
                 alienBullets.removeElementAt(iterAlienBullets.position());
             }
 
@@ -333,7 +342,8 @@ public class Game implements Runnable {
 
             Bullet bullet = (Bullet) iterShipBullets.next();
             if (bullet.reachedY(450)) {
-            	LogFile.getInstance().writeOffscreen("Spaceship", bullet.getX());
+                LogFile.getInstance()
+                        .writeOffscreen("Spaceship", bullet.getX());
                 shipBullets.removeElementAt(iterShipBullets.position());
             }
 
@@ -434,14 +444,14 @@ public class Game implements Runnable {
     /**
      * the method we use to exit the application.
      */
-	public void end() {
-		running = false;
-		HighscoreManager.getInstance().addScore(score);
-		LogFile.getInstance().writeString("Game ended at " + new Date());
-		LogFile.getInstance().close();
-		screen.close();
-		exec.returning();
-	}
+    public void end() {
+        running = false;
+        HighscoreManager.getInstance().addScore(score);
+        LogFile.getInstance().writeString("Game ended at " + new Date());
+        LogFile.getInstance().close();
+        screen.close();
+        exec.returning();
+    }
 
     public int getLevelNumber() {
         return levelNumber;
