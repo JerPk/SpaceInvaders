@@ -2,12 +2,22 @@ package iterator;
 
 import java.util.Vector;
 
-import bullet.Bullet;
-
+/**
+ * The ConcreteAggregate class.
+ * 
+ * @author Group 23
+ */
 public class ConcreteAggregate implements Aggregate {
 
+  /**
+   * Method to create the iterator.
+   * 
+   * @param vector
+   *          vector
+   * @return the iterator
+   */
   @Override
-  public Iterator createIterator(Vector<?> vector) {
+  public final Iterator createIterator(Vector<?> vector) {
     return new ConcreteIterator(vector);
   }
 

@@ -20,7 +20,7 @@ public class StandardLevel extends Level {
    * @param number
    *          Level number
    */
-  public StandardLevel(int number) {
+  public StandardLevel(final int number) {
     super(number);
     levelNumber = number;
   }
@@ -31,7 +31,7 @@ public class StandardLevel extends Level {
    * @return the created aliens
    */
   @Override
-  public Vector<Alien> createAliens() {
+  public final Vector<Alien> createAliens() {
     int offsetY = 0;
     int offsetX = 75;
     Vector<Alien> tempAliens = new Vector<Alien>(0);
@@ -62,7 +62,7 @@ public class StandardLevel extends Level {
    * @return the created barriers
    */
   @Override
-  public Vector<Barrier> createBarriers() {
+  public final Vector<Barrier> createBarriers() {
     Vector<Barrier> tempBarriers = new Vector<Barrier>(0);
     int numberOfBariers = 0;
 
