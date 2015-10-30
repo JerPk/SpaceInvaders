@@ -1,9 +1,7 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.Game;
 import spaceinvaders.LogFile;
-import spaceinvaders.SpriteSheet;
 
 /**
  * the first alien type is considered the easiest. it has the least health and

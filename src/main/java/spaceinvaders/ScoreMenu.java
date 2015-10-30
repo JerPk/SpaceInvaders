@@ -1,5 +1,7 @@
 package spaceinvaders;
 
+import state.Executor;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -15,12 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-import state.Executor;
-
 public class ScoreMenu implements Runnable {
 
-  // private JFrame frame;
-
+  private HighscoreManager highscoremanager;
   private ArrayList<Score> allscores;
   private JTable table;
 
@@ -32,9 +31,16 @@ public class ScoreMenu implements Runnable {
   private Boolean running;
   private Thread thread;
   private Executor exec;
-  private GridBagConstraints c;
+  
+  private GridBagConstraints constraints;
   private JPanel panel;
 
+  /**
+   * The constructor of the game class.
+   * 
+   * @param ex
+   *          executor for the state pattern
+   */
   public ScoreMenu(Executor ex) {
     exec = ex;
     running = false;
@@ -45,15 +51,15 @@ public class ScoreMenu implements Runnable {
   private void setup() {
     panel = new JPanel();
     panel.setLayout(new GridBagLayout());
-    c = new GridBagConstraints();
+    constraints = new GridBagConstraints();
     panel.setBackground(Color.black);
 
     JLabel title = createTitle();
-    c.gridx = 0;
-    c.gridy = 0;
-    c.gridwidth = 3;
-    c.insets = new Insets(0, 0, 20, 0);
-    panel.add(title, c);
+    constraints.gridx = 0;
+    constraints.gridy = 0;
+    constraints.gridwidth = 3;
+    constraints.insets = new Insets(0, 0, 20, 0);
+    panel.add(title, constraints);
 
     String[] columnNames = { "Number", "Name", "Score" };
     Object[][] data = createData();
@@ -65,10 +71,10 @@ public class ScoreMenu implements Runnable {
     table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
     table.setGridColor(Color.gray);
 
-    c.gridx = 0;
-    c.gridy = 1;
-    c.insets = new Insets(0, 0, 20, 0);
-    panel.add(table, c);
+    constraints.gridx = 0;
+    constraints.gridy = 1;
+    constraints.insets = new Insets(0, 0, 20, 0);
+    panel.add(table, constraints);
 
     addButtons();
 
@@ -85,22 +91,22 @@ public class ScoreMenu implements Runnable {
 
   private void addButtons() {
     btnReturn = new JButton("Return");
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.gridx = 0;
-    c.gridy = 2;
-    c.gridwidth = 1;
-    c.insets = new Insets(0, 5, 0, 5);
-    panel.add(btnReturn, c);
+    constraints.fill = GridBagConstraints.HORIZONTAL;
+    constraints.gridx = 0;
+    constraints.gridy = 2;
+    constraints.gridwidth = 1;
+    constraints.insets = new Insets(0, 5, 0, 5);
+    panel.add(btnReturn, constraints);
 
     btnReset = new JButton("Reset");
-    c.gridx = 1;
-    c.gridy = 2;
-    panel.add(btnReset, c);
+    constraints.gridx = 1;
+    constraints.gridy = 2;
+    panel.add(btnReset, constraints);
 
     btnQuit = new JButton("Quit");
-    c.gridx = 2;
-    c.gridy = 2;
-    panel.add(btnQuit, c);
+    constraints.gridx = 2;
+    constraints.gridy = 2;
+    panel.add(btnQuit, constraints);
   }
 
   public void show() {
@@ -111,9 +117,13 @@ public class ScoreMenu implements Runnable {
     CardWindow.getInstance().showCard("SCORECARD");
   }
 
+  /**
+   * Standard method to run the menu.
+   */
   public void run() {
     while (running) {
       listenForActions();
+
       try {
         Thread.sleep(1000);
       } catch (Exception e) {
@@ -122,10 +132,13 @@ public class ScoreMenu implements Runnable {
     }
   }
 
+  /**
+   * Method to handle when a button is pressed.
+   */
   public void listenForActions() {
     btnReturn.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent ae) {
         running = false;
         exec.returning();
       }
@@ -133,8 +146,8 @@ public class ScoreMenu implements Runnable {
 
     btnReset.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {
-        HighscoreManager.getInstance().clear();
+      public void actionPerformed(ActionEvent ae) {
+        highscoremanager.clear();
       }
     });
 
@@ -142,37 +155,42 @@ public class ScoreMenu implements Runnable {
     // end.
     btnQuit.addActionListener(new ActionListener() {
       @Override
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent ae) {
         running = false;
         exec.quit();
       }
     });
   }
 
+  /**
+   * Method to create data for the table.
+   * 
+   * @return data to fill the table with scores
+   */
   public Object[][] createData() {
     allscores = HighscoreManager.getInstance().getScores();
+    
+    Score score1 = allscores.get(0);
+    Score score2 = allscores.get(1);
+    Score score3 = allscores.get(2);
+    Score score4 = allscores.get(3);
+    Score score5 = allscores.get(4);
+    Score score6 = allscores.get(5);
+    Score score7 = allscores.get(6);
+    Score score8 = allscores.get(7);
+    Score score9 = allscores.get(8);
+    Score score10 = allscores.get(9);
 
-    Score Score1 = allscores.get(0);
-    Score Score2 = allscores.get(1);
-    Score Score3 = allscores.get(2);
-    Score Score4 = allscores.get(3);
-    Score Score5 = allscores.get(4);
-    Score Score6 = allscores.get(5);
-    Score Score7 = allscores.get(6);
-    Score Score8 = allscores.get(7);
-    Score Score9 = allscores.get(8);
-    Score Score10 = allscores.get(9);
-
-    Object[][] data = { { "1. ", Score1.getName(), Score1.getScore() },
-        { "2. ", Score2.getName(), Score2.getScore() },
-        { "3. ", Score3.getName(), Score3.getScore() },
-        { "4. ", Score4.getName(), Score4.getScore() },
-        { "5. ", Score5.getName(), Score5.getScore() },
-        { "6. ", Score6.getName(), Score6.getScore() },
-        { "7. ", Score7.getName(), Score7.getScore() },
-        { "8. ", Score8.getName(), Score8.getScore() },
-        { "9. ", Score9.getName(), Score9.getScore() },
-        { "10. ", Score10.getName(), Score10.getScore() }, };
+    Object[][] data = { { "1. ", score1.getName(), score1.getScore() },
+        { "2. ", score2.getName(), score2.getScore() },
+        { "3. ", score3.getName(), score3.getScore() },
+        { "4. ", score4.getName(), score4.getScore() },
+        { "5. ", score5.getName(), score5.getScore() },
+        { "6. ", score6.getName(), score6.getScore() },
+        { "7. ", score7.getName(), score7.getScore() },
+        { "8. ", score8.getName(), score8.getScore() },
+        { "9. ", score9.getName(), score9.getScore() },
+        { "10. ", score10.getName(), score10.getScore() }, };
 
     return data;
   }

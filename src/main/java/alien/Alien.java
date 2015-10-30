@@ -1,23 +1,18 @@
 package alien;
 
-import static org.junit.Assert.assertEquals;
+import bullet.Bullet;
 import iterator.ConcreteAggregate;
 import iterator.Iterator;
+import spaceinvaders.LogFile;
+import spaceinvaders.SpriteSheet;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.Vector;
 
-import bullet.Bullet;
-import spaceinvaders.BuffereImageLoader;
-import spaceinvaders.Game;
-import spaceinvaders.LogFile;
-import spaceinvaders.Screen;
-import spaceinvaders.SpriteSheet;
-
 import org.junit.Test;
 
-import bullet.Bullet;
+
 
 /**
  * The Alien class is the abstract super class of all the alien types.

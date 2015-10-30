@@ -1,6 +1,5 @@
 package level;
 
-import spaceinvaders.Game;
 import spaceinvaders.LogFile;
 
 /**

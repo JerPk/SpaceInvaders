@@ -1,9 +1,7 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.Game;
 import spaceinvaders.LogFile;
-import spaceinvaders.SpriteSheet;
 
 /**
  * the third alien type is considered the hardest. it has the most health and
