@@ -60,9 +60,9 @@ public class Barrier {
 
   private boolean ifHitMega(Vector<Bullet> alienBullets, int i) {
     if (alienBullets.get(i).getX() + 15 >= xpos
-        && alienBullets.get(i).getX() + 15 <= xpos + 44) {
+        && alienBullets.get(i).getX() <= xpos + 44) {
       if (alienBullets.get(i).getY() + 50 >= ypos
-          && alienBullets.get(i).getY() + 50 <= ypos + 32) {
+          && alienBullets.get(i).getY() <= ypos + 32) {
         return true;
       }
     }
