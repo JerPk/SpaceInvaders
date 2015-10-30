@@ -1,8 +1,7 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.Game;
-import spaceinvaders.SpriteSheet;
+import spaceinvaders.LogFile;
 
 /**
  * the first alien type is considered the easiest. it has the least health and
@@ -22,7 +21,7 @@ public class AlienType1 extends Alien {
    */
   public AlienType1(double x, double y) {
     super(x, y);
-    Game.logfile.writeCreate("AlienType1", x, y);
+    LogFile.getInstance().writeCreate("AlienType1", x, y);
     setSpritesheet(7, 225, 16, 16);
     setScore(10);
     setHealth(1);
@@ -37,7 +36,7 @@ public class AlienType1 extends Alien {
   @Override
   public Bullet shoot() {
     final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
-    Game.logfile.writeShoot("AlienType1", getX(), getY());
+    LogFile.getInstance().writeShoot("AlienType1", getX(), getY());
     return newBullet;
   }
 }

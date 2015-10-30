@@ -82,7 +82,7 @@ public class Screen extends JPanel implements KeyListener {
     }
 
     renderScore(game.getScore());
-    renderHighScore(game.getHsmanager());
+    renderHighScore(HighscoreManager.getInstance());
     renderLevelNumber(game.getLevelNumber());
 
     // Draw the bullets and spaceship
@@ -179,11 +179,13 @@ public class Screen extends JPanel implements KeyListener {
       // logfile.writeMove("Spaceship", spaceship.getPosX(),
       // spaceship.getPosY());
     }
+
     if (ke.getKeyCode() == KeyEvent.VK_RIGHT) {
       rightPressed = false;
       // logfile.writeMove("Spaceship", spaceship.getPosX(),
       // spaceship.getPosY());
     }
+
     if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
       spacePressed = false;
     }
@@ -255,5 +257,4 @@ public class Screen extends JPanel implements KeyListener {
   public void setPressedSpace(boolean bool) {
     spacePressed = bool;
   }
-
 }

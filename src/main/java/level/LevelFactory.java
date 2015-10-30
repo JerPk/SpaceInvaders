@@ -1,6 +1,6 @@
 package level;
 
-import spaceinvaders.Game;
+import spaceinvaders.LogFile;
 
 /**
  * Class of the level factory.
@@ -27,7 +27,7 @@ public class LevelFactory {
       level = new Level(number);
     }
 
-    Game.logfile.writeString("Level " + number + " created");
+    LogFile.getInstance().writeString("Level " + number + " created");
 
     return level;
   }

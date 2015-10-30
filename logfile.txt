@@ -1,0 +1,283 @@
+Game started at Fri Oct 30 12:18:00 CET 2015.
+Spaceship created at x=304.0, y=425.0.
+Level 1 created.
+AlienType1 created at x=72.0, y=0.0.
+AlienType1 created at x=97.0, y=0.0.
+AlienType1 created at x=122.0, y=0.0.
+AlienType1 created at x=147.0, y=0.0.
+AlienType1 created at x=172.0, y=0.0.
+AlienType1 created at x=197.0, y=0.0.
+AlienType1 created at x=222.0, y=0.0.
+AlienType1 created at x=247.0, y=0.0.
+AlienType1 created at x=272.0, y=0.0.
+AlienType1 created at x=297.0, y=0.0.
+AlienType1 created at x=322.0, y=0.0.
+AlienType1 created at x=347.0, y=0.0.
+AlienType1 created at x=372.0, y=0.0.
+AlienType1 created at x=397.0, y=0.0.
+AlienType1 created at x=422.0, y=0.0.
+AlienType1 created at x=447.0, y=0.0.
+AlienType1 created at x=472.0, y=0.0.
+AlienType1 created at x=497.0, y=0.0.
+AlienType1 created at x=72.0, y=25.0.
+AlienType1 created at x=97.0, y=25.0.
+AlienType1 created at x=122.0, y=25.0.
+AlienType1 created at x=147.0, y=25.0.
+AlienType1 created at x=172.0, y=25.0.
+AlienType1 created at x=197.0, y=25.0.
+AlienType1 created at x=222.0, y=25.0.
+AlienType1 created at x=247.0, y=25.0.
+AlienType1 created at x=272.0, y=25.0.
+AlienType1 created at x=297.0, y=25.0.
+AlienType1 created at x=322.0, y=25.0.
+AlienType1 created at x=347.0, y=25.0.
+AlienType1 created at x=372.0, y=25.0.
+AlienType1 created at x=397.0, y=25.0.
+AlienType1 created at x=422.0, y=25.0.
+AlienType1 created at x=447.0, y=25.0.
+AlienType1 created at x=472.0, y=25.0.
+AlienType1 created at x=497.0, y=25.0.
+AlienType1 created at x=72.0, y=50.0.
+AlienType1 created at x=97.0, y=50.0.
+AlienType1 created at x=122.0, y=50.0.
+AlienType1 created at x=147.0, y=50.0.
+AlienType1 created at x=172.0, y=50.0.
+AlienType1 created at x=197.0, y=50.0.
+AlienType1 created at x=222.0, y=50.0.
+AlienType1 created at x=247.0, y=50.0.
+AlienType1 created at x=272.0, y=50.0.
+AlienType1 created at x=297.0, y=50.0.
+AlienType1 created at x=322.0, y=50.0.
+AlienType1 created at x=347.0, y=50.0.
+AlienType1 created at x=372.0, y=50.0.
+AlienType1 created at x=397.0, y=50.0.
+AlienType1 created at x=422.0, y=50.0.
+AlienType1 created at x=447.0, y=50.0.
+AlienType1 created at x=472.0, y=50.0.
+AlienType1 created at x=497.0, y=50.0.
+Barrier created at x=105.0, y=370.0.
+Barrier created at x=232.0, y=370.0.
+Barrier created at x=359.0, y=370.0.
+Barrier created at x=486.0, y=370.0.
+Bullet created at x=376.0, y=27.0.
+AlienType1 shot a bullet from x=371.0, y=25.0.
+Bullet created at x=424.0, y=427.0.
+Spaceship shot a bullet from x=414.0, y=425.0.
+Bullet created at x=424.0, y=427.0.
+Spaceship shot a bullet from x=414.0, y=425.0.
+Bullet created at x=601.0, y=52.0.
+AlienType1 shot a bullet from x=596.0, y=50.0.
+Bullet created at x=408.0, y=427.0.
+Spaceship shot a bullet from x=398.0, y=425.0.
+Bullet created at x=408.0, y=427.0.
+Spaceship shot a bullet from x=398.0, y=425.0.
+Bullet created at x=356.0, y=427.0.
+Spaceship shot a bullet from x=346.0, y=425.0.
+Bullet created at x=356.0, y=427.0.
+Spaceship shot a bullet from x=346.0, y=425.0.
+Aliens reached a border and moved down.
+Bullet created at x=396.0, y=72.0.
+AlienType1 shot a bullet from x=391.0, y=70.0.
+Bullet created at x=284.0, y=427.0.
+Spaceship shot a bullet from x=274.0, y=425.0.
+Bullet created at x=284.0, y=427.0.
+Spaceship shot a bullet from x=274.0, y=425.0.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Bullet created at x=471.0, y=72.0.
+AlienType1 shot a bullet from x=466.0, y=70.0.
+Barrier at position x=359.0, y=370.0 is hit.
+Bullet created at x=218.0, y=427.0.
+Spaceship shot a bullet from x=208.0, y=425.0.
+Bullet created at x=218.0, y=427.0.
+Spaceship shot a bullet from x=208.0, y=425.0.
+Alien at position x=410.0, y=70.0 is hit.
+Bullet created at x=396.0, y=22.0.
+AlienType1 shot a bullet from x=391.0, y=20.0.
+Alien at position x=404.0, y=70.0 is hit.
+Bullet created at x=298.0, y=427.0.
+Spaceship shot a bullet from x=288.0, y=425.0.
+Bullet created at x=298.0, y=427.0.
+Spaceship shot a bullet from x=288.0, y=425.0.
+Alien bullet went offscreen at x=601.0.
+Barrier at position x=359.0, y=370.0 is hit.
+Alien at position x=342.0, y=45.0 is hit.
+Bullet created at x=446.0, y=47.0.
+AlienType1 shot a bullet from x=441.0, y=45.0.
+Bullet created at x=330.0, y=427.0.
+Spaceship shot a bullet from x=320.0, y=425.0.
+Bullet created at x=330.0, y=427.0.
+Spaceship shot a bullet from x=320.0, y=425.0.
+Alien at position x=289.0, y=70.0 is hit.
+Bullet created at x=274.0, y=427.0.
+Spaceship shot a bullet from x=264.0, y=425.0.
+Bullet created at x=274.0, y=427.0.
+Spaceship shot a bullet from x=264.0, y=425.0.
+Aliens reached a border and moved down.
+Alien at position x=228.0, y=90.0 is hit.
+Bullet created at x=416.0, y=67.0.
+AlienType1 shot a bullet from x=411.0, y=65.0.
+Bullet created at x=214.0, y=427.0.
+Spaceship shot a bullet from x=204.0, y=425.0.
+Bullet created at x=214.0, y=427.0.
+Spaceship shot a bullet from x=204.0, y=425.0.
+Alien at position x=205.0, y=90.0 is hit.
+Alien bullet went offscreen at x=471.0.
+Bullet created at x=142.0, y=427.0.
+Spaceship shot a bullet from x=132.0, y=425.0.
+Bullet created at x=142.0, y=427.0.
+Spaceship shot a bullet from x=132.0, y=425.0.
+Bullet created at x=391.0, y=67.0.
+AlienType1 shot a bullet from x=386.0, y=65.0.
+Barrier at position x=359.0, y=370.0 is hit.
+Bullet created at x=170.0, y=427.0.
+Spaceship shot a bullet from x=160.0, y=425.0.
+Bullet created at x=170.0, y=427.0.
+Spaceship shot a bullet from x=160.0, y=425.0.
+Alien at position x=283.0, y=65.0 is hit.
+Bullet created at x=291.0, y=67.0.
+AlienType1 shot a bullet from x=286.0, y=65.0.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Alien at position x=315.0, y=90.0 is hit.
+Alien at position x=261.0, y=90.0 is hit.
+Bullet created at x=286.0, y=427.0.
+Spaceship shot a bullet from x=276.0, y=425.0.
+Bullet created at x=286.0, y=427.0.
+Spaceship shot a bullet from x=276.0, y=425.0.
+Alien bullet went offscreen at x=446.0.
+Bullet created at x=191.0, y=42.0.
+AlienType1 shot a bullet from x=186.0, y=40.0.
+Alien at position x=216.0, y=90.0 is hit.
+Bullet created at x=366.0, y=427.0.
+Spaceship shot a bullet from x=356.0, y=425.0.
+Bullet created at x=366.0, y=427.0.
+Spaceship shot a bullet from x=356.0, y=425.0.
+Alien bullet went offscreen at x=416.0.
+Barrier at position x=359.0, y=370.0 is hit.
+Aliens reached a border and moved down.
+Bullet created at x=422.0, y=427.0.
+Spaceship shot a bullet from x=412.0, y=425.0.
+Bullet created at x=422.0, y=427.0.
+Spaceship shot a bullet from x=412.0, y=425.0.
+Bullet created at x=281.0, y=87.0.
+AlienType1 shot a bullet from x=276.0, y=85.0.
+Bullet created at x=476.0, y=427.0.
+Spaceship shot a bullet from x=466.0, y=425.0.
+Bullet created at x=476.0, y=427.0.
+Spaceship shot a bullet from x=466.0, y=425.0.
+Alien at position x=175.0, y=85.0 is hit.
+Alien at position x=233.0, y=110.0 is hit.
+Bullet created at x=181.0, y=87.0.
+AlienType1 shot a bullet from x=176.0, y=85.0.
+Bullet created at x=554.0, y=427.0.
+Spaceship shot a bullet from x=544.0, y=425.0.
+Bullet created at x=554.0, y=427.0.
+Spaceship shot a bullet from x=544.0, y=425.0.
+Alien at position x=284.0, y=110.0 is hit.
+Alien bullet went offscreen at x=291.0.
+Bullet created at x=522.0, y=427.0.
+Spaceship shot a bullet from x=512.0, y=425.0.
+Bullet created at x=522.0, y=427.0.
+Spaceship shot a bullet from x=512.0, y=425.0.
+Bullet created at x=256.0, y=62.0.
+AlienType1 shot a bullet from x=251.0, y=60.0.
+Bullet created at x=470.0, y=427.0.
+Spaceship shot a bullet from x=460.0, y=425.0.
+Bullet created at x=470.0, y=427.0.
+Spaceship shot a bullet from x=460.0, y=425.0.
+Alien at position x=357.0, y=85.0 is hit.
+Alien at position x=416.0, y=110.0 is hit.
+Alien bullet went offscreen at x=191.0.
+Bullet created at x=431.0, y=62.0.
+AlienType1 shot a bullet from x=426.0, y=60.0.
+Bullet created at x=394.0, y=427.0.
+Spaceship shot a bullet from x=384.0, y=425.0.
+Bullet created at x=394.0, y=427.0.
+Spaceship shot a bullet from x=384.0, y=425.0.
+Alien at position x=464.0, y=110.0 is hit.
+Alien bullet went offscreen at x=281.0.
+Bullet created at x=338.0, y=427.0.
+Spaceship shot a bullet from x=328.0, y=425.0.
+Bullet created at x=338.0, y=427.0.
+Spaceship shot a bullet from x=328.0, y=425.0.
+Aliens reached a border and moved down.
+Bullet created at x=331.0, y=82.0.
+AlienType1 shot a bullet from x=326.0, y=80.0.
+Bullet created at x=276.0, y=427.0.
+Spaceship shot a bullet from x=266.0, y=425.0.
+Bullet created at x=276.0, y=427.0.
+Spaceship shot a bullet from x=266.0, y=425.0.
+Alien bullet went offscreen at x=181.0.
+Barrier at position x=232.0, y=370.0 is hit.
+Bullet created at x=356.0, y=82.0.
+AlienType1 shot a bullet from x=351.0, y=80.0.
+Bullet created at x=204.0, y=427.0.
+Spaceship shot a bullet from x=194.0, y=425.0.
+Bullet created at x=204.0, y=427.0.
+Spaceship shot a bullet from x=194.0, y=425.0.
+Alien at position x=455.0, y=130.0 is hit.
+Bullet created at x=168.0, y=427.0.
+Spaceship shot a bullet from x=158.0, y=425.0.
+Bullet created at x=168.0, y=427.0.
+Spaceship shot a bullet from x=158.0, y=425.0.
+Bullet created at x=131.0, y=82.0.
+AlienType1 shot a bullet from x=126.0, y=80.0.
+Alien at position x=382.0, y=80.0 is hit.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Bullet created at x=228.0, y=427.0.
+Spaceship shot a bullet from x=218.0, y=425.0.
+Alien bullet went offscreen at x=431.0.
+Alien at position x=335.0, y=80.0 is hit.
+Bullet created at x=284.0, y=427.0.
+Spaceship shot a bullet from x=274.0, y=425.0.
+Bullet created at x=284.0, y=427.0.
+Spaceship shot a bullet from x=274.0, y=425.0.
+Bullet created at x=406.0, y=107.0.
+AlienType1 shot a bullet from x=401.0, y=105.0.
+Spaceship at position x=331.0, y=416.39999999999856 is hit.
+Spaceship has 2 lives left.
+Alien at position x=280.0, y=105.0 is hit.
+Bullet created at x=342.0, y=427.0.
+Spaceship shot a bullet from x=332.0, y=425.0.
+Bullet created at x=342.0, y=427.0.
+Spaceship shot a bullet from x=332.0, y=425.0.
+Alien at position x=204.0, y=130.0 is hit.
+Bullet created at x=206.0, y=82.0.
+AlienType1 shot a bullet from x=201.0, y=80.0.
+Bullet created at x=418.0, y=427.0.
+Spaceship shot a bullet from x=408.0, y=425.0.
+Bullet created at x=418.0, y=427.0.
+Spaceship shot a bullet from x=408.0, y=425.0.
+Aliens reached a border and moved down.
+Alien bullet went offscreen at x=356.0.
+Barrier at position x=105.0, y=370.0 is hit.
+Alien at position x=223.0, y=125.0 is hit.
+Bullet created at x=444.0, y=427.0.
+Spaceship shot a bullet from x=434.0, y=425.0.
+Bullet created at x=444.0, y=427.0.
+Spaceship shot a bullet from x=434.0, y=425.0.
+Bullet created at x=416.0, y=152.0.
+AlienType1 shot a bullet from x=411.0, y=150.0.
+Alien at position x=289.0, y=125.0 is hit.
+Bullet created at x=412.0, y=427.0.
+Spaceship shot a bullet from x=402.0, y=425.0.
+Bullet created at x=412.0, y=427.0.
+Spaceship shot a bullet from x=402.0, y=425.0.
+Spaceship at position x=406.0, y=417.19999999999857 is hit.
+Spaceship has 1 lives left.
+Alien at position x=341.0, y=125.0 is hit.
+Bullet created at x=116.0, y=102.0.
+AlienType1 shot a bullet from x=111.0, y=100.0.
+Alien at position x=403.0, y=125.0 is hit.
+Bullet created at x=191.0, y=102.0.
+AlienType1 shot a bullet from x=186.0, y=100.0.
+Alien bullet went offscreen at x=206.0.
+Spaceship at position x=416.0, y=415.99999999999864 is hit.
+Spaceship has no lives left.
+Game ended at Fri Oct 30 12:18:23 CET 2015.

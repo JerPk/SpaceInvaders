@@ -5,6 +5,7 @@ import java.util.*;
 
 import javax.swing.JOptionPane;
 
+
 /**
  * The HihgscoreManager is the main class in terms of reading and writing the
  * highscores from a file(scores.dat to be precise) to an arraylist that will be
@@ -15,6 +16,8 @@ import javax.swing.JOptionPane;
  */
 public class HighscoreManager {
 
+  private static HighscoreManager uniqueInstance;
+
   /**
    * An arraylist of the type "score" that will be used to get all the scores in
    * the game class.
@@ -22,22 +25,30 @@ public class HighscoreManager {
   private ArrayList<Score> scores;
 
   /**
-   * Initialising an outputStream for working with the file.
+   * Initialising an outputStream for working with the file
    */
-  ObjectOutputStream outputStream = null;
+  private ObjectOutputStream outputStream = null;
 
   /**
-   * Initialising an inputStream for working with the file.
+   * Initialising an inputStream for working with the file
    */
-  ObjectInputStream inputStream = null;
+  private ObjectInputStream inputStream = null;
 
   /**
    * the HighscoreManager is the main class in terms of the scores. it contains
    * the methods that are used to read and write to the highscores.dat file
    * which contain all the highscores.
    */
-  public HighscoreManager() {
+  private HighscoreManager() {
     scores = new ArrayList<Score>();
+    loadScoreFile();
+  }
+
+  public static synchronized HighscoreManager getInstance() {
+    if (uniqueInstance == null) {
+      uniqueInstance = new HighscoreManager();
+    }
+    return uniqueInstance;
   }
 
   /**
@@ -81,14 +92,16 @@ public class HighscoreManager {
    */
   public void addScore(int score) {
     Score lowestTop10score;
-    if (scores.size() < 10) {
+    if (scores.size() == 0) {
+      lowestTop10score = new Score("New", 0);
+    } else if (scores.size() < 10) {
       lowestTop10score = scores.get(scores.size() - 1);
     } else {
       lowestTop10score = scores.get(9);
     }
     if (score >= lowestTop10score.getScore()) {
       String name = JOptionPane
-          .showInputDialog("Congratulations you are on the leaderboards what is your name?");
+          .showInputDialog("Congratulations, you are on the leaderboards! What is your name?");
       addScore(name, score);
     }
   }

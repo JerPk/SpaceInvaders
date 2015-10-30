@@ -36,10 +36,8 @@ public class Score implements Serializable {
   /**
    * The constructor method of the score class.
    * 
-   * @param name
-   *          of the person who gained this score
-   * @param score
-   *          amount scored
+   * @param name of the person who gained this score
+   * @param score amount scored
    */
   public Score(String name, int score) {
     this.score = score;

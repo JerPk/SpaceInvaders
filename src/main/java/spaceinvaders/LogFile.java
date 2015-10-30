@@ -16,13 +16,9 @@ public class LogFile {
    * 
    * @return unique LogFile
    */
-  public static LogFile getInstance() {
+  public static synchronized LogFile getInstance() {
     if (uniqueInstance == null) {
-      synchronized (LogFile.class) {
-        if (uniqueInstance == null) {
-          uniqueInstance = new LogFile();
-        }
-      }
+      uniqueInstance = new LogFile();
     }
     return uniqueInstance;
   }
@@ -101,6 +97,7 @@ public class LogFile {
   }
 
   /**
+<<<<<<< HEAD
    * method to write object which shot to logfile.
    * 
    * @param object

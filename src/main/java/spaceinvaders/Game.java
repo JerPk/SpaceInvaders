@@ -26,8 +26,6 @@ public class Game implements Runnable {
    */
   private boolean running = false;
 
-  // private ScoreMenu s_menu;
-
   private boolean bossLevel;
 
   private ConcreteAggregate concreteAggregate = new ConcreteAggregate();
@@ -40,7 +38,11 @@ public class Game implements Runnable {
   private Executor exec;
 
   /**
+<<<<<<< HEAD
    * Vector to store all alien, bullet and barrier objects.
+=======
+   * Vector to store all alien, bullet and barrier objects
+>>>>>>> 968cb4c8bff05ae694ae2cef969c237e51fb250c
    */
   private Vector<Alien> aliens;
   private Vector<Bullet> alienBullets;
@@ -48,11 +50,9 @@ public class Game implements Runnable {
   private Vector<Barrier> barriers;
 
   private int counter;
-  private int score = 0;
+  private static int score;
 
   private Spaceship spaceship;
-  public static LogFile logfile;
-  private HighscoreManager highscoremanager;
   private Screen screen;
 
   private Level level;
@@ -65,9 +65,6 @@ public class Game implements Runnable {
     exec = ex;
     counter = 0;
     screen = new Screen(this);
-
-    highscoremanager = new HighscoreManager();
-
   }
 
   /**
@@ -106,8 +103,9 @@ public class Game implements Runnable {
       e.printStackTrace();
     }
 
-    logfile.writeString("Game ended because of an error at " + new Date());
-    logfile.close();
+    LogFile.getInstance().writeString(
+        "Game ended because of an error at " + new Date());
+    LogFile.getInstance().close();
 
     // exits the application.
     System.exit(1);
@@ -122,11 +120,12 @@ public class Game implements Runnable {
     shipBullets = new Vector<Bullet>(0);
     barriers = new Vector<Barrier>(0);
 
-    logfile = LogFile.getInstance();
-    logfile.open();
-    logfile.writeString("Game started at " + new Date());
+    LogFile.getInstance().open();
+    LogFile.getInstance().writeString("Game started at " + new Date());
 
     spaceship = new Spaceship();
+
+    score = 0;
 
     generateLevel();
   }
@@ -142,18 +141,22 @@ public class Game implements Runnable {
     while (running) {
       screen.repaint();
       counter++;
+
       if (counter >= 50) {
         alienShoot();
         counter = 0;
       }
-      if (levelNumber > 15) {
-        end();
-      } else if (aliens.size() == 0) {
-        generateLevel();
-        if (levelNumber % 5 == 0) {
-          bossLevel = true;
+      if (aliens.size() == 0) {
+        if (levelNumber >= 15) {
+          end();
         } else {
-          bossLevel = false;
+          generateLevel();
+
+          if (levelNumber % 5 == 0) {
+            bossLevel = true;
+          } else {
+            bossLevel = false;
+          }
         }
       } else if (aliens.get(aliens.size() - 1).reachedY(400)) {
         end();
@@ -180,7 +183,7 @@ public class Game implements Runnable {
    * spaceship position.
    */
   public void generateLevel() {
-    clearVectors();
+
     level = LevelFactory.createLevel(++levelNumber);
     spaceship.resetPosition();
     aliens = level.createAliens();
@@ -197,6 +200,8 @@ public class Game implements Runnable {
       e.printStackTrace();
     }
 
+    screen.setPressedLeft(false);
+    screen.setPressedRight(false);
     CardWindow.getInstance().showCard("GAMECARD");
     screen.requestFocusInWindow();
   }
@@ -206,6 +211,7 @@ public class Game implements Runnable {
    * and vertically.
    */
   public void moveAliens() {
+
     Iterator iterAliens = concreteAggregate.createIterator(aliens);
 
     // in this while loop all the aliens are moved vertically.
@@ -218,15 +224,14 @@ public class Game implements Runnable {
     // updated simultaneously. this is the case when all the aliens need
     // to be moved vertically.
     if (Alien.getupdateLogic()) {
-
       Iterator iterAliens2 = concreteAggregate.createIterator(aliens);
 
       while (iterAliens2.hasNext()) {
         Alien alien = (Alien) iterAliens2.next();
         alien.vmovement();
       }
-
-      Game.logfile.writeString("Aliens reached a border and moved down");
+      LogFile.getInstance().writeString(
+          "Aliens reached a border and moved down");
     }
   }
 
@@ -281,6 +286,7 @@ public class Game implements Runnable {
         }
       }
     }
+
     Iterator iterBarriers = concreteAggregate.createIterator(barriers);
 
     while (iterBarriers.hasNext()) {
@@ -321,7 +327,9 @@ public class Game implements Runnable {
         }
       }
     } else {
-      alienBullets.addAll(aliens.get(0).BossShoot());
+      if (aliens.size() != 0) {
+        alienBullets.addAll(aliens.get(0).BossShoot());
+      }
     }
   }
 
@@ -329,13 +337,14 @@ public class Game implements Runnable {
    * The method that removes all the bullets that are offscreen.
    */
   public void removeOffScreenBullets() {
+
     Iterator iterAlienBullets = concreteAggregate.createIterator(alienBullets);
 
     while (iterAlienBullets.hasNext()) {
 
       Bullet bullet = (Bullet) iterAlienBullets.next();
       if (bullet.reachedY(450)) {
-        Game.logfile.writeOffscreen("Alien", bullet.getX());
+        LogFile.getInstance().writeOffscreen("Alien", bullet.getX());
         alienBullets.removeElementAt(iterAlienBullets.position());
       }
 
@@ -347,7 +356,7 @@ public class Game implements Runnable {
 
       Bullet bullet = (Bullet) iterShipBullets.next();
       if (bullet.reachedY(450)) {
-        Game.logfile.writeOffscreen("Spaceship", bullet.getX());
+        LogFile.getInstance().writeOffscreen("Spaceship", bullet.getX());
         shipBullets.removeElementAt(iterShipBullets.position());
       }
 
@@ -388,56 +397,6 @@ public class Game implements Runnable {
   }
 
   /**
-   * equals method that compares if two game objects are equal.
-   */
-  public boolean equals(Object other) {
-    boolean result = false;
-    if (other instanceof Game) {
-      Game that = (Game) other;
-      if (this.getcounter() == that.getcounter()) {
-        result = true;
-      }
-    }
-    return result;
-  }
-
-  /**
-   * Compares two images pixel by pixel.
-   *
-   * @return whether the images are both the same.
-   */
-  public boolean compareImages(Object objA, Object objB) {
-
-    if (objA instanceof BufferedImage && objB instanceof BufferedImage) {
-      BufferedImage imgA = (BufferedImage) objA;
-      BufferedImage imgB = (BufferedImage) objB;
-
-      // The images mush be the same size.
-      if (imgA.getWidth() == imgB.getWidth()
-          && imgA.getHeight() == imgB.getHeight()) {
-        int width = imgA.getWidth();
-        int height = imgA.getHeight();
-
-        // Loop over every pixel.
-        for (int y = 0; y < height; y++) {
-          for (int x = 0; x < width; x++) {
-            // Compare the pixels for equality.
-            if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-              return false;
-            }
-          }
-        }
-      } else {
-        return false;
-      }
-
-      return true;
-    }
-    return false;
-
-  }
-
-  /**
    * the getter metod that returns the alienvector.
    * 
    * @return vector containing all aliens currently active in the game
@@ -449,9 +408,8 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the shipbullets vector.
    * 
-   * @param bill
-   *          bullets to add to the vector
-   */
+   * @param bill bullets to add to the vector
+  */
   public void addShipBullets(Bullet bill) {
     shipBullets.add(bill);
   }
@@ -468,8 +426,7 @@ public class Game implements Runnable {
   /**
    * the method that adds a bullet to the alienbullets vector.
    * 
-   * @param bill
-   *          bullets to add to the vector
+   * @param bill bullets to add to the vector
    */
   public void addAlienBullets(Bullet bill) {
     alienBullets.add(bill);
@@ -477,7 +434,7 @@ public class Game implements Runnable {
 
   /**
    * the getter method that returns the alienbullets vector.
-   * 
+   *
    * @return vector containing aliens' bullets
    */
   public Vector<Bullet> getAlienBullets() {
@@ -503,9 +460,9 @@ public class Game implements Runnable {
    */
   public void end() {
     running = false;
-    highscoremanager.addScore(score);
-    logfile.writeString("Game ended at " + new Date());
-    logfile.close();
+    HighscoreManager.getInstance().addScore(score);
+    LogFile.getInstance().writeString("Game ended at " + new Date());
+    LogFile.getInstance().close();
     exec.returning();
   }
 
@@ -513,30 +470,18 @@ public class Game implements Runnable {
     return levelNumber;
   }
 
-  public int getScore() {
+  public static int getScore() {
     return score;
-  }
-
-  public HighscoreManager getHsmanager() {
-    return highscoremanager;
-  }
-
-  /**
-   * the set highscoremanager sets the new Highscoremanager. This method is used
-   * only for testing purposes.
-   */
-  public void setHighscoremanager(HighscoreManager manager) {
-    highscoremanager = manager;
   }
 
   /**
    * the set score method is able to manually set the score of the player. this
    * method is only used for testing purposes.
    * 
-   * @param score1
-   *          set attribute score
+   * @param score1 set attribute score
    */
   public void setscore(int score1) {
     score = score1;
   }
+
 }

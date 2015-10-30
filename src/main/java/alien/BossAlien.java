@@ -9,8 +9,7 @@ import bullet.Bullet;
 import bullet.DiagonalBulletLeft;
 import bullet.DiagonalBulletRight;
 import bullet.MegaBullet;
-import spaceinvaders.Game;
-import spaceinvaders.SpriteSheet;
+import spaceinvaders.LogFile;
 
 public class BossAlien extends Alien {
 
@@ -20,7 +19,6 @@ public class BossAlien extends Alien {
   private int movementSpeed = 1;
   private int randomNum;
   private boolean overwrite;
-  private Game game;
 
   /**
    * the constructor of alien type 3.
@@ -31,7 +29,7 @@ public class BossAlien extends Alien {
    */
   public BossAlien(double x, double y) {
     super(x, y);
-    Game.logfile.writeCreate("BossAlien", x, y);
+    LogFile.getInstance().writeCreate("BossAlien", x, y);
     setSpritesheet(215, 225, 50, 20);
     setScore(100);
     setHealth(20);
@@ -90,8 +88,8 @@ public class BossAlien extends Alien {
     if (overwrite == false) {
       randomNum = rand.nextInt(3) + 1;
     }
-
-    Game.logfile.writeShoot("BossAlien", getX(), getY());
+    
+    LogFile.getInstance().writeShoot("BossAlien", getX(), getY());
 
     if (randomNum == 1) {
       Vector<Bullet> newTridentBullets = tridentBullets();
@@ -192,7 +190,7 @@ public class BossAlien extends Alien {
       Bullet bullet = (Bullet) iterShipBullets.next();
       if (bullet.getY() > ypos - 12 && bullet.getY() < ypos + 20) {
         if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 50) {
-          Game.logfile.writeHit("Alien", xpos, ypos);
+          LogFile.getInstance().writeHit("Alien", xpos, ypos);
           health--;
           return iterShipBullets.position();
         }

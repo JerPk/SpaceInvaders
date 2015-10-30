@@ -31,6 +31,9 @@ public class ScoreMenu implements Runnable {
   private Boolean running;
   private Thread thread;
   private Executor exec;
+  
+  private GridBagConstraints gbc;
+  private JPanel panel;
 
   /**
    * The constructor of the game class.
@@ -42,17 +45,16 @@ public class ScoreMenu implements Runnable {
     exec = ex;
     running = false;
 
-    highscoremanager = new HighscoreManager();
-    allscores = highscoremanager.getScores();
+    setup();
+  }
 
-    JPanel panel = new JPanel();
+  private void setup() {
+    panel = new JPanel();
     panel.setLayout(new GridBagLayout());
+    gbc = new GridBagConstraints();
     panel.setBackground(Color.black);
 
-    GridBagConstraints gbc = new GridBagConstraints();
-    JLabel title = new JLabel("Highscores");
-    title.setForeground(Color.white);
-    title.setFont(new Font("Calibri", Font.PLAIN, 30));
+    JLabel title = createTitle();
     gbc.gridx = 0;
     gbc.gridy = 0;
     gbc.gridwidth = 3;
@@ -68,11 +70,26 @@ public class ScoreMenu implements Runnable {
     table.setForeground(Color.white);
     table.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
     table.setGridColor(Color.gray);
+
     gbc.gridx = 0;
     gbc.gridy = 1;
     gbc.insets = new Insets(0, 0, 20, 0);
     panel.add(table, gbc);
 
+    addButtons();
+
+    CardWindow.getInstance().addCard(panel, "SCORECARD");
+  }
+
+  private JLabel createTitle() {
+    JLabel title = new JLabel("Highscores");
+    title.setForeground(Color.white);
+    title.setFont(new Font("Calibri", Font.PLAIN, 30));
+
+    return title;
+  }
+
+  private void addButtons() {
     btnReturn = new JButton("Return");
     gbc.fill = GridBagConstraints.HORIZONTAL;
     gbc.gridx = 0;
@@ -86,18 +103,14 @@ public class ScoreMenu implements Runnable {
     gbc.gridy = 2;
     panel.add(btnReset, gbc);
 
-    btnQuit = new JButton("Quit Game");
+    btnQuit = new JButton("Quit");
     gbc.gridx = 2;
     gbc.gridy = 2;
     panel.add(btnQuit, gbc);
-
-    CardWindow.getInstance().addCard(panel, "SCORECARD");
   }
 
-  /**
-   * Method to make the menu ready to display and make a thread to run it.
-   */
   public void show() {
+    setup();
     running = true;
     thread = new Thread(this);
     thread.start();
@@ -155,6 +168,8 @@ public class ScoreMenu implements Runnable {
    * @return data to fill the table with scores
    */
   public Object[][] createData() {
+    allscores = HighscoreManager.getInstance().getScores();
+    
     Score score1 = allscores.get(0);
     Score score2 = allscores.get(1);
     Score score3 = allscores.get(2);

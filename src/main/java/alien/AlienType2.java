@@ -1,8 +1,7 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.Game;
-import spaceinvaders.SpriteSheet;
+import spaceinvaders.LogFile;
 
 /**
  * the second alien type is considered normal. it has both normal health and
@@ -22,7 +21,7 @@ public class AlienType2 extends Alien {
    */
   public AlienType2(double x, double y) {
     super(x, y);
-    Game.logfile.writeCreate("AlienType2", x, y);
+    LogFile.getInstance().writeCreate("AlienType2", x, y);
     setSpritesheet(40, 225, 16, 16);
     setScore(20);
     setHealth(2);
@@ -38,7 +37,7 @@ public class AlienType2 extends Alien {
   @Override
   public Bullet shoot() {
     final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
-    Game.logfile.writeShoot("AlienType2", getX(), getY());
+    LogFile.getInstance().writeShoot("AlienType2", getX(), getY());
 
     newBullet.setDownSpeed(4.4);
     newBullet.setSpritesheet(172, 605, 6, 16);

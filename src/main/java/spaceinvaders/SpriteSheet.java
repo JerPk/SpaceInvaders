@@ -41,7 +41,7 @@ public class SpriteSheet {
   /**
    * uses the coordinates specified to grab the part of the sprite sheet. that
    * will be used by the object.
-   * 
+   *
    * @param col
    *          of the piece of image we need
    * @param row

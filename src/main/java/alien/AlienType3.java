@@ -1,8 +1,7 @@
 package alien;
 
 import bullet.Bullet;
-import spaceinvaders.Game;
-import spaceinvaders.SpriteSheet;
+import spaceinvaders.LogFile;
 
 /**
  * the third alien type is considered the hardest. it has the most health and
@@ -22,7 +21,7 @@ public class AlienType3 extends Alien {
    */
   public AlienType3(double x, double y) {
     super(x, y);
-    Game.logfile.writeCreate("AlienType3", x, y);
+    LogFile.getInstance().writeCreate("AlienType3", x, y);
     setSpritesheet(74, 225, 22, 16);
     setScore(30);
     setHealth(3);
@@ -38,7 +37,7 @@ public class AlienType3 extends Alien {
   @Override
   public Bullet shoot() {
     final Bullet newBullet = new Bullet(getX() + 5, getY() + 2);
-    Game.logfile.writeShoot("AlienType3", getX(), getY());
+    LogFile.getInstance().writeShoot("AlienType3", getX(), getY());
 
     newBullet.setDownSpeed(6.6);
     newBullet.setSpritesheet(200, 605, 6, 12);

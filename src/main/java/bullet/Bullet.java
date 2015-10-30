@@ -3,8 +3,7 @@ package bullet;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
-import spaceinvaders.Game;
-import spaceinvaders.Screen;
+import spaceinvaders.LogFile;
 import spaceinvaders.SpriteSheet;
 
 public class Bullet {
@@ -18,8 +17,7 @@ public class Bullet {
     this.xpos = x;
     this.ypos = y;
 
-    Game.logfile.writeCreate("Bullet", xpos, ypos);
-
+    LogFile.getInstance().writeCreate("Bullet", xpos, ypos);
     bullet = SpriteSheet.getInstance().grabImage(413, 277, 6, 12);
   }
 

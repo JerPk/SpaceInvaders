@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import alien.Alien;
 import alien.AlienFactory;
 import spaceinvaders.Barrier;
+import spaceinvaders.Game;
+import spaceinvaders.HighscoreManager;
 import spaceinvaders.Screen;
 import spaceinvaders.SpriteSheet;
 
@@ -112,15 +114,13 @@ public class Level {
    */
   public final JPanel createTransitionPanel() {
     final JPanel panel = new JPanel();
-    final Font labelFont = new Font("Courier", Font.PLAIN, 15);
-    final Color labelColor = Color.white;
 
     panel.setLayout(new GridBagLayout());
     final GridBagConstraints constraints = new GridBagConstraints();
     panel.setBackground(Color.black);
 
     final JLabel levelNumberLabel = new JLabel("Level " + levelNumber);
-    levelNumberLabel.setForeground(labelColor);
+    levelNumberLabel.setForeground(Color.white);
     levelNumberLabel.setFont(new Font("Courier", Font.BOLD, 30));
     constraints.gridx = 0;
     constraints.gridy = 0;
@@ -128,9 +128,7 @@ public class Level {
     constraints.insets = new Insets(0, 0, 30, 0);
     panel.add(levelNumberLabel, constraints);
 
-    final JLabel alienTypeLabel = new JLabel("Type of aliens: ");
-    alienTypeLabel.setForeground(labelColor);
-    alienTypeLabel.setFont(labelFont);
+    final JLabel alienTypeLabel = createLabel("Type of aliens: ");
     constraints.gridy = 1;
     constraints.gridwidth = 1;
     constraints.anchor = GridBagConstraints.LINE_START;
@@ -143,21 +141,36 @@ public class Level {
     constraints.gridx = 1;
     panel.add(alienImageLabel, constraints);
 
-    final JLabel alienLivesLabel = new JLabel("Alien lives: " + alienLives);
-    alienLivesLabel.setForeground(labelColor);
-    alienLivesLabel.setFont(labelFont);
+    final JLabel alienLivesLabel = createLabel("Alien lives: " + alienLives);
     constraints.gridx = 0;
     constraints.gridy = 2;
     constraints.gridwidth = 2;
     panel.add(alienLivesLabel, constraints);
 
-    final JLabel ScoreLabel = new JLabel("Score: ");
-    ScoreLabel.setForeground(labelColor);
-    ScoreLabel.setFont(labelFont);
+    final JLabel scoreLabel = createLabel("Current score: " + Game.getScore());
     constraints.gridy = 3;
-    panel.add(ScoreLabel, constraints);
+    panel.add(scoreLabel, constraints);
+
+    final JLabel highscoreLabel = createLabel("Current highscore: "
+        + getHighscore());
+    constraints.gridy = 4;
+    panel.add(highscoreLabel, constraints);
 
     return panel;
+  }
+
+  /**
+   * Method to create JLabel.
+   */
+  private JLabel createLabel(String text) {
+    final Font labelFont = new Font("Courier", Font.PLAIN, 15);
+    final Color labelColor = Color.white;
+
+    final JLabel label = new JLabel(text);
+    label.setForeground(labelColor);
+    label.setFont(labelFont);
+
+    return label;
   }
 
   /**
@@ -177,5 +190,14 @@ public class Level {
       alienTypeImage = SpriteSheet.getInstance().grabImage(74, 225, 22, 16);
       alienLives = 3;
     }
+  }
+
+  /**
+   * Method to retrieve highscore.
+   */
+  private int getHighscore() {
+    int score = HighscoreManager.getInstance().getScores().get(0).getScore();
+
+    return score;
   }
 }

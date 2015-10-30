@@ -29,15 +29,14 @@ public class Spaceship {
     xpos = Screen.WIDTH / 2 - 13;
     lives = 3;
 
-    Game.logfile.writeCreate("Spaceship", xpos, ypos);
+    LogFile.getInstance().writeCreate("Spaceship", xpos, ypos);
 
     spaceship = SpriteSheet.getInstance().grabImage(277, 228, 26, 16);
 
   }
 
   /**
-   * this method makes the ship move left by 1 as long as it hasn't reached the
-   * border.
+   * this method makes the ship move left by 1 as long as it hasn't reached the border.
    *
    */
   public void moveLeft() {
@@ -47,8 +46,7 @@ public class Spaceship {
   }
 
   /**
-   * this method makes the ship move right by 1 as long as it hasn't reached the
-   * border.
+   * this method makes the ship move right by 1 as long as it hasn't reached the border.
    *
    */
   public void moveRight() {
@@ -64,7 +62,7 @@ public class Spaceship {
    */
   public Bullet shoot() {
     Bullet newBullet = new Bullet(xpos + 10, ypos + 2);
-    Game.logfile.writeShoot("Spaceship", getPosX(), getPosY());
+    LogFile.getInstance().writeShoot("Spaceship", getPosX(), getPosY());
 
     newBullet.setSpritesheet(423, 277, 6, 12);
     return newBullet;
@@ -79,7 +77,6 @@ public class Spaceship {
    */
   public int ifHit(Vector<Bullet> alienBullets) {
     Iterator iterAlienBullets = concreteAggregate.createIterator(alienBullets);
-
     while (iterAlienBullets.hasNext()) {
       Bullet bullet = (Bullet) iterAlienBullets.next();
 
@@ -88,23 +85,22 @@ public class Spaceship {
           return iterAlienBullets.position();
         }
       }
-
       if (bullet.getY() > ypos - 10 && bullet.getY() < ypos + 16) {
         if (bullet.getX() > xpos - 6 && bullet.getX() < xpos + 26) {
           lives -= 1;
-          Game.logfile.writeHit("Spaceship", bullet.getX(), bullet.getY());
+          LogFile.getInstance().writeHit("Spaceship", bullet.getX(),
+              bullet.getY());
           if (lives > 0) {
-            Game.logfile.writeString("Spaceship has " + String.valueOf(lives)
-                + " lives left");
+            LogFile.getInstance().writeString(
+                "Spaceship has " + String.valueOf(lives) + " lives left");
           } else {
-            Game.logfile.writeString("Spaceship has no lives left");
+            LogFile.getInstance().writeString("Spaceship has no lives left");
           }
           return iterAlienBullets.position();
         }
       }
     }
     return -1;
-
   }
 
   /**
@@ -118,12 +114,12 @@ public class Spaceship {
     if (bullet.getX() + 15 >= xpos && bullet.getX() + 15 <= xpos + 26) {
       if (bullet.getY() + 50 >= ypos && bullet.getY() + 50 <= ypos + 16) {
         lives -= 1;
-        Game.logfile.writeHit("Spaceship", bullet.getX(), bullet.getY());
+        LogFile.getInstance().writeHit("Spaceship", bullet.getX(), bullet.getY());
         if (lives > 0) {
-          Game.logfile.writeString("Spaceship has " + String.valueOf(lives)
-              + " lives left");
+          LogFile.getInstance().writeString(
+              "Spaceship has " + String.valueOf(lives) + " lives left");
         } else {
-          Game.logfile.writeString("Spaceship has no lives left");
+          LogFile.getInstance().writeString("Spaceship has no lives left");
         }
         return true;
       }
@@ -175,14 +171,12 @@ public class Spaceship {
 
   /**
    * the method used to draw the spaceship on the screen.
-   *
    */
   public void render(Graphics graphics) {
     graphics.drawImage(spaceship, (int) xpos, (int) ypos, null);
 
     for (int i = 1; i <= lives; i++) {
       graphics.drawImage(spaceship, 10 + 30 * (i - 1), 452, null);
-
     }
 
   }

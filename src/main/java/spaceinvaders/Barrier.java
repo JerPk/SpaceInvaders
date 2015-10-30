@@ -24,7 +24,7 @@ public class Barrier {
     this.ypos = yco;
     this.state = 0;
 
-    Game.logfile.writeCreate("Barrier", xpos, ypos);
+    LogFile.getInstance().writeCreate("Barrier", xpos, ypos);
 
     barrier[0] = SpriteSheet.getInstance().grabImage(316, 213, 44, 32);
     barrier[1] = SpriteSheet.getInstance().grabImage(480, 210, 44, 32);
@@ -51,7 +51,7 @@ public class Barrier {
           && alienBullets.get(i).getY() < ypos + 32) {
         if (alienBullets.get(i).getX() > xpos - 6
             && alienBullets.get(i).getX() < xpos + 44) {
-          Game.logfile.writeHit("Barrier", xpos, ypos);
+          LogFile.getInstance().writeHit("Barrier", xpos, ypos);
           state++;
           return i;
         }
@@ -111,5 +111,6 @@ public class Barrier {
 
   public void render(Graphics graphic) {
     graphic.drawImage(barrier[state], (int) xpos, (int) ypos, null);
+
   }
 }
